@@ -28,9 +28,6 @@ public class Artist {
 
     @Override
     public String toString() {
-        return "Artist{" +
-                "name='" + name + '\'' +
-                ", genres=" + Arrays.toString(genres) +
-                '}';
+        return name;
     }
 }
