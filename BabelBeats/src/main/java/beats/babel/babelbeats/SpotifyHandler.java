@@ -15,8 +15,6 @@ import org.json.JSONObject;
 public class SpotifyHandler {
     private SpotifyUser spotifyUser;
     private String accessToken;
-
-    // CHANGE IT LATER TO BE TAKEN FROM FILE
     private String clientID;
     private String clientSecret;
 
@@ -168,20 +166,6 @@ public class SpotifyHandler {
             builder.PUT(HttpRequest.BodyPublishers.ofString(parameters));
         }
         HttpRequest request = builder.build();
-        //        var client = HttpClient.newHttpClient();
-        //        var request = HttpRequest.newBuilder(
-        //                        URI.create(url))
-        //                .header(headerName, headerValue)
-        //                .build();
-        //
-        //        if(!parameters.isEmpty()) {
-        //             request = HttpRequest.newBuilder(
-        //                            URI.create(url))
-        //                    .header(headerName, headerValue)
-        //                    .POST(HttpRequest.BodyPublishers.ofString(parameters))
-        //                    .build();
-        //        }
-
         try {
             var response = client.send(request, HttpResponse.BodyHandlers.ofString());
             return response.body();
