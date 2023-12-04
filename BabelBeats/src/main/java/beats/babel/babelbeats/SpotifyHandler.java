@@ -9,7 +9,6 @@ import org.json.JSONObject;
 public class SpotifyHandler {
     private SpotifyUser spotifyUser;
     private String accessToken;
-
     private String clientID;
     private String clientSecret;
 
