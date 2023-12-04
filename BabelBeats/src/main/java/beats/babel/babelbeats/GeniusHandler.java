@@ -5,8 +5,10 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpClient;
 import java.util.Objects;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URLEncoder;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +20,17 @@ public class GeniusHandler {
     public GeniusHandler() {
         accessToken = "tLh3CHyVeq43Q0fL1p3h3ckxvwCd8x6mAlUgvoQLWTfYvjB2Lq3t-IWvMylju31A";
     }
-    public String searchGenius(String query)
+
+    public String getLyrics(String artist, String title)
+    {
+        String search = searchGenius(artist + title);
+        JSONObject results = getResults(search);
+        String url = getUrl(results.toString());
+        WebScraper scrape = new WebScraper(6000);
+        return formatText(scrape.scrapeLyrics(url), '[', ']', 2);
+    }
+
+    private String searchGenius(String query)
     {
         try
         {
@@ -47,20 +59,33 @@ public class GeniusHandler {
                     newLineCount += 1;
                 else
                     newLineCount = 0;
-                if (newLineCount < maxEndl)
+                if (newLineCount < maxEndl && !removeCycle)
                     formattedText.append(character);
             }
+            else if(character == stopSign) {
+                removeCycle = false;
+            }
         }
+        return formattedText.toString();
     }
 
-    public String getLyrics(String JSON_file)
+    private JSONObject getResults(String JSON_string)
     {
-        JSONExtractor file = new JSONExtractor();
-        String first = file.extract(JSON_file, "response");
-        String second = file.extract(JSON_file, "song");
+        JSONObject file = new JSONObject(JSON_string);
+        JSONObject response = file.getJSONObject("response");
+        JSONArray hits =response.getJSONArray("hits");
+        return hits.getJSONObject(0);
     }
 
-    public String searchSong(String id)
+    private String getUrl(String JSON_file)
+    {
+        JSONObject file = new JSONObject(JSON_file);
+        JSONObject result = file.getJSONObject("result");
+        return result.getString( "url");
+    }
+
+
+    private String searchSong(String id)
     {
             String uri = "https://api.genius.com/songs/" + id;
             String[] header = new String[]{"Authorization"};
@@ -95,6 +120,7 @@ public class GeniusHandler {
             e.printStackTrace();
             return null;
         }
+
 
     }
 
