@@ -4,16 +4,16 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpClient;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-import beats.babel.babelbeats.JSONExtractor;
-import beats.babel.babelbeats.SpotifyUserToken;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 
 public class SpotifyHandler {
-    private SpotifyUserToken userToken;
+    private SpotifyUser spotifyUser;
     private String accessToken;
 
     // CHANGE IT LATER TO BE TAKEN FROM FILE
@@ -53,7 +53,7 @@ public class SpotifyHandler {
     public String fetchUserProfileJSON() {
         String url = "https://api.spotify.com/v1/me";
         String[] headerName = new String[]{"Authorization"};
-        String[] headerValue = new String[]{"Bearer " + userToken.getToken()};
+        String[] headerValue = new String[]{"Bearer " + spotifyUser.getToken()};
 //          String headerName = "Authorization";
 //          String headerValue = "Bearer " + userToken.getToken();
 
@@ -71,29 +71,36 @@ public class SpotifyHandler {
     public void startPlayback() {
         String url = "https://api.spotify.com/v1/me/player/play";
         String[] header = new String[]{"Authorization"};
-        String[] headerValues = new String[]{"Bearer " + userToken.getToken()};
+        String[] headerValues = new String[]{"Bearer " + spotifyUser.getToken()};
         sendHTTPRequest(url, header, headerValues, "PUT", "");
     }
 
     public void pausePlayback() {
         String url = "https://api.spotify.com/v1/me/player/pause";
         String[] header = new String[]{"Authorization"};
-        String[] headerValues = new String[]{"Bearer " + userToken.getToken()};
+        String[] headerValues = new String[]{"Bearer " + spotifyUser.getToken()};
         sendHTTPRequest(url, header, headerValues, "PUT", "");
     }
 
-    private String fetchUsersFavsJSON() {
+    private String fetchUsersFavArtistsJSON() {
         String url = "https://api.spotify.com/v1/me/top/artists?limit=30&offset=0";
         String[] headerName = new String[]{"Authorization"};
-        String[] headerValues = new String[]{"Bearer " + userToken.getToken()};
+        String[] headerValues = new String[]{"Bearer " + spotifyUser.getToken()};
         return sendHTTPRequest(url, headerName, headerValues);
     }
 
 
-    public Artist[] getUsersFavs() {
-        String fetchedJSON = fetchUsersFavsJSON();
+    public Artist[] getUsersFavArtists() {
+//        fetch json from Spotify API
+        String fetchedJSON = fetchUsersFavArtistsJSON();
+
+//        extract artist info from fetched json
         JSONExtractor je = new JSONExtractor();
         JSONArray items = je.extractList(fetchedJSON, "items");
+
+//        initialize Artist[]
+        Artist[] topArtists = new Artist[30];
+
         for (int i = 0; i < items.length(); i++){
 //            extract current item from JSONArray items
             JSONObject item = items.getJSONObject(i);
@@ -107,16 +114,44 @@ public class SpotifyHandler {
             int height = imageJson.getInt("height");
             String imageUrl = imageJson.getString("url");
             Image image = new Image(width, height, imageUrl);
+
 //            get artists name
             String name = item.getString("name");
+
+//            get artist's genres as JSONArray from item
             JSONArray genresArray = item.getJSONArray("genres");
 
-//            String[] genres = item.get
+//            extract each genre and put it into String[] genres
+            String[] genres = new String[genresArray.length()];
+            for (int j = 0; j < genresArray.length(); j++){
+                genres[j] = genresArray.getString(j);
+            }
+
+//            create Artist obj and add it to topArtists
+            Artist artist = new Artist(name, genres, image);
+            topArtists[i] = artist;
         }
-        Artist[] topArtists = new Artist[30];
         return topArtists;
     }
 
+    public Map<String, Integer> countUsersGenres(){
+//        initialize a map that has genre names as keys and their count as values
+        Map<String, Integer> genres = new HashMap<>();
+
+//        iterate over each of users top artists and add their genres to hashmap
+        for (Artist a : spotifyUser.getTopArtists()){
+            for (String g : a.getGenres()){
+                if (!genres.containsKey(g)){
+                    genres.put(g, 1);
+                }
+                else{
+                    genres.put(g, genres.get(g) + 1);
+                }
+            }
+        }
+
+        return genres;
+    }
 
     private String sendHTTPRequest(String url, String[] headerName, String[] headerValue, String type, String parameters) {
         var client = HttpClient.newHttpClient();
@@ -165,8 +200,8 @@ public class SpotifyHandler {
         return accessToken;
     }
 
-    public void setUserToken(SpotifyUserToken sut) {
-        userToken = sut;
+    public void setSpotifyUser(SpotifyUser sut) {
+        spotifyUser = sut;
     }
 
     public boolean isConnected() {
