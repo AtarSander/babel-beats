@@ -18,8 +18,9 @@ public class BabelBeatsApplication {
 		sh.setUserToken(sut);
 //		System.out.println(sh.getUserCountry());
 		while (true) {
-			sh.startPlayback();
-			sh.pausePlayback();
+//			sh.startPlayback();
+//			sh.pausePlayback();
+			sh.getUsersFavs();
 		}
 	}
 }

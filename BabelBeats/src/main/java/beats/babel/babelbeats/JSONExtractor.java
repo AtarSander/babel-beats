@@ -1,6 +1,7 @@
 package beats.babel.babelbeats;
 
 import org.apache.tomcat.util.json.JSONParser;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -12,6 +13,11 @@ public class JSONExtractor {
     public String extract(String json, String key){
         JSONObject parser = new JSONObject(json);
         return parser.getString(key);
+    }
+
+    public JSONArray extractList(String json, String key){
+        JSONObject parser = new JSONObject(json);
+        return parser.getJSONArray(key);
     }
 
     public String[] readFromFile(String fileName, String[] keys) {
