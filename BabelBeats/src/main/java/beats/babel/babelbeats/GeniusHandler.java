@@ -34,9 +34,34 @@ public class GeniusHandler {
             return null;
         }
     }
+
+    private String formatText(String text, char startSign, char stopSign, int maxEndl) {
+        int newLineCount = 0;
+        StringBuilder formattedText = new StringBuilder();
+        boolean removeCycle = false;
+        for (char character : text.toCharArray()) {
+            if (!removeCycle) {
+                if (character == startSign)
+                    removeCycle = true;
+                if (character == '\n')
+                    newLineCount += 1;
+                else
+                    newLineCount = 0;
+                if (newLineCount < maxEndl)
+                    formattedText.append(character);
+            }
+        }
+    }
+
+    public String getLyrics(String JSON_file)
+    {
+        JSONExtractor file = new JSONExtractor();
+        String first = file.extract(JSON_file, "response");
+        String second = file.extract(JSON_file, "song");
+    }
+
     public String searchSong(String id)
     {
-
             String uri = "https://api.genius.com/songs/" + id;
             String[] header = new String[]{"Authorization"};
             String[] headerValues = new String[]{"Bearer " + accessToken};
