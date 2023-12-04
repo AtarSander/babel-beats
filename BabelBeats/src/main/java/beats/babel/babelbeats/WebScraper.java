@@ -3,6 +3,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.jsoup.safety.Whitelist;
 
 import java.io.IOException;
 
@@ -16,15 +17,22 @@ public class WebScraper {
 
     public String scrapeLyrics()
     {
+        String lyrics = "";
         try {
             Document doc = Jsoup.connect(url).userAgent("Mozilla").timeout(timeout).get();
-            Elements body = doc.select();
-            System.out.println(body.select("br"));
+            Elements lyricsContainers = doc.select("div[data-lyrics-container=true]");
+            StringBuilder textWithLineBreaks = new StringBuilder();
+            for (Element div : lyricsContainers) {
+                textWithLineBreaks.append(div.html().replaceAll("<br>", "\n"));
+            }
+            Whitelist whitelist = Whitelist.none();
+            lyrics = Jsoup.clean(textWithLineBreaks.toString(), "", whitelist, new Document.OutputSettings().prettyPrint(false));
+
         }
         catch(IOException e) {
             e.printStackTrace();
     }
-        return "0";
+        return lyrics;
     }
 
 }
