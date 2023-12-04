@@ -90,19 +90,32 @@ public class SpotifyHandler {
     }
 
 
-//    public Artist[] getUsersFavs() {
-//        String fetchedJSON = fetchUsersFavsJSON();
-//        JSONExtractor je = new JSONExtractor();
-//        JSONArray items = je.extractList(fetchedJSON, "items");
-//        for (int i = 0; i < items.length(); i++){
-//            JSONObject item = items.getJSONObject(i);
-//            JSONArray images = item.getJSONArray("images");
-//
-//
-//        }
-//        Artist[] topArtists = new Artist[30];
-//        return topArtists;
-//    }
+    public Artist[] getUsersFavs() {
+        String fetchedJSON = fetchUsersFavsJSON();
+        JSONExtractor je = new JSONExtractor();
+        JSONArray items = je.extractList(fetchedJSON, "items");
+        for (int i = 0; i < items.length(); i++){
+//            extract current item from JSONArray items
+            JSONObject item = items.getJSONObject(i);
+
+//            extract images from item
+            JSONArray images = item.getJSONArray("images");
+
+//            get first image from list
+            JSONObject imageJson = images.getJSONObject(0);
+            int width = imageJson.getInt("width");
+            int height = imageJson.getInt("height");
+            String imageUrl = imageJson.getString("url");
+            Image image = new Image(width, height, imageUrl);
+//            get artists name
+            String name = item.getString("name");
+            JSONArray genresArray = item.getJSONArray("genres");
+
+//            String[] genres = item.get
+        }
+        Artist[] topArtists = new Artist[30];
+        return topArtists;
+    }
 
 
     private String sendHTTPRequest(String url, String[] headerName, String[] headerValue, String type, String parameters) {

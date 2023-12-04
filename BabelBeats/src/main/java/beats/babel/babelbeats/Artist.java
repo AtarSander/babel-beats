@@ -1,16 +1,17 @@
 package beats.babel.babelbeats;
 
+
 import java.util.Arrays;
 
 public class Artist {
     private final String name;
     private final String[] genres;
-    private final String pictureURL;
+    private final Image image;
 
-    public Artist(String name, String[] genres, String pictureURL){
+    public Artist(String name, String[] genres, Image image){
         this.name = name;
         this.genres = genres;
-        this.pictureURL = pictureURL;
+        this.image = image;
     }
 
     public String getName() {
@@ -21,17 +22,15 @@ public class Artist {
         return genres;
     }
 
-    public String getPictureURL() {
-        return pictureURL;
+    public Image getImage() {
+        return image;
     }
-
 
     @Override
     public String toString() {
-        return "beats.babel.babelbeats.Artist{" +
+        return "Artist{" +
                 "name='" + name + '\'' +
                 ", genres=" + Arrays.toString(genres) +
-                ", pictureURL='" + pictureURL + '\'' +
                 '}';
     }
 }
