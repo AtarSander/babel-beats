@@ -8,14 +8,15 @@ import org.jsoup.safety.Whitelist;
 import java.io.IOException;
 
 public class WebScraper {
-    private final String url;
-    private int timeout;
-    public WebScraper(String url)
+
+    private final int timeout;
+    public WebScraper(int timeout)
     {
-        this.url = url;
+        this.timeout = timeout;
     }
 
-    public String scrapeLyrics()
+
+    public String scrapeLyrics(String url)
     {
         String lyrics = "";
         try {
