@@ -7,27 +7,18 @@
 Aplikacja pomagająca uczyć się nowych języków podczas słuchania muzyki.
 Słuchając utworu zagranicznego wykonawcy, użytkownik dostaje tekst piosenki w języku oryginalnym oraz wersję przetłumaczoną na przez niego wybrany. Na podstawie historii słuchania użytkownika z serwisu Spotify, aplikacja będzie dobierać muzykę odpowiadającą jego gustom, co uczyni proces uczenia się nowego języka - przyjemnym i ekscytującym.
 # Technologie
-## Rozważamy dwie opcje implementacji
-## Web
+## Web app
 ### Database
-- MySQL
+- MongoDB
 ### Backend
 - Spring
 - Spotify API
 - Genius API
 - Open AI API (Whisper)
 - DeepL API
+- YouTube API
 ### Frontend
 - React
-## Desktop app
-### Database
-- MySQL
-### Fullstack
-- Swing
-- Spotify API
-- Genius API
-- Open AI API (Whisper)
-- DeepL API
 # Funkcjonalności
 1. Przetworzenie upodobań muzycznych
 - Analiza upodobań muzycznych użytkownika za pomocą Spotify API
