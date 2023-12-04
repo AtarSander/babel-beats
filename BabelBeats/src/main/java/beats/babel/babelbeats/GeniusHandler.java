@@ -120,8 +120,5 @@ public class GeniusHandler {
             e.printStackTrace();
             return null;
         }
-
-
     }
-
 }
