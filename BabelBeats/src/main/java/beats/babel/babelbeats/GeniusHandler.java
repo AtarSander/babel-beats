@@ -21,9 +21,9 @@ public class GeniusHandler {
         accessToken = "tLh3CHyVeq43Q0fL1p3h3ckxvwCd8x6mAlUgvoQLWTfYvjB2Lq3t-IWvMylju31A";
     }
 
-    public String getLyrics(String artist, String title)
+    public String getLyrics(String query)
     {
-        String search = searchGenius(artist + title);
+        String search = searchGenius(query);
         JSONObject results = getResults(search);
         String url = getUrl(results.toString());
         WebScraper scrape = new WebScraper(6000);
