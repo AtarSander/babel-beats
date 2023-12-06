@@ -22,7 +22,7 @@ public class BabelBeatsApplication {
 		}
 		SpotifyUser su = new SpotifyUser(sc.getUserToken(), sc.getRefreshToken());
 		sh.setSpotifyUser(su);
-		Song[] songs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(0, "german"), 5);
+		Song[] songs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(13, "english"), 5);
 
 		String name = songs[0].toString();
 
@@ -32,12 +32,12 @@ public class BabelBeatsApplication {
 		MusicDownloader.download(url, name);
 
 		GeniusHandler gh = new GeniusHandler();
-		String lyrics = gh.getLyrics(name);
+		gh.getLyricsToFile(name, "EN", true);
 //		DeepLHandler dh = new DeepLHandler();
 //		dh.translate(lyrics, "PL");
 		Timestamper ts = new Timestamper();
 		List<Pair> pairs = ts.getTimestamps(name.replace(" ", "_"));
-
+//		List<Pair> pairs = ts.getTimestamps("Post_Malone_Mourning");
 		for(Pair pair:pairs){
 			System.out.println(pair.toString());
 		}

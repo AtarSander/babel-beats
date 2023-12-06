@@ -1,5 +1,6 @@
 package beats.babel.babelbeats;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpClient;
@@ -134,9 +135,9 @@ public class GeniusHandler {
         JSONObject jo = new JSONObject();
 
         if(formatName)
-            jo.put("name", query.replace(" ", "_"));
+            jo.put("title", query.replace(" ", "_"));
         else
-            jo.put("name", query);
+            jo.put("title", query);
 
         jo.put("language", language);
         jo.put("lyrics", lyrics);
@@ -144,6 +145,10 @@ public class GeniusHandler {
             JSONTokener tokener = new JSONTokener(new FileReader("src/main/resources/lyrics/songs_data.json"));
             JSONArray jsonArray = new JSONArray(tokener);
             jsonArray.put(jo);
+            try (FileWriter fileWriter = new FileWriter("src/main/resources/lyrics/songs_data.json")) {
+                fileWriter.write(jsonArray.toString(2));
+            }
+
         }
         catch (Exception e){
             e.printStackTrace();

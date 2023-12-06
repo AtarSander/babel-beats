@@ -1,6 +1,7 @@
 package beats.babel.babelbeats;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -28,30 +29,30 @@ public class Timestamper {
         return timestamp();
     }
 
-    private void callWhisper(String name){
-        ProcessBuilder pb = new ProcessBuilder("python src/main/python/transcript.py " + name);
+    private void callWhisper(String name) {
+        ProcessBuilder pb = new ProcessBuilder("python", "src/main/python/transcript.py", name);
         pb.redirectErrorStream(true);
-        try{
+
+        try {
             Process process = pb.start();
-            process.waitFor();
-        }
-        catch(Exception e){
+
+            // Redirect the output to the console
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                }
+            }
+
+            // Wait for the process to finish
+            int exitCode = process.waitFor();
+            System.out.println("Exit Code: " + exitCode);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void loadPlain(String name) {
-        try {
-            Path file = Paths.get(plainPath);
-            List<String> lines = Files.readAllLines(file, StandardCharsets.UTF_8);
-            for (String line : lines) {
-                plain_lyric_lines.add(line);
-                plain_lyric_words.add(separateWords(line));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         try {
             JSONTokener tokener = new JSONTokener(new FileReader("src/main/resources/lyrics/songs_data.json"));
             JSONArray jsonArray = new JSONArray(tokener);
@@ -160,7 +161,6 @@ public class Timestamper {
                             break;
                         }
                     }
-
                     j++;
                 }
                 if (count > max_count && saved > previous) {
