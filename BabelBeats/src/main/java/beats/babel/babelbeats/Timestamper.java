@@ -14,9 +14,18 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Timestamper {
-    List<String[]> plain_lyric = new ArrayList<>();
+    List<String[]> plain_lyric_words = new ArrayList<>();
+    List<String> plain_lyric_lines = new ArrayList<>();
     String timestamped_lyric;
-    List<Map<String, Double>> timestamped_lines;
+    List<Map<String, Double>> timestamped_lines = new ArrayList<>();
+
+    public List<Pair> return_timestamp(String name)
+    {
+        loadPlain("src/main/resources/lyrics/plain/" + name + ".txt");
+        loadTimestamped("src/main/resources/lyrics/timestamped/" + name + ".json");
+        aggregateLines();
+        return timestamp();
+    }
 
 
     private void loadPlain(String path) {
@@ -24,8 +33,8 @@ public class Timestamper {
             Path file = Paths.get(path);
             List<String> lines = Files.readAllLines(file, StandardCharsets.UTF_8);
             for (String line : lines) {
-                String[] array = line.split("\n");
-                plain_lyric.add(array);
+                plain_lyric_lines.add(line);
+                plain_lyric_words.add(separateWords(line));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,7 +80,7 @@ public class Timestamper {
         return timestamped_mapped;
     }
 
-    private void agregateLines()
+    private void aggregateLines()
     {
         try
         {
@@ -87,11 +96,88 @@ public class Timestamper {
             e.printStackTrace();
         }
     }
-    private String[] seperateWords(String line){
+    private String[] separateWords(String line){
         return line.split(" ");
     }
-    // DO ZMIANY NA MAP
-    public void matchWords(Map<String, Double> speculatedText, String actualText){
-        ;
+
+    private List<String> sortKeys(Map<String, Double> map)
+    {
+        List<Map.Entry<String, Double>> entryList = new ArrayList<>(map.entrySet());
+        entryList.sort(Map.Entry.comparingByValue());
+        List<String> sortedKeys = new ArrayList<>();
+        for (Map.Entry<String, Double> entry : entryList) {
+            sortedKeys.add(entry.getKey());
+        }
+        return sortedKeys;
+    }
+
+    private List<Pair> timestamp()
+    {
+        int i=0, j, k=0, l=0, count, max_count;
+        Double saved = 0., max_saved = 0., previous= -1.;
+        String[] line_plain;
+        Map<String, Double> line_stamped;
+        List<Pair> final_lyric = new ArrayList<>();
+        while (i < plain_lyric_words.size())
+        {
+            k = 0;
+            max_count = 0;
+            if (i < plain_lyric_words.size() - 1 && i < timestamped_lines.size() - 1)
+                l = i + 1;
+            else
+                l = timestamped_lines.size();
+            while (k < l)
+            {
+                line_plain = plain_lyric_words.get(i);
+                line_stamped = timestamped_lines.get(k);
+                List<String> mapKeysList = sortKeys(line_stamped);
+                j = 0;
+                count = 0;
+                while (j < line_plain.length && j < mapKeysList.size())
+                {
+                    for (String entry : mapKeysList)
+                    {
+                        if ((line_plain[j]).equalsIgnoreCase(entry))
+                        {
+                            count++;
+                            if (count < 2)
+                                saved = line_stamped.get(entry);
+                            break;
+                        }
+                    }
+
+                    j++;
+                }
+                if (count > max_count && saved > previous)
+                {
+                    max_count = count;
+                    max_saved = saved;
+                }
+                k++;
+            }
+            final_lyric.add(new Pair(plain_lyric_lines.get(i), max_saved));
+            previous = max_saved;
+            i++;
+        }
+        return final_lyric;
     }
 }
+
+class Pair {
+    private String key;
+    private double value;
+
+    public Pair(String key, double value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public double getValue() {
+        return value;
+    }
+}
+
