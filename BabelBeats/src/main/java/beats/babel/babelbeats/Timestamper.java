@@ -19,7 +19,7 @@ public class Timestamper {
     String timestamped_lyric;
     List<Map<String, Double>> timestamped_lines = new ArrayList<>();
 
-    public List<Pair> return_timestamp(String name)
+    public List<Pair> getTimestamps(String name)
     {
         loadPlain("src/main/resources/lyrics/plain/" + name + ".txt");
         loadTimestamped("src/main/resources/lyrics/timestamped/" + name + ".json");
