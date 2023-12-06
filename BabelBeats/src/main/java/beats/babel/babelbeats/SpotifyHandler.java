@@ -155,7 +155,7 @@ public class SpotifyHandler {
         return rh.sendHTTPRequest(url, headerName, headerValues);
     }
 
-    private Song[] getPlaylistSongs(String playlistID, int songCount){
+    public Song[] getPlaylistSongs(String playlistID, int songCount){
 //        fetch json
         String fetchedData = fetchSongsFromPlaylistJSON(playlistID, songCount);
         JSONObject jo = new JSONObject(fetchedData);
@@ -168,15 +168,15 @@ public class SpotifyHandler {
         for (int i = 0; i < items.length(); i++){
 //            get current song json
             JSONObject item = items.getJSONObject(i);
-
+            JSONObject track = item.getJSONObject("track");
 //            extract songs name
-            String name = item.getString("name");
+            String name = track.getString("name");
 
 //            extract songId
-            String songId = item.getString("id");
+            String songId = track.getString("id");
 
 //            extract artistIds
-            JSONArray artistIds = item.getJSONArray("artists");
+            JSONArray artistIds = track.getJSONArray("artists");
 
 //            init Artist[]
             Artist[] artists = new Artist[artistIds.length()];
@@ -189,7 +189,8 @@ public class SpotifyHandler {
             }
 
 //            get song image
-            JSONObject imageJson = item.getJSONArray("images").getJSONObject(0);
+            JSONObject album = track.getJSONObject("album");
+            JSONObject imageJson = album.getJSONArray("images").getJSONObject(0);
             Image image = createImageFromJson(imageJson);
 
 //            add song to songs
