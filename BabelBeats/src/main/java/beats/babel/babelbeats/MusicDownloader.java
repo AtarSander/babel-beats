@@ -13,7 +13,7 @@ public class MusicDownloader {
                     "--extract-audio",
                     "--audio-format", "mp3",
                     "--audio-quality", "0",
-                    "--output", "src/main/resources/audio/" + name + ".mp3",
+                    "--output", "src/main/resources/audio/" + name.replace(" ", "_") + ".mp3",
                     url);
             processBuilder.redirectErrorStream(true);
             Process process = processBuilder.start();

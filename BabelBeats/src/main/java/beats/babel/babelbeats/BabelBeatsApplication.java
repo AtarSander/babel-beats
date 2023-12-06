@@ -23,9 +23,7 @@ public class BabelBeatsApplication {
 		SpotifyUser su = new SpotifyUser(sc.getUserToken(), sc.getRefreshToken());
 		sh.setSpotifyUser(su);
 		Song[] songs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(0, "german"), 5);
-//		for (Song s : songs){
-//			System.out.println(s.toString());
-//		}
+
 		String name = songs[0].toString();
 
 		YoutubeSearcher ys = new YoutubeSearcher();
@@ -38,8 +36,10 @@ public class BabelBeatsApplication {
 //		DeepLHandler dh = new DeepLHandler();
 //		dh.translate(lyrics, "PL");
 		Timestamper ts = new Timestamper();
-		List<Pair> pairs = ts.getTimestamps(name);
+		List<Pair> pairs = ts.getTimestamps(name.replace(" ", "_"));
 
-//		String playlistId = sh.getRecommendedPlaylist(0, "Polish");
+		for(Pair pair:pairs){
+			System.out.println(pair.toString());
+		}
 	}
 }

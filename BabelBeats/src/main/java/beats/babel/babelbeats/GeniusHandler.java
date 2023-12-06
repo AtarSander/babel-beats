@@ -1,14 +1,16 @@
 package beats.babel.babelbeats;
-import java.io.IOException;
+import java.io.FileReader;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpClient;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.net.URI;
 import java.net.URLEncoder;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +20,12 @@ public class GeniusHandler {
     private static String accessToken;
 
     public GeniusHandler() {
-        accessToken = "tLh3CHyVeq43Q0fL1p3h3ckxvwCd8x6mAlUgvoQLWTfYvjB2Lq3t-IWvMylju31A";
+        if (accessToken == null) {
+            JSONExtractor JSONe = new JSONExtractor();
+            String[] keys = new String[]{"accessToken"};
+            String[] credentials = JSONe.readFromFile("src/main/resources/geniusCredentials.json", keys);
+            accessToken = credentials[0];
+        }
     }
 
     public String getLyrics(String query)
@@ -34,13 +41,13 @@ public class GeniusHandler {
     {
         try
         {
-            String encodedQuery = URLEncoder.encode(query, "UTF-8");
+            String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8);
             String uri = "https://api.genius.com/search?q=" + encodedQuery;
             String[] header = new String[]{"Authorization"};
             String[] headerValues = new String[]{"Bearer " + accessToken};
             return sendHTTPRequest(uri, header, headerValues, "GET", "");
         }
-        catch ( IOException e) {
+        catch (Exception e) {
             // Handle exceptions
             e.printStackTrace();
             return null;
@@ -119,6 +126,27 @@ public class GeniusHandler {
         catch(Exception e){
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public void getLyricsToFile(String query, String language, boolean formatName){
+        String lyrics = getLyrics(query);
+        JSONObject jo = new JSONObject();
+
+        if(formatName)
+            jo.put("name", query.replace(" ", "_"));
+        else
+            jo.put("name", query);
+
+        jo.put("language", language);
+        jo.put("lyrics", lyrics);
+        try{
+            JSONTokener tokener = new JSONTokener(new FileReader("src/main/resources/lyrics/songs_data.json"));
+            JSONArray jsonArray = new JSONArray(tokener);
+            jsonArray.put(jo);
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
 }
