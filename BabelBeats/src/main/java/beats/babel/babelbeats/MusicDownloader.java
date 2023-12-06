@@ -4,8 +4,9 @@ import java.lang.ProcessBuilder;
 
 public class MusicDownloader {
 
-    public static void download(String url, String name)
+    public static int download(String url, String name)
     {
+        int exitCode = 0;
         try {
             // Build the command
             ProcessBuilder processBuilder = new ProcessBuilder("yt-dlp",
@@ -16,11 +17,12 @@ public class MusicDownloader {
                     url);
             processBuilder.redirectErrorStream(true);
             Process process = processBuilder.start();
-
+            exitCode = process.waitFor();
             }
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
 
         }
+        return exitCode;
     }
 }
