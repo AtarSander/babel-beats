@@ -1,4 +1,5 @@
 package beats.babel.babelbeats.controller;
+
 import beats.babel.babelbeats.JSONExtractor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
@@ -12,6 +13,7 @@ import java.util.Base64;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/")
 public class SpotifyController {
     private static String userToken;
@@ -20,6 +22,7 @@ public class SpotifyController {
     private static String clientID;
     private static String clientSecret;
     private static final String redirect_uri = "http://localhost:8080/callback";
+    private static final String redirect_callback = "http://localhost:3000/home";
 
     public SpotifyController(){
         if (clientID == null || clientSecret == null)
@@ -71,7 +74,8 @@ public class SpotifyController {
     }
 
     @GetMapping("callback")
-    public void requestUserToken(@RequestParam(required = true)String code, @RequestParam(required = true)String state){
+    public RedirectView requestUserToken(@RequestParam(required = true)String code, @RequestParam(required = true)String state){
+        RedirectView redirectedView = new RedirectView();
         if (Objects.equals(state, generatedState)) {
             String url = "https://accounts.spotify.com/api/token";
             String parameters = "code=" + code +
@@ -100,6 +104,9 @@ public class SpotifyController {
             // ADD BETTER ERROR MESSAGE HANDLING
             System.out.println("User denied access!");
         }
+        redirectedView.setUrl(redirect_callback);
+        return redirectedView;
+
     }
 
     public static String base64Encode(String originalString) {

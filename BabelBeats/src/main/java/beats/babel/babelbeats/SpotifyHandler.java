@@ -4,8 +4,10 @@ import java.util.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 
+@Component
 public class SpotifyHandler {
     private SpotifyUser spotifyUser;
     private String accessToken;

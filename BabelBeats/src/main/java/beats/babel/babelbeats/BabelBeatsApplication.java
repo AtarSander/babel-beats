@@ -1,12 +1,9 @@
 package beats.babel.babelbeats;
 
+import beats.babel.babelbeats.controller.RestAPI;
 import beats.babel.babelbeats.controller.SpotifyController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @SpringBootApplication
 public class BabelBeatsApplication {
@@ -15,31 +12,36 @@ public class BabelBeatsApplication {
 		SpringApplication.run(BabelBeatsApplication.class, args);
 
 		SpotifyController sc = new SpotifyController();
-		SpotifyHandler sh = new SpotifyHandler();
-
-		while(!sc.hasLoggedUser()){
-			;
+//		SpotifyHandler sh = new SpotifyHandler();
+		while (!sc.hasLoggedUser()) {
+			try {
+				Thread.sleep(1000); // Add a short delay to avoid busy-waiting
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
 		}
 		SpotifyUser su = new SpotifyUser(sc.getUserToken(), sc.getRefreshToken());
 		sh.setSpotifyUser(su);
-		Song[] songs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(13, "english"), 5);
+		RestAPI restapi = new RestAPI(sh);
 
-		String name = songs[0].toString();
+//		Song[] songs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(13, "english"), 5);
 
-		YoutubeSearcher ys = new YoutubeSearcher();
-
-		String url =  ys.urlSearch(name);
-		MusicDownloader.download(url, name);
-
-		GeniusHandler gh = new GeniusHandler();
-		gh.getLyricsToFile(name, "EN", true);
-//		DeepLHandler dh = new DeepLHandler();
-//		dh.translate(lyrics, "PL");
-		Timestamper ts = new Timestamper();
-		List<Pair> pairs = ts.getTimestamps(name.replace(" ", "_"));
-//		List<Pair> pairs = ts.getTimestamps("Post_Malone_Mourning");
-		for(Pair pair:pairs){
-			System.out.println(pair.toString());
-		}
+//		String name = songs[0].toString();
+//
+//		YoutubeSearcher ys = new YoutubeSearcher();
+//
+//		String url =  ys.urlSearch(name);
+//		MusicDownloader.download(url, name);
+//
+//		GeniusHandler gh = new GeniusHandler();
+//		gh.getLyricsToFile(name, "EN", true);
+////		DeepLHandler dh = new DeepLHandler();
+////		dh.translate(lyrics, "PL");
+//		Timestamper ts = new Timestamper();
+//		List<Pair> pairs = ts.getTimestamps(name.replace(" ", "_"));
+////		List<Pair> pairs = ts.getTimestamps("Post_Malone_Mourning");
+//		for(Pair pair:pairs){
+//			System.out.println(pair.toString());
+//		}
 	}
 }
