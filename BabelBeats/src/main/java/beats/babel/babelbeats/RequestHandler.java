@@ -7,7 +7,7 @@ import java.net.http.HttpResponse;
 import java.util.Objects;
 
 public class RequestHandler {
-    public String sendHTTPRequest(String url, String[] headerName, String[] headerValue, String type, String parameters) {
+    public static String sendHTTPRequest(String url, String[] headerName, String[] headerValue, String type, String parameters) {
         var client = HttpClient.newHttpClient();
 
         var builder = HttpRequest.newBuilder(

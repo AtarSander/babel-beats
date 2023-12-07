@@ -33,11 +33,11 @@ public class Song {
     @Override
     public String toString() {
         StringBuilder stringOutput = new StringBuilder();
-        for (Artist artist : artists)
-        {
-            stringOutput.append(artist);
-            stringOutput.append(" ");
-        }
+//        for (Artist artist : artists)
+//        {
+        stringOutput.append(artists[0]);
+        stringOutput.append(" ");
+//        }
         stringOutput.append(name);
         return stringOutput.toString();
     }

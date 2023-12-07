@@ -2,6 +2,7 @@ import json
 import torch
 import whisper_timestamped as whisper
 import sys
+import os.path
 MODEL_SIZE = "medium"
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -35,4 +36,5 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
         raise Exception("Script takes exactly 1 argument")
     song_name = sys.argv[1]
-    generate_transcripts(load_song_data(), song_name)
+    if not os.path.isfile(f"src/main/resources/lyrics/timestamps{song_name}.json"):
+        generate_transcripts(load_song_data(), song_name)

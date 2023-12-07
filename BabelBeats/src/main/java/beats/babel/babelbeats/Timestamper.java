@@ -1,13 +1,6 @@
 package beats.babel.babelbeats;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.*;
 import java.util.*;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.charset.StandardCharsets;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
@@ -21,7 +14,32 @@ public class Timestamper {
     List<Map<String, Double>> timestamped_lines = new ArrayList<>();
     private final static String plainPath = "src/main/resources/lyrics/songs_data.json";
 
-    public List<Pair> getTimestamps(String name) {
+
+
+    public void saveTimestamps(String name){
+        List<Pair> lyrics = getTimestamps(name);
+//        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/lyrics/processedLyrics/" + name + ".json")))
+//        {
+//            for (Pair pair : lyrics) {
+//                writer.write(pair.toString());
+//                writer.newLine();
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        try {
+            ObjectMapper mapJson = new ObjectMapper();
+            String json = mapJson.writeValueAsString(lyrics);
+            File file = new File("src/main/resources/lyrics/processedLyrics/" + name + ".json");
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.writeValue(file, json);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<Pair> getTimestamps(String name) {
         loadPlain(name);
         callWhisper(name);
         loadTimestamped("src/main/resources/lyrics/timestamps/" + name + ".json");
@@ -54,7 +72,7 @@ public class Timestamper {
 
     private void loadPlain(String name) {
         try {
-            JSONTokener tokener = new JSONTokener(new FileReader("src/main/resources/lyrics/songs_data.json"));
+            JSONTokener tokener = new JSONTokener(new FileReader(plainPath));
             JSONArray jsonArray = new JSONArray(tokener);
             JSONObject obj = new JSONObject();
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -134,8 +152,8 @@ public class Timestamper {
     }
 
     private List<Pair> timestamp() {
-        int i = 0, j, k = 0, l = 0, count, max_count;
-        Double saved = 0., max_saved = 0., previous = -1.;
+        int i = 0, j, k, l, count, max_count;
+        double saved = 0., max_saved = 0., previous = -1.;
         String[] line_plain;
         Map<String, Double> line_stamped;
         List<Pair> final_lyric = new ArrayList<>();
@@ -177,9 +195,10 @@ public class Timestamper {
     }
 }
 
+
 class Pair {
-    private String key;
-    private double value;
+    private final String key;
+    private final double value;
 
     public Pair(String key, double value) {
         this.key = key;
@@ -196,7 +215,6 @@ class Pair {
 
     @Override
     public String toString() {
-        return key + " " + value;
+        return key + ": " + value;
     }
 }
-

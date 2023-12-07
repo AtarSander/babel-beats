@@ -1,6 +1,7 @@
 package beats.babel.babelbeats.controller;
 
 import beats.babel.babelbeats.JSONExtractor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import java.net.URI;
@@ -16,23 +17,24 @@ import java.util.Base64;
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/")
 public class SpotifyController {
-    private static String userToken;
-    private static String refreshToken;
-    private static String generatedState;
-    private static String clientID;
-    private static String clientSecret;
+    private String userToken;
+    private String refreshToken;
+    private String generatedState;
+    private String clientID;
+    private String clientSecret;
     private static final String redirect_uri = "http://localhost:8080/callback";
     private static final String redirect_callback = "http://localhost:3000/home";
 
-    public SpotifyController(){
-        if (clientID == null || clientSecret == null)
-        {
-            JSONExtractor JSONe = new JSONExtractor();
-            String[] keys = new String[]{"ClientId", "ClientSecret"};
-            String[] credentials = JSONe.readFromFile("src/main/resources/spotifyCredentials.json", keys);
-            clientID = credentials[0];
-            clientSecret = credentials[1];
+    public SpotifyController() {
+            initialize();
         }
+
+    private void initialize() {
+        JSONExtractor JSONe = new JSONExtractor();
+        String[] keys = new String[]{"ClientId", "ClientSecret"};
+        String[] credentials = JSONe.readFromFile("src/main/resources/spotifyCredentials.json", keys);
+        clientID = credentials[0];
+        clientSecret = credentials[1];
     }
 
     public String getUserToken(){
@@ -62,7 +64,7 @@ public class SpotifyController {
     public RedirectView requestAuth() {
         RedirectView redirectedView = new RedirectView();
         generatedState = generateRandomString(16);
-        String scope = "user-read-playback-state user-modify-playback-state user-top-read streaming user-read-private user-read-email";
+        String scope = "user-read-playback-state user-read-currently-playing user-modify-playback-state user-top-read streaming user-read-private user-read-email";
         String redirectUrl = "https://accounts.spotify.com/authorize?" +
                 "response_type=code" +
                 "&client_id=" + clientID +
@@ -101,20 +103,18 @@ public class SpotifyController {
             }
         }
         else {
-            // ADD BETTER ERROR MESSAGE HANDLING
             System.out.println("User denied access!");
         }
-        redirectedView.setUrl(redirect_callback);
+        redirectedView.setUrl(redirect_callback + "?userToken=" + userToken + "&refreshToken=" + refreshToken);
         return redirectedView;
-
     }
 
-    public static String base64Encode(String originalString) {
+    private static String base64Encode(String originalString) {
         byte[] encodedBytes = Base64.getEncoder().encode(originalString.getBytes());
         return new String(encodedBytes);
     }
 
-    public boolean hasLoggedUser(){
-        return userToken != null;
-    }
+//    public boolean hasLoggedUser(){
+//        return userToken != null;
+//    }
 }

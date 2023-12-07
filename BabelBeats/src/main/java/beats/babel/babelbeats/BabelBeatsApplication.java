@@ -11,18 +11,13 @@ public class BabelBeatsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BabelBeatsApplication.class, args);
 
-		SpotifyController sc = new SpotifyController();
 //		SpotifyHandler sh = new SpotifyHandler();
-		while (!sc.hasLoggedUser()) {
-			try {
-				Thread.sleep(1000); // Add a short delay to avoid busy-waiting
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-			}
-		}
-		SpotifyUser su = new SpotifyUser(sc.getUserToken(), sc.getRefreshToken());
-		sh.setSpotifyUser(su);
-		RestAPI restapi = new RestAPI(sh);
+
+
+
+//		SpotifyUser su = new SpotifyUser(sc.getUserToken(), sc.getRefreshToken());
+//		sh.setSpotifyUser(su);
+//		RestAPI restapi = new RestAPI(sh);
 
 //		Song[] songs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(13, "english"), 5);
 
