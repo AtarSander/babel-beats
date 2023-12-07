@@ -1,0 +1,2566 @@
+{
+  "text": " Oh, to see without my eyes The first time that you kissed me Boundless by the time I cried I built your walls around me White noise, what an awful sound Fumbling by a river Feel my feet above the ground Hand of God, deliver me Oh, who will always be The first time that you touched me Oh, will wonders ever cease Blessed be the mystery of love Lord, I no longer believe Drowned in living waters Cursed by the love that I receive From my brother's daughter Like a feisty undead Alexander's lover Now my riverbed has dried Shall I find a lover? Oh, who will always be I'm running like a plover Now I'm prone to misery The birthmark on your shoulder reminds me How much sorrow can I take Black bird on my shoulder Oh, I'm so much older Than what difference does it make When this love is over Shall I sleep within your bed? River of unhappiness Hold your hands upon my head Till I breathe my last breath Oh, who is me The last time that you touched me Oh, will wonders ever cease Blessed be the mystery of love Thanks for watching! The shoulder reminds me How much sorrow can I take Black bird on my shoulder How much sorrow can I take Black bird on my shoulder And what difference does it make? When this love is over Shall I sleep within your bed? River of unhappiness Hold your hands upon my head Till I breathe my last breath Oh, who is me The last time that you touched me Oh, will wonders ever cease Blessed be the mystery of love Thanks for watching!",
+  "segments": [
+    {
+      "id": 0,
+      "seek": 0,
+      "start": 0.0,
+      "end": 27.04,
+      "text": " Oh, to see without my eyes The first time that you kissed me",
+      "tokens": [
+        50364,
+        876,
+        11,
+        281,
+        536,
+        1553,
+        452,
+        2575,
+        440,
+        700,
+        565,
+        300,
+        291,
+        33027,
+        385,
+        51714
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.44622765647040474,
+      "compression_ratio": 0.967741935483871,
+      "no_speech_prob": 0.6567526459693909,
+      "confidence": 0.76,
+      "words": [
+        {
+          "text": "Oh,",
+          "start": 0.0,
+          "end": 11.04,
+          "confidence": 0.095
+        },
+        {
+          "text": "to",
+          "start": 19.2,
+          "end": 19.7,
+          "confidence": 0.933
+        },
+        {
+          "text": "see",
+          "start": 19.7,
+          "end": 20.0,
+          "confidence": 0.989
+        },
+        {
+          "text": "without",
+          "start": 20.0,
+          "end": 20.42,
+          "confidence": 0.985
+        },
+        {
+          "text": "my",
+          "start": 20.42,
+          "end": 21.0,
+          "confidence": 0.986
+        },
+        {
+          "text": "eyes",
+          "start": 21.0,
+          "end": 21.66,
+          "confidence": 0.996
+        },
+        {
+          "text": "The",
+          "start": 21.66,
+          "end": 23.1,
+          "confidence": 0.373
+        },
+        {
+          "text": "first",
+          "start": 23.1,
+          "end": 23.78,
+          "confidence": 0.997
+        },
+        {
+          "text": "time",
+          "start": 23.78,
+          "end": 24.24,
+          "confidence": 0.996
+        },
+        {
+          "text": "that",
+          "start": 24.24,
+          "end": 24.86,
+          "confidence": 0.973
+        },
+        {
+          "text": "you",
+          "start": 24.86,
+          "end": 25.34,
+          "confidence": 0.98
+        },
+        {
+          "text": "kissed",
+          "start": 25.34,
+          "end": 26.34,
+          "confidence": 0.942
+        },
+        {
+          "text": "me",
+          "start": 26.34,
+          "end": 27.04,
+          "confidence": 0.992
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "seek": 2700,
+      "start": 27.48,
+      "end": 35.86,
+      "text": " Boundless by the time I cried I built your walls around me",
+      "tokens": [
+        50364,
+        363,
+        554,
+        1832,
+        538,
+        264,
+        565,
+        286,
+        16266,
+        286,
+        3094,
+        428,
+        7920,
+        926,
+        385,
+        50814
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.11784186570540718,
+      "compression_ratio": 1.3095238095238095,
+      "no_speech_prob": 0.501535952091217,
+      "confidence": 0.959,
+      "words": [
+        {
+          "text": "Boundless",
+          "start": 27.48,
+          "end": 28.58,
+          "confidence": 0.989
+        },
+        {
+          "text": "by",
+          "start": 28.58,
+          "end": 28.94,
+          "confidence": 0.764
+        },
+        {
+          "text": "the",
+          "start": 28.94,
+          "end": 29.18,
+          "confidence": 0.996
+        },
+        {
+          "text": "time",
+          "start": 29.18,
+          "end": 29.44,
+          "confidence": 0.999
+        },
+        {
+          "text": "I",
+          "start": 29.44,
+          "end": 29.74,
+          "confidence": 0.988
+        },
+        {
+          "text": "cried",
+          "start": 29.74,
+          "end": 30.48,
+          "confidence": 0.997
+        },
+        {
+          "text": "I",
+          "start": 30.48,
+          "end": 31.98,
+          "confidence": 0.895
+        },
+        {
+          "text": "built",
+          "start": 31.98,
+          "end": 32.5,
+          "confidence": 0.89
+        },
+        {
+          "text": "your",
+          "start": 32.5,
+          "end": 33.16,
+          "confidence": 0.981
+        },
+        {
+          "text": "walls",
+          "start": 33.16,
+          "end": 33.7,
+          "confidence": 0.997
+        },
+        {
+          "text": "around",
+          "start": 33.7,
+          "end": 35.06,
+          "confidence": 0.99
+        },
+        {
+          "text": "me",
+          "start": 35.06,
+          "end": 35.86,
+          "confidence": 0.998
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "seek": 2700,
+      "start": 36.38,
+      "end": 44.42,
+      "text": " White noise, what an awful sound Fumbling by a river",
+      "tokens": [
+        50814,
+        5552,
+        5658,
+        11,
+        437,
+        364,
+        11232,
+        1626,
+        479,
+        14188,
+        538,
+        257,
+        6810,
+        51264
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.11784186570540718,
+      "compression_ratio": 1.3095238095238095,
+      "no_speech_prob": 0.501535952091217,
+      "confidence": 0.843,
+      "words": [
+        {
+          "text": "White",
+          "start": 36.38,
+          "end": 36.94,
+          "confidence": 0.831
+        },
+        {
+          "text": "noise,",
+          "start": 36.94,
+          "end": 37.48,
+          "confidence": 0.986
+        },
+        {
+          "text": "what",
+          "start": 37.78,
+          "end": 37.86,
+          "confidence": 0.99
+        },
+        {
+          "text": "an",
+          "start": 37.86,
+          "end": 38.16,
+          "confidence": 0.995
+        },
+        {
+          "text": "awful",
+          "start": 38.16,
+          "end": 38.52,
+          "confidence": 0.998
+        },
+        {
+          "text": "sound",
+          "start": 38.52,
+          "end": 40.04,
+          "confidence": 0.999
+        },
+        {
+          "text": "Fumbling",
+          "start": 40.04,
+          "end": 41.82,
+          "confidence": 0.858
+        },
+        {
+          "text": "by",
+          "start": 41.82,
+          "end": 42.76,
+          "confidence": 0.995
+        },
+        {
+          "text": "a",
+          "start": 42.76,
+          "end": 43.16,
+          "confidence": 0.432
+        },
+        {
+          "text": "river",
+          "start": 43.16,
+          "end": 44.42,
+          "confidence": 0.599
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "seek": 2700,
+      "start": 45.22,
+      "end": 53.72,
+      "text": " Feel my feet above the ground Hand of God, deliver me",
+      "tokens": [
+        51264,
+        14113,
+        452,
+        3521,
+        3673,
+        264,
+        2727,
+        8854,
+        295,
+        1265,
+        11,
+        4239,
+        385,
+        51714
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.11784186570540718,
+      "compression_ratio": 1.3095238095238095,
+      "no_speech_prob": 0.501535952091217,
+      "confidence": 0.963,
+      "words": [
+        {
+          "text": "Feel",
+          "start": 45.22,
+          "end": 45.8,
+          "confidence": 0.78
+        },
+        {
+          "text": "my",
+          "start": 45.8,
+          "end": 46.42,
+          "confidence": 0.998
+        },
+        {
+          "text": "feet",
+          "start": 46.42,
+          "end": 46.72,
+          "confidence": 0.999
+        },
+        {
+          "text": "above",
+          "start": 46.72,
+          "end": 47.18,
+          "confidence": 0.993
+        },
+        {
+          "text": "the",
+          "start": 47.18,
+          "end": 47.66,
+          "confidence": 0.994
+        },
+        {
+          "text": "ground",
+          "start": 47.66,
+          "end": 48.92,
+          "confidence": 0.999
+        },
+        {
+          "text": "Hand",
+          "start": 48.92,
+          "end": 50.48,
+          "confidence": 0.899
+        },
+        {
+          "text": "of",
+          "start": 50.48,
+          "end": 50.92,
+          "confidence": 0.998
+        },
+        {
+          "text": "God,",
+          "start": 50.92,
+          "end": 51.4,
+          "confidence": 0.962
+        },
+        {
+          "text": "deliver",
+          "start": 51.92,
+          "end": 52.96,
+          "confidence": 0.998
+        },
+        {
+          "text": "me",
+          "start": 52.96,
+          "end": 53.72,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "seek": 5400,
+      "start": 54.24,
+      "end": 62.4,
+      "text": " Oh, who will always be The first time that you touched me",
+      "tokens": [
+        50364,
+        876,
+        11,
+        567,
+        486,
+        1009,
+        312,
+        440,
+        700,
+        565,
+        300,
+        291,
+        9828,
+        385,
+        50764
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.21365167299906412,
+      "compression_ratio": 1.1958762886597938,
+      "no_speech_prob": 0.03028448484838009,
+      "confidence": 0.801,
+      "words": [
+        {
+          "text": "Oh,",
+          "start": 54.24,
+          "end": 55.18,
+          "confidence": 0.843
+        },
+        {
+          "text": "who",
+          "start": 55.52,
+          "end": 55.54,
+          "confidence": 0.654
+        },
+        {
+          "text": "will",
+          "start": 55.54,
+          "end": 55.94,
+          "confidence": 0.238
+        },
+        {
+          "text": "always",
+          "start": 55.94,
+          "end": 56.4,
+          "confidence": 0.653
+        },
+        {
+          "text": "be",
+          "start": 56.4,
+          "end": 57.36,
+          "confidence": 0.981
+        },
+        {
+          "text": "The",
+          "start": 57.36,
+          "end": 58.66,
+          "confidence": 0.887
+        },
+        {
+          "text": "first",
+          "start": 58.66,
+          "end": 59.46,
+          "confidence": 0.998
+        },
+        {
+          "text": "time",
+          "start": 59.46,
+          "end": 59.9,
+          "confidence": 0.992
+        },
+        {
+          "text": "that",
+          "start": 59.9,
+          "end": 60.48,
+          "confidence": 0.974
+        },
+        {
+          "text": "you",
+          "start": 60.48,
+          "end": 60.92,
+          "confidence": 0.998
+        },
+        {
+          "text": "touched",
+          "start": 60.92,
+          "end": 61.9,
+          "confidence": 0.979
+        },
+        {
+          "text": "me",
+          "start": 61.9,
+          "end": 62.4,
+          "confidence": 0.999
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "seek": 5400,
+      "start": 63.06,
+      "end": 72.72,
+      "text": " Oh, will wonders ever cease Blessed be the mystery of love",
+      "tokens": [
+        50764,
+        876,
+        11,
+        486,
+        27348,
+        1562,
+        27887,
+        37501,
+        312,
+        264,
+        11422,
+        295,
+        959,
+        51314
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.21365167299906412,
+      "compression_ratio": 1.1958762886597938,
+      "no_speech_prob": 0.03028448484838009,
+      "confidence": 0.834,
+      "words": [
+        {
+          "text": "Oh,",
+          "start": 63.06,
+          "end": 63.88,
+          "confidence": 0.585
+        },
+        {
+          "text": "will",
+          "start": 64.08,
+          "end": 64.32,
+          "confidence": 0.449
+        },
+        {
+          "text": "wonders",
+          "start": 64.32,
+          "end": 64.66,
+          "confidence": 0.779
+        },
+        {
+          "text": "ever",
+          "start": 64.66,
+          "end": 65.22,
+          "confidence": 0.983
+        },
+        {
+          "text": "cease",
+          "start": 65.22,
+          "end": 66.86,
+          "confidence": 0.996
+        },
+        {
+          "text": "Blessed",
+          "start": 66.86,
+          "end": 68.52,
+          "confidence": 0.705
+        },
+        {
+          "text": "be",
+          "start": 68.52,
+          "end": 69.2,
+          "confidence": 0.994
+        },
+        {
+          "text": "the",
+          "start": 69.2,
+          "end": 69.96,
+          "confidence": 0.991
+        },
+        {
+          "text": "mystery",
+          "start": 69.96,
+          "end": 71.46,
+          "confidence": 0.985
+        },
+        {
+          "text": "of",
+          "start": 71.46,
+          "end": 72.02,
+          "confidence": 0.998
+        },
+        {
+          "text": "love",
+          "start": 72.02,
+          "end": 72.72,
+          "confidence": 0.991
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "seek": 8400,
+      "start": 89.7,
+      "end": 98.06,
+      "text": " Lord, I no longer believe Drowned in living waters",
+      "tokens": [
+        50364,
+        3257,
+        11,
+        286,
+        572,
+        2854,
+        1697,
+        2491,
+        14683,
+        294,
+        2647,
+        12975,
+        51064
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.09151964982350667,
+      "compression_ratio": 1.121212121212121,
+      "no_speech_prob": 0.05270755663514137,
+      "confidence": 0.979,
+      "words": [
+        {
+          "text": "Lord,",
+          "start": 89.7,
+          "end": 90.26,
+          "confidence": 0.905
+        },
+        {
+          "text": "I",
+          "start": 90.26,
+          "end": 90.86,
+          "confidence": 0.999
+        },
+        {
+          "text": "no",
+          "start": 90.86,
+          "end": 91.16,
+          "confidence": 0.995
+        },
+        {
+          "text": "longer",
+          "start": 91.16,
+          "end": 91.58,
+          "confidence": 0.999
+        },
+        {
+          "text": "believe",
+          "start": 91.58,
+          "end": 92.88,
+          "confidence": 0.997
+        },
+        {
+          "text": "Drowned",
+          "start": 92.88,
+          "end": 94.9,
+          "confidence": 0.958
+        },
+        {
+          "text": "in",
+          "start": 94.9,
+          "end": 95.44,
+          "confidence": 0.998
+        },
+        {
+          "text": "living",
+          "start": 95.44,
+          "end": 96.4,
+          "confidence": 0.993
+        },
+        {
+          "text": "waters",
+          "start": 96.4,
+          "end": 98.06,
+          "confidence": 0.996
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "seek": 8400,
+      "start": 98.62,
+      "end": 106.7,
+      "text": " Cursed by the love that I receive From my brother's daughter",
+      "tokens": [
+        51064,
+        383,
+        47267,
+        538,
+        264,
+        959,
+        300,
+        286,
+        4774,
+        3358,
+        452,
+        3708,
+        311,
+        4653,
+        51514
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.09151964982350667,
+      "compression_ratio": 1.121212121212121,
+      "no_speech_prob": 0.05270755663514137,
+      "confidence": 0.922,
+      "words": [
+        {
+          "text": "Cursed",
+          "start": 98.62,
+          "end": 99.22,
+          "confidence": 0.861
+        },
+        {
+          "text": "by",
+          "start": 99.22,
+          "end": 99.62,
+          "confidence": 0.997
+        },
+        {
+          "text": "the",
+          "start": 99.62,
+          "end": 99.82,
+          "confidence": 0.983
+        },
+        {
+          "text": "love",
+          "start": 99.82,
+          "end": 100.02,
+          "confidence": 0.998
+        },
+        {
+          "text": "that",
+          "start": 100.02,
+          "end": 100.32,
+          "confidence": 0.971
+        },
+        {
+          "text": "I",
+          "start": 100.32,
+          "end": 100.62,
+          "confidence": 0.998
+        },
+        {
+          "text": "receive",
+          "start": 100.62,
+          "end": 101.86,
+          "confidence": 0.782
+        },
+        {
+          "text": "From",
+          "start": 101.86,
+          "end": 103.56,
+          "confidence": 0.97
+        },
+        {
+          "text": "my",
+          "start": 103.56,
+          "end": 104.26,
+          "confidence": 0.998
+        },
+        {
+          "text": "brother's",
+          "start": 104.26,
+          "end": 105.72,
+          "confidence": 0.817
+        },
+        {
+          "text": "daughter",
+          "start": 105.72,
+          "end": 106.7,
+          "confidence": 0.981
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "seek": 10700,
+      "start": 107.42,
+      "end": 115.66,
+      "text": " Like a feisty undead Alexander's lover",
+      "tokens": [
+        50364,
+        1743,
+        257,
+        579,
+        38618,
+        674,
+        2056,
+        14845,
+        311,
+        18009,
+        50814
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.24344808083993416,
+      "compression_ratio": 1.0238095238095237,
+      "no_speech_prob": 0.6370922923088074,
+      "confidence": 0.685,
+      "words": [
+        {
+          "text": "Like",
+          "start": 107.42,
+          "end": 108.3,
+          "confidence": 0.978
+        },
+        {
+          "text": "a",
+          "start": 108.3,
+          "end": 108.76,
+          "confidence": 0.79
+        },
+        {
+          "text": "feisty",
+          "start": 108.76,
+          "end": 109.22,
+          "confidence": 0.856
+        },
+        {
+          "text": "undead",
+          "start": 109.22,
+          "end": 109.92,
+          "confidence": 0.53
+        },
+        {
+          "text": "Alexander's",
+          "start": 109.92,
+          "end": 114.62,
+          "confidence": 0.509
+        },
+        {
+          "text": "lover",
+          "start": 114.62,
+          "end": 115.66,
+          "confidence": 0.808
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "seek": 10700,
+      "start": 116.34,
+      "end": 124.44,
+      "text": " Now my riverbed has dried Shall I find a lover?",
+      "tokens": [
+        50814,
+        823,
+        452,
+        6810,
+        2883,
+        575,
+        13538,
+        12128,
+        286,
+        915,
+        257,
+        18009,
+        30,
+        51264
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.24344808083993416,
+      "compression_ratio": 1.0238095238095237,
+      "no_speech_prob": 0.6370922923088074,
+      "confidence": 0.9,
+      "words": [
+        {
+          "text": "Now",
+          "start": 116.34,
+          "end": 116.96,
+          "confidence": 0.932
+        },
+        {
+          "text": "my",
+          "start": 116.96,
+          "end": 117.6,
+          "confidence": 0.939
+        },
+        {
+          "text": "riverbed",
+          "start": 117.6,
+          "end": 118.28,
+          "confidence": 0.851
+        },
+        {
+          "text": "has",
+          "start": 118.28,
+          "end": 118.72,
+          "confidence": 0.969
+        },
+        {
+          "text": "dried",
+          "start": 118.72,
+          "end": 119.96,
+          "confidence": 0.99
+        },
+        {
+          "text": "Shall",
+          "start": 119.96,
+          "end": 121.4,
+          "confidence": 0.968
+        },
+        {
+          "text": "I",
+          "start": 121.4,
+          "end": 121.94,
+          "confidence": 0.997
+        },
+        {
+          "text": "find",
+          "start": 121.94,
+          "end": 122.74,
+          "confidence": 0.991
+        },
+        {
+          "text": "a",
+          "start": 122.74,
+          "end": 123.48,
+          "confidence": 0.579
+        },
+        {
+          "text": "lover?",
+          "start": 123.48,
+          "end": 124.44,
+          "confidence": 0.933
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "seek": 12500,
+      "start": 125.34,
+      "end": 133.46,
+      "text": " Oh, who will always be I'm running like a plover",
+      "tokens": [
+        50364,
+        876,
+        11,
+        567,
+        486,
+        1009,
+        312,
+        286,
+        478,
+        2614,
+        411,
+        257,
+        499,
+        3570,
+        50814
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.2150832563638687,
+      "compression_ratio": 1.14,
+      "no_speech_prob": 0.1868913471698761,
+      "confidence": 0.752,
+      "words": [
+        {
+          "text": "Oh,",
+          "start": 125.34,
+          "end": 126.32,
+          "confidence": 0.983
+        },
+        {
+          "text": "who",
+          "start": 126.48,
+          "end": 126.5,
+          "confidence": 0.509
+        },
+        {
+          "text": "will",
+          "start": 126.5,
+          "end": 127.0,
+          "confidence": 0.333
+        },
+        {
+          "text": "always",
+          "start": 127.0,
+          "end": 127.5,
+          "confidence": 0.989
+        },
+        {
+          "text": "be",
+          "start": 127.5,
+          "end": 128.72,
+          "confidence": 0.98
+        },
+        {
+          "text": "I'm",
+          "start": 128.72,
+          "end": 129.96,
+          "confidence": 0.872
+        },
+        {
+          "text": "running",
+          "start": 129.96,
+          "end": 130.82,
+          "confidence": 0.994
+        },
+        {
+          "text": "like",
+          "start": 130.82,
+          "end": 131.78,
+          "confidence": 0.996
+        },
+        {
+          "text": "a",
+          "start": 131.78,
+          "end": 132.16,
+          "confidence": 0.999
+        },
+        {
+          "text": "plover",
+          "start": 132.16,
+          "end": 133.46,
+          "confidence": 0.519
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "seek": 12500,
+      "start": 134.0,
+      "end": 144.18,
+      "text": " Now I'm prone to misery The birthmark on your shoulder reminds me",
+      "tokens": [
+        50814,
+        823,
+        286,
+        478,
+        25806,
+        281,
+        32309,
+        440,
+        3965,
+        5638,
+        322,
+        428,
+        7948,
+        12025,
+        385,
+        51364
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.2150832563638687,
+      "compression_ratio": 1.14,
+      "no_speech_prob": 0.1868913471698761,
+      "confidence": 0.873,
+      "words": [
+        {
+          "text": "Now",
+          "start": 134.0,
+          "end": 134.82,
+          "confidence": 0.568
+        },
+        {
+          "text": "I'm",
+          "start": 134.82,
+          "end": 135.38,
+          "confidence": 0.987
+        },
+        {
+          "text": "prone",
+          "start": 135.38,
+          "end": 135.62,
+          "confidence": 0.654
+        },
+        {
+          "text": "to",
+          "start": 135.62,
+          "end": 135.84,
+          "confidence": 0.999
+        },
+        {
+          "text": "misery",
+          "start": 135.84,
+          "end": 137.44,
+          "confidence": 0.99
+        },
+        {
+          "text": "The",
+          "start": 137.44,
+          "end": 138.92,
+          "confidence": 0.757
+        },
+        {
+          "text": "birthmark",
+          "start": 138.92,
+          "end": 139.74,
+          "confidence": 0.981
+        },
+        {
+          "text": "on",
+          "start": 139.74,
+          "end": 140.4,
+          "confidence": 0.994
+        },
+        {
+          "text": "your",
+          "start": 140.4,
+          "end": 140.96,
+          "confidence": 0.997
+        },
+        {
+          "text": "shoulder",
+          "start": 140.96,
+          "end": 142.42,
+          "confidence": 0.984
+        },
+        {
+          "text": "reminds",
+          "start": 142.42,
+          "end": 143.52,
+          "confidence": 0.586
+        },
+        {
+          "text": "me",
+          "start": 143.52,
+          "end": 144.18,
+          "confidence": 0.998
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "seek": 15500,
+      "start": 155.0,
+      "end": 177.24,
+      "text": " How much sorrow can I take Black bird on my shoulder",
+      "tokens": [
+        50364,
+        1012,
+        709,
+        23027,
+        393,
+        286,
+        747,
+        4076,
+        5255,
+        322,
+        452,
+        7948,
+        51464
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.19934714635213216,
+      "compression_ratio": 0.896551724137931,
+      "no_speech_prob": 0.029530473053455353,
+      "confidence": 0.884,
+      "words": [
+        {
+          "text": "How",
+          "start": 155.0,
+          "end": 170.1,
+          "confidence": 0.714
+        },
+        {
+          "text": "much",
+          "start": 170.1,
+          "end": 170.78,
+          "confidence": 0.994
+        },
+        {
+          "text": "sorrow",
+          "start": 170.78,
+          "end": 171.24,
+          "confidence": 0.999
+        },
+        {
+          "text": "can",
+          "start": 171.24,
+          "end": 171.68,
+          "confidence": 0.991
+        },
+        {
+          "text": "I",
+          "start": 171.68,
+          "end": 172.08,
+          "confidence": 0.997
+        },
+        {
+          "text": "take",
+          "start": 172.08,
+          "end": 173.72,
+          "confidence": 0.998
+        },
+        {
+          "text": "Black",
+          "start": 173.72,
+          "end": 174.8,
+          "confidence": 0.624
+        },
+        {
+          "text": "bird",
+          "start": 174.8,
+          "end": 175.28,
+          "confidence": 0.597
+        },
+        {
+          "text": "on",
+          "start": 175.28,
+          "end": 175.9,
+          "confidence": 0.992
+        },
+        {
+          "text": "my",
+          "start": 175.9,
+          "end": 176.52,
+          "confidence": 0.998
+        },
+        {
+          "text": "shoulder",
+          "start": 176.52,
+          "end": 177.24,
+          "confidence": 0.997
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "seek": 17700,
+      "start": 177.24,
+      "end": 181.58,
+      "text": " Oh, I'm so much older Than what difference does it make",
+      "tokens": [
+        50364,
+        876,
+        11,
+        286,
+        478,
+        370,
+        709,
+        4906,
+        18289,
+        437,
+        2649,
+        775,
+        309,
+        652,
+        50664
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.2760729683770074,
+      "compression_ratio": 1.2421875,
+      "no_speech_prob": 0.9008341431617737,
+      "confidence": 0.51,
+      "words": [
+        {
+          "text": "Oh,",
+          "start": 177.24,
+          "end": 177.26,
+          "confidence": 0.218
+        },
+        {
+          "text": "I'm",
+          "start": 177.26,
+          "end": 177.28,
+          "confidence": 0.2
+        },
+        {
+          "text": "so",
+          "start": 177.28,
+          "end": 177.3,
+          "confidence": 0.192
+        },
+        {
+          "text": "much",
+          "start": 177.3,
+          "end": 177.32,
+          "confidence": 0.346
+        },
+        {
+          "text": "older",
+          "start": 177.32,
+          "end": 177.8,
+          "confidence": 0.932
+        },
+        {
+          "text": "Than",
+          "start": 177.8,
+          "end": 179.24,
+          "confidence": 0.589
+        },
+        {
+          "text": "what",
+          "start": 179.24,
+          "end": 179.72,
+          "confidence": 0.994
+        },
+        {
+          "text": "difference",
+          "start": 179.72,
+          "end": 180.2,
+          "confidence": 0.994
+        },
+        {
+          "text": "does",
+          "start": 180.2,
+          "end": 180.56,
+          "confidence": 0.996
+        },
+        {
+          "text": "it",
+          "start": 180.56,
+          "end": 180.92,
+          "confidence": 0.998
+        },
+        {
+          "text": "make",
+          "start": 180.92,
+          "end": 181.58,
+          "confidence": 0.998
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "seek": 17700,
+      "start": 183.02,
+      "end": 190.36,
+      "text": " When this love is over Shall I sleep within your bed?",
+      "tokens": [
+        50664,
+        1133,
+        341,
+        959,
+        307,
+        670,
+        12128,
+        286,
+        2817,
+        1951,
+        428,
+        2901,
+        30,
+        51114
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.2760729683770074,
+      "compression_ratio": 1.2421875,
+      "no_speech_prob": 0.9008341431617737,
+      "confidence": 0.99,
+      "words": [
+        {
+          "text": "When",
+          "start": 183.02,
+          "end": 183.58,
+          "confidence": 0.959
+        },
+        {
+          "text": "this",
+          "start": 183.58,
+          "end": 184.28,
+          "confidence": 0.997
+        },
+        {
+          "text": "love",
+          "start": 184.28,
+          "end": 184.76,
+          "confidence": 0.995
+        },
+        {
+          "text": "is",
+          "start": 184.76,
+          "end": 185.5,
+          "confidence": 0.999
+        },
+        {
+          "text": "over",
+          "start": 185.5,
+          "end": 186.9,
+          "confidence": 0.999
+        },
+        {
+          "text": "Shall",
+          "start": 186.9,
+          "end": 188.04,
+          "confidence": 0.952
+        },
+        {
+          "text": "I",
+          "start": 188.04,
+          "end": 188.58,
+          "confidence": 0.999
+        },
+        {
+          "text": "sleep",
+          "start": 188.58,
+          "end": 188.96,
+          "confidence": 0.997
+        },
+        {
+          "text": "within",
+          "start": 188.96,
+          "end": 189.3,
+          "confidence": 0.996
+        },
+        {
+          "text": "your",
+          "start": 189.3,
+          "end": 189.8,
+          "confidence": 0.999
+        },
+        {
+          "text": "bed?",
+          "start": 189.8,
+          "end": 190.36,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "seek": 17700,
+      "start": 191.84,
+      "end": 199.4,
+      "text": " River of unhappiness Hold your hands upon my head",
+      "tokens": [
+        51114,
+        8640,
+        295,
+        517,
+        1641,
+        427,
+        1324,
+        6962,
+        428,
+        2377,
+        3564,
+        452,
+        1378,
+        51564
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.2760729683770074,
+      "compression_ratio": 1.2421875,
+      "no_speech_prob": 0.9008341431617737,
+      "confidence": 0.945,
+      "words": [
+        {
+          "text": "River",
+          "start": 191.84,
+          "end": 193.0,
+          "confidence": 0.677
+        },
+        {
+          "text": "of",
+          "start": 193.0,
+          "end": 194.06,
+          "confidence": 0.996
+        },
+        {
+          "text": "unhappiness",
+          "start": 194.06,
+          "end": 195.94,
+          "confidence": 0.995
+        },
+        {
+          "text": "Hold",
+          "start": 195.94,
+          "end": 196.98,
+          "confidence": 0.861
+        },
+        {
+          "text": "your",
+          "start": 196.98,
+          "end": 197.54,
+          "confidence": 0.996
+        },
+        {
+          "text": "hands",
+          "start": 197.54,
+          "end": 197.9,
+          "confidence": 0.981
+        },
+        {
+          "text": "upon",
+          "start": 197.9,
+          "end": 198.3,
+          "confidence": 0.917
+        },
+        {
+          "text": "my",
+          "start": 198.3,
+          "end": 198.84,
+          "confidence": 0.999
+        },
+        {
+          "text": "head",
+          "start": 198.84,
+          "end": 199.4,
+          "confidence": 0.999
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "seek": 20100,
+      "start": 201.0,
+      "end": 208.28,
+      "text": " Till I breathe my last breath Oh, who is me",
+      "tokens": [
+        50364,
+        20227,
+        286,
+        10192,
+        452,
+        1036,
+        6045,
+        876,
+        11,
+        567,
+        307,
+        385,
+        50764
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.13406455839002454,
+      "compression_ratio": 1.2830188679245282,
+      "no_speech_prob": 0.8810492157936096,
+      "confidence": 0.798,
+      "words": [
+        {
+          "text": "Till",
+          "start": 201.0,
+          "end": 201.4,
+          "confidence": 0.344
+        },
+        {
+          "text": "I",
+          "start": 201.4,
+          "end": 202.04,
+          "confidence": 0.992
+        },
+        {
+          "text": "breathe",
+          "start": 202.04,
+          "end": 202.52,
+          "confidence": 0.955
+        },
+        {
+          "text": "my",
+          "start": 202.52,
+          "end": 203.14,
+          "confidence": 0.994
+        },
+        {
+          "text": "last",
+          "start": 203.14,
+          "end": 204.24,
+          "confidence": 1.0
+        },
+        {
+          "text": "breath",
+          "start": 204.24,
+          "end": 204.98,
+          "confidence": 0.992
+        },
+        {
+          "text": "Oh,",
+          "start": 204.98,
+          "end": 206.34,
+          "confidence": 0.94
+        },
+        {
+          "text": "who",
+          "start": 206.58,
+          "end": 206.62,
+          "confidence": 0.769
+        },
+        {
+          "text": "is",
+          "start": 206.62,
+          "end": 207.42,
+          "confidence": 0.602
+        },
+        {
+          "text": "me",
+          "start": 207.42,
+          "end": 208.28,
+          "confidence": 0.751
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "seek": 20100,
+      "start": 209.58,
+      "end": 217.24,
+      "text": " The last time that you touched me Oh, will wonders ever cease",
+      "tokens": [
+        50764,
+        440,
+        1036,
+        565,
+        300,
+        291,
+        9828,
+        385,
+        876,
+        11,
+        486,
+        27348,
+        1562,
+        27887,
+        51214
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.13406455839002454,
+      "compression_ratio": 1.2830188679245282,
+      "no_speech_prob": 0.8810492157936096,
+      "confidence": 0.988,
+      "words": [
+        {
+          "text": "The",
+          "start": 209.58,
+          "end": 209.82,
+          "confidence": 0.919
+        },
+        {
+          "text": "last",
+          "start": 209.82,
+          "end": 210.5,
+          "confidence": 0.989
+        },
+        {
+          "text": "time",
+          "start": 210.5,
+          "end": 210.88,
+          "confidence": 0.998
+        },
+        {
+          "text": "that",
+          "start": 210.88,
+          "end": 211.52,
+          "confidence": 0.989
+        },
+        {
+          "text": "you",
+          "start": 211.52,
+          "end": 212.0,
+          "confidence": 0.999
+        },
+        {
+          "text": "touched",
+          "start": 212.0,
+          "end": 213.0,
+          "confidence": 0.995
+        },
+        {
+          "text": "me",
+          "start": 213.0,
+          "end": 213.94,
+          "confidence": 0.999
+        },
+        {
+          "text": "Oh,",
+          "start": 213.94,
+          "end": 214.96,
+          "confidence": 0.987
+        },
+        {
+          "text": "will",
+          "start": 215.0,
+          "end": 215.32,
+          "confidence": 0.997
+        },
+        {
+          "text": "wonders",
+          "start": 215.32,
+          "end": 215.74,
+          "confidence": 0.997
+        },
+        {
+          "text": "ever",
+          "start": 215.74,
+          "end": 216.46,
+          "confidence": 0.999
+        },
+        {
+          "text": "cease",
+          "start": 216.46,
+          "end": 217.24,
+          "confidence": 0.999
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "seek": 20100,
+      "start": 218.56,
+      "end": 223.8,
+      "text": " Blessed be the mystery of love",
+      "tokens": [
+        51214,
+        37501,
+        312,
+        264,
+        11422,
+        295,
+        959,
+        51514
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.13406455839002454,
+      "compression_ratio": 1.2830188679245282,
+      "no_speech_prob": 0.8810492157936096,
+      "confidence": 0.93,
+      "words": [
+        {
+          "text": "Blessed",
+          "start": 218.56,
+          "end": 219.64,
+          "confidence": 0.652
+        },
+        {
+          "text": "be",
+          "start": 219.64,
+          "end": 220.28,
+          "confidence": 0.997
+        },
+        {
+          "text": "the",
+          "start": 220.28,
+          "end": 220.94,
+          "confidence": 0.999
+        },
+        {
+          "text": "mystery",
+          "start": 220.94,
+          "end": 222.58,
+          "confidence": 0.998
+        },
+        {
+          "text": "of",
+          "start": 222.58,
+          "end": 223.08,
+          "confidence": 0.996
+        },
+        {
+          "text": "love",
+          "start": 223.08,
+          "end": 223.8,
+          "confidence": 0.999
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "seek": 23100,
+      "start": 232.96,
+      "end": 235.3,
+      "text": " Thanks for watching!",
+      "tokens": [
+        50364,
+        2561,
+        337,
+        1976,
+        0,
+        50614
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.9159807477678571,
+      "compression_ratio": 0.7142857142857143,
+      "no_speech_prob": 0.9548658132553101,
+      "confidence": 0.352,
+      "words": [
+        {
+          "text": "Thanks",
+          "start": 232.96,
+          "end": 233.94,
+          "confidence": 0.06
+        },
+        {
+          "text": "for",
+          "start": 233.94,
+          "end": 234.74,
+          "confidence": 0.869
+        },
+        {
+          "text": "watching!",
+          "start": 234.74,
+          "end": 235.3,
+          "confidence": 0.831
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "seek": 26100,
+      "start": 261.0,
+      "end": 264.76,
+      "text": " The shoulder reminds me",
+      "tokens": [
+        50364,
+        440,
+        7948,
+        12025,
+        385,
+        50564
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.33652618527412415,
+      "compression_ratio": 0.7419354838709677,
+      "no_speech_prob": 0.983856201171875,
+      "confidence": 0.671,
+      "words": [
+        {
+          "text": "The",
+          "start": 261.0,
+          "end": 261.42,
+          "confidence": 0.393
+        },
+        {
+          "text": "shoulder",
+          "start": 261.42,
+          "end": 262.94,
+          "confidence": 0.529
+        },
+        {
+          "text": "reminds",
+          "start": 262.94,
+          "end": 264.08,
+          "confidence": 0.975
+        },
+        {
+          "text": "me",
+          "start": 264.08,
+          "end": 264.76,
+          "confidence": 0.999
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "seek": 26500,
+      "start": 265.0,
+      "end": 287.9,
+      "text": " How much sorrow can I take Black bird on my shoulder",
+      "tokens": [
+        50364,
+        1012,
+        709,
+        23027,
+        393,
+        286,
+        747,
+        4076,
+        5255,
+        322,
+        452,
+        7948,
+        51614
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.2810768445332845,
+      "compression_ratio": 0.896551724137931,
+      "no_speech_prob": 0.6357999444007874,
+      "confidence": 0.836,
+      "words": [
+        {
+          "text": "How",
+          "start": 265.0,
+          "end": 265.38,
+          "confidence": 0.251
+        },
+        {
+          "text": "much",
+          "start": 265.38,
+          "end": 266.6,
+          "confidence": 0.99
+        },
+        {
+          "text": "sorrow",
+          "start": 266.6,
+          "end": 267.66,
+          "confidence": 0.993
+        },
+        {
+          "text": "can",
+          "start": 267.66,
+          "end": 268.44,
+          "confidence": 0.993
+        },
+        {
+          "text": "I",
+          "start": 268.44,
+          "end": 268.54,
+          "confidence": 0.995
+        },
+        {
+          "text": "take",
+          "start": 268.54,
+          "end": 269.64,
+          "confidence": 0.999
+        },
+        {
+          "text": "Black",
+          "start": 269.64,
+          "end": 271.24,
+          "confidence": 0.588
+        },
+        {
+          "text": "bird",
+          "start": 271.24,
+          "end": 271.36,
+          "confidence": 0.987
+        },
+        {
+          "text": "on",
+          "start": 271.36,
+          "end": 287.14,
+          "confidence": 0.99
+        },
+        {
+          "text": "my",
+          "start": 287.14,
+          "end": 287.34,
+          "confidence": 0.996
+        },
+        {
+          "text": "shoulder",
+          "start": 287.34,
+          "end": 287.9,
+          "confidence": 0.998
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "seek": 29000,
+      "start": 290.0,
+      "end": 298.36,
+      "text": " How much sorrow can I take Black bird on my shoulder",
+      "tokens": [
+        50364,
+        1012,
+        709,
+        23027,
+        393,
+        286,
+        747,
+        4076,
+        5255,
+        322,
+        452,
+        7948,
+        50764
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.12699704421193977,
+      "compression_ratio": 1.2173913043478262,
+      "no_speech_prob": 0.7621733546257019,
+      "confidence": 0.943,
+      "words": [
+        {
+          "text": "How",
+          "start": 290.0,
+          "end": 290.78,
+          "confidence": 0.541
+        },
+        {
+          "text": "much",
+          "start": 290.78,
+          "end": 291.28,
+          "confidence": 0.999
+        },
+        {
+          "text": "sorrow",
+          "start": 291.28,
+          "end": 291.82,
+          "confidence": 0.999
+        },
+        {
+          "text": "can",
+          "start": 291.82,
+          "end": 292.26,
+          "confidence": 0.997
+        },
+        {
+          "text": "I",
+          "start": 292.26,
+          "end": 292.52,
+          "confidence": 0.999
+        },
+        {
+          "text": "take",
+          "start": 292.52,
+          "end": 293.9,
+          "confidence": 0.999
+        },
+        {
+          "text": "Black",
+          "start": 293.9,
+          "end": 295.28,
+          "confidence": 0.976
+        },
+        {
+          "text": "bird",
+          "start": 295.28,
+          "end": 295.88,
+          "confidence": 0.999
+        },
+        {
+          "text": "on",
+          "start": 295.88,
+          "end": 296.42,
+          "confidence": 0.999
+        },
+        {
+          "text": "my",
+          "start": 296.42,
+          "end": 296.98,
+          "confidence": 1.0
+        },
+        {
+          "text": "shoulder",
+          "start": 296.98,
+          "end": 298.36,
+          "confidence": 0.999
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "seek": 29000,
+      "start": 299.1,
+      "end": 302.1,
+      "text": " And what difference does it make?",
+      "tokens": [
+        50764,
+        400,
+        437,
+        2649,
+        775,
+        309,
+        652,
+        30,
+        51014
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.12699704421193977,
+      "compression_ratio": 1.2173913043478262,
+      "no_speech_prob": 0.7621733546257019,
+      "confidence": 0.853,
+      "words": [
+        {
+          "text": "And",
+          "start": 299.1,
+          "end": 299.72,
+          "confidence": 0.39
+        },
+        {
+          "text": "what",
+          "start": 299.72,
+          "end": 300.3,
+          "confidence": 0.996
+        },
+        {
+          "text": "difference",
+          "start": 300.3,
+          "end": 300.72,
+          "confidence": 0.997
+        },
+        {
+          "text": "does",
+          "start": 300.72,
+          "end": 301.14,
+          "confidence": 0.998
+        },
+        {
+          "text": "it",
+          "start": 301.14,
+          "end": 301.46,
+          "confidence": 0.998
+        },
+        {
+          "text": "make?",
+          "start": 301.46,
+          "end": 302.1,
+          "confidence": 0.999
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "seek": 29000,
+      "start": 303.56,
+      "end": 310.98,
+      "text": " When this love is over Shall I sleep within your bed?",
+      "tokens": [
+        51014,
+        1133,
+        341,
+        959,
+        307,
+        670,
+        12128,
+        286,
+        2817,
+        1951,
+        428,
+        2901,
+        30,
+        51464
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.12699704421193977,
+      "compression_ratio": 1.2173913043478262,
+      "no_speech_prob": 0.7621733546257019,
+      "confidence": 0.995,
+      "words": [
+        {
+          "text": "When",
+          "start": 303.56,
+          "end": 304.14,
+          "confidence": 0.98
+        },
+        {
+          "text": "this",
+          "start": 304.14,
+          "end": 304.76,
+          "confidence": 0.999
+        },
+        {
+          "text": "love",
+          "start": 304.76,
+          "end": 305.36,
+          "confidence": 0.998
+        },
+        {
+          "text": "is",
+          "start": 305.36,
+          "end": 305.94,
+          "confidence": 0.999
+        },
+        {
+          "text": "over",
+          "start": 305.94,
+          "end": 307.5,
+          "confidence": 1.0
+        },
+        {
+          "text": "Shall",
+          "start": 307.5,
+          "end": 308.62,
+          "confidence": 0.968
+        },
+        {
+          "text": "I",
+          "start": 308.62,
+          "end": 309.12,
+          "confidence": 0.999
+        },
+        {
+          "text": "sleep",
+          "start": 309.12,
+          "end": 309.5,
+          "confidence": 1.0
+        },
+        {
+          "text": "within",
+          "start": 309.5,
+          "end": 309.84,
+          "confidence": 0.999
+        },
+        {
+          "text": "your",
+          "start": 309.84,
+          "end": 310.28,
+          "confidence": 0.999
+        },
+        {
+          "text": "bed?",
+          "start": 310.28,
+          "end": 310.98,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "seek": 31200,
+      "start": 312.42,
+      "end": 319.96,
+      "text": " River of unhappiness Hold your hands upon my head",
+      "tokens": [
+        50364,
+        8640,
+        295,
+        517,
+        1641,
+        427,
+        1324,
+        6962,
+        428,
+        2377,
+        3564,
+        452,
+        1378,
+        50814
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.04521527344530279,
+      "compression_ratio": 1.3135593220338984,
+      "no_speech_prob": 0.8411375284194946,
+      "confidence": 0.987,
+      "words": [
+        {
+          "text": "River",
+          "start": 312.42,
+          "end": 313.56,
+          "confidence": 0.997
+        },
+        {
+          "text": "of",
+          "start": 313.56,
+          "end": 314.46,
+          "confidence": 0.999
+        },
+        {
+          "text": "unhappiness",
+          "start": 314.46,
+          "end": 316.58,
+          "confidence": 0.998
+        },
+        {
+          "text": "Hold",
+          "start": 316.58,
+          "end": 317.52,
+          "confidence": 0.867
+        },
+        {
+          "text": "your",
+          "start": 317.52,
+          "end": 318.0,
+          "confidence": 0.999
+        },
+        {
+          "text": "hands",
+          "start": 318.0,
+          "end": 318.44,
+          "confidence": 0.998
+        },
+        {
+          "text": "upon",
+          "start": 318.44,
+          "end": 318.84,
+          "confidence": 0.998
+        },
+        {
+          "text": "my",
+          "start": 318.84,
+          "end": 319.36,
+          "confidence": 0.999
+        },
+        {
+          "text": "head",
+          "start": 319.36,
+          "end": 319.96,
+          "confidence": 0.999
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "seek": 31200,
+      "start": 321.34,
+      "end": 329.02,
+      "text": " Till I breathe my last breath Oh, who is me",
+      "tokens": [
+        50814,
+        20227,
+        286,
+        10192,
+        452,
+        1036,
+        6045,
+        876,
+        11,
+        567,
+        307,
+        385,
+        51264
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.04521527344530279,
+      "compression_ratio": 1.3135593220338984,
+      "no_speech_prob": 0.8411375284194946,
+      "confidence": 0.936,
+      "words": [
+        {
+          "text": "Till",
+          "start": 321.34,
+          "end": 321.98,
+          "confidence": 0.977
+        },
+        {
+          "text": "I",
+          "start": 321.98,
+          "end": 322.56,
+          "confidence": 0.998
+        },
+        {
+          "text": "breathe",
+          "start": 322.56,
+          "end": 323.08,
+          "confidence": 0.999
+        },
+        {
+          "text": "my",
+          "start": 323.08,
+          "end": 323.68,
+          "confidence": 0.999
+        },
+        {
+          "text": "last",
+          "start": 323.68,
+          "end": 324.72,
+          "confidence": 1.0
+        },
+        {
+          "text": "breath",
+          "start": 324.72,
+          "end": 325.48,
+          "confidence": 0.994
+        },
+        {
+          "text": "Oh,",
+          "start": 325.48,
+          "end": 326.82,
+          "confidence": 0.693
+        },
+        {
+          "text": "who",
+          "start": 327.22,
+          "end": 327.24,
+          "confidence": 0.778
+        },
+        {
+          "text": "is",
+          "start": 327.24,
+          "end": 327.98,
+          "confidence": 0.992
+        },
+        {
+          "text": "me",
+          "start": 327.98,
+          "end": 329.02,
+          "confidence": 0.999
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "seek": 31200,
+      "start": 330.1,
+      "end": 337.86,
+      "text": " The last time that you touched me Oh, will wonders ever cease",
+      "tokens": [
+        51264,
+        440,
+        1036,
+        565,
+        300,
+        291,
+        9828,
+        385,
+        876,
+        11,
+        486,
+        27348,
+        1562,
+        27887,
+        51714
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.04521527344530279,
+      "compression_ratio": 1.3135593220338984,
+      "no_speech_prob": 0.8411375284194946,
+      "confidence": 0.994,
+      "words": [
+        {
+          "text": "The",
+          "start": 330.1,
+          "end": 330.32,
+          "confidence": 0.957
+        },
+        {
+          "text": "last",
+          "start": 330.32,
+          "end": 330.9,
+          "confidence": 1.0
+        },
+        {
+          "text": "time",
+          "start": 330.9,
+          "end": 331.46,
+          "confidence": 0.999
+        },
+        {
+          "text": "that",
+          "start": 331.46,
+          "end": 332.0,
+          "confidence": 0.997
+        },
+        {
+          "text": "you",
+          "start": 332.0,
+          "end": 332.54,
+          "confidence": 0.999
+        },
+        {
+          "text": "touched",
+          "start": 332.54,
+          "end": 333.56,
+          "confidence": 0.997
+        },
+        {
+          "text": "me",
+          "start": 333.56,
+          "end": 334.48,
+          "confidence": 1.0
+        },
+        {
+          "text": "Oh,",
+          "start": 334.48,
+          "end": 335.5,
+          "confidence": 0.982
+        },
+        {
+          "text": "will",
+          "start": 335.54,
+          "end": 335.9,
+          "confidence": 0.998
+        },
+        {
+          "text": "wonders",
+          "start": 335.9,
+          "end": 336.3,
+          "confidence": 0.999
+        },
+        {
+          "text": "ever",
+          "start": 336.3,
+          "end": 337.0,
+          "confidence": 0.999
+        },
+        {
+          "text": "cease",
+          "start": 337.0,
+          "end": 337.86,
+          "confidence": 0.999
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "seek": 33900,
+      "start": 339.14,
+      "end": 344.34,
+      "text": " Blessed be the mystery of love",
+      "tokens": [
+        50364,
+        37501,
+        312,
+        264,
+        11422,
+        295,
+        959,
+        50664
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.12317413753933376,
+      "compression_ratio": 0.7894736842105263,
+      "no_speech_prob": 0.09455521404743195,
+      "confidence": 0.998,
+      "words": [
+        {
+          "text": "Blessed",
+          "start": 339.14,
+          "end": 340.22,
+          "confidence": 0.997
+        },
+        {
+          "text": "be",
+          "start": 340.22,
+          "end": 340.84,
+          "confidence": 0.997
+        },
+        {
+          "text": "the",
+          "start": 340.84,
+          "end": 341.46,
+          "confidence": 0.999
+        },
+        {
+          "text": "mystery",
+          "start": 341.46,
+          "end": 343.18,
+          "confidence": 0.998
+        },
+        {
+          "text": "of",
+          "start": 343.18,
+          "end": 343.64,
+          "confidence": 0.998
+        },
+        {
+          "text": "love",
+          "start": 343.64,
+          "end": 344.34,
+          "confidence": 0.999
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "seek": 36900,
+      "start": 369.3,
+      "end": 370.62,
+      "text": " Thanks for watching!",
+      "tokens": [
+        50364,
+        2561,
+        337,
+        1976,
+        0,
+        50464
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.5504269259316581,
+      "compression_ratio": 0.7142857142857143,
+      "no_speech_prob": 0.9949058294296265,
+      "confidence": 0.642,
+      "words": [
+        {
+          "text": "Thanks",
+          "start": 369.3,
+          "end": 370.3,
+          "confidence": 0.28
+        },
+        {
+          "text": "for",
+          "start": 370.3,
+          "end": 370.42,
+          "confidence": 0.964
+        },
+        {
+          "text": "watching!",
+          "start": 370.42,
+          "end": 370.62,
+          "confidence": 0.981
+        }
+      ]
+    }
+  ],
+  "language": "EN"
+}

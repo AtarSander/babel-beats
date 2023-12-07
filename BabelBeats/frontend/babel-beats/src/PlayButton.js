@@ -30,7 +30,7 @@ const PlayButton = () => {
 
     return (
         <div className="bottomBar">
-            <button className="playButton" onClick={() => setIsPlaying(prevIsPlaying => !prevIsPlaying)}></button>
+            <button className="playButton" onClick={() => setIsPlaying(prevIsPlaying => !prevIsPlaying)}>Play/Pause</button>
         </div>
     );
 };

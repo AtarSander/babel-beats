@@ -16,7 +16,7 @@ public class Timestamper {
 
 
 
-    public void saveTimestamps(String name){
+    public void saveTimestamps(String name) {
         List<Pair> lyrics = getTimestamps(name);
 //        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/lyrics/processedLyrics/" + name + ".json")))
 //        {
@@ -27,15 +27,27 @@ public class Timestamper {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        try {
-            ObjectMapper mapJson = new ObjectMapper();
-            String json = mapJson.writeValueAsString(lyrics);
-            File file = new File("src/main/resources/lyrics/processedLyrics/" + name + ".json");
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.writeValue(file, json);
+//        try {
+//            ObjectMapper mapJson = new ObjectMapper();
+//            String json = mapJson.writeValueAsString(lyrics);
+//            File file = new File("src/main/resources/lyrics/processedLyrics/" + name + ".json");
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            objectMapper.writeValue(file, json);
+//        }
+//        catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        JSONArray jsonArray = new JSONArray();
+        for (Pair pair : lyrics) {
+            JSONObject pairObject = new JSONObject();
+            pairObject.put("key", pair.getKey());
+            pairObject.put("value", pair.getValue());
+            jsonArray.put(pairObject);
         }
-        catch (IOException e) {
-            e.printStackTrace();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/lyrics/processedLyrics/" + name + ".json"))) {
+            writer.write(jsonArray.toString());
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle the exception appropriately
         }
     }
 

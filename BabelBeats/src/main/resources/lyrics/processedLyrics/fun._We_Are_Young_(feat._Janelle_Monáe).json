@@ -1,70 +1,282 @@
-: 0.0
-: 0.0
-Gib mir 'ne Sekunde, ich muss meine Geschichte auf die Reihe kriegen: 0.0
-Meine Freunde sind auf dem Klo und werden: 0.0
-Höher als der Empire State: 15.78
-Meine Geliebte, sie wartet auf mich, auf der anderen Seite der Bar: 15.78
-Mein Platz wurde von einer Sonnenbrille eingenommen, die nach einer Narbe fragt, und: 15.78
-I know I gave it to you months ago: 25.78
-I know you're tryin' to forget: 28.96
-But between the drinks and subtle things: 32.76
-The holes in my apologies: 35.26
-You know, I'm tryin' hard to take it back: 37.08
-: 37.08
-Wenn also die Bar schließt: 42.6
-Und du dich fühlst als würdest du zusammenbrechen: 42.6
-Werde ich dich nach Hause tragen: 42.6
-: 42.6
-Heute Nacht: 42.6
-Sind wir jung: 42.6
-Also lass uns die Welt in Brand setzen: 42.6
-Wir können heller brennen als die Sonne: 42.6
-Heute Nacht: 42.6
-Sind wir jung: 42.6
-Also lasst uns die Welt in Brand setzen: 42.6
-Wir können heller brennen als die Sonne: 42.6
-: 42.6
-Jetzt weiß ich, dass ich nicht alles bin, was du hast: 42.6
-Ich schätze, dass ich, ich dachte nur: 42.6
-Vielleicht könnten wir neue Wege finden, um auseinander zu fallen: 42.6
-Aber unsere Freunde sind zurück, also lasst uns einen Toast aussprechen: 42.6
-Denn ich habe jemanden gefunden, der mich nach Hause trägt: 42.6
-: 42.6
-Heute Nacht: 42.6
-Sind wir jung: 42.6
-Also lass uns die Welt in Brand setzen: 42.6
-Wir können heller brennen als die Sonne: 42.6
-Heute Nacht: 42.6
-Sind wir jung: 42.6
-Also lasst uns die Welt in Brand setzen: 42.6
-Wir können heller brennen als die Sonne: 42.6
-: 42.6
-Trag mich heute Nacht nach Hause: 42.6
-(Na-na, na-na-na-na-na-na, na-na-na-na): 42.6
-Trag mich heute Nacht einfach nach Hause: 42.6
-(Na-na, na-na-na-na-na-na, na-na-na-na): 42.6
-Trag mich heute Nacht nach Hause: 42.6
-(Na-na, na-na-na-na-na-na, na-na-na-na): 42.6
-Trag mich heute Nacht einfach nach Hause: 42.6
-(Na-na, na-na-na-na-na-na, na-na-na-na): 42.6
-(Na-na, na-na-na-na-na-na, na-na-na-na): 42.6
-Der Mond ist auf meiner Seite, ich habe keinen Grund zu laufen: 42.6
-(Na-na, na-na-na-na-na-na, na-na-na-na): 42.6
-Wird also jemand kommen und mich heute Nacht nach Hause tragen?: 42.6
-(Na-na, na-na-na-na-na-na, na-na-na-na): 42.6
-Die Engel sind nie angekommen, aber ich kann den Chor hören: 42.6
-(Na-na, na-na-na-na-na-na, na-na-na-na): 42.6
-Wird also jemand kommen und mich nach Hause tragen?: 42.6
-: 42.6
-Heute Nacht: 42.6
-Sind wir jung: 42.6
-Also lass uns die Welt in Brand setzen: 42.6
-Wir können heller brennen als die Sonne: 42.6
-Heute Nacht: 42.6
-Sind wir jung: 42.6
-Also lasst uns die Welt in Brand setzen: 42.6
-Wir können heller brennen als die Sonne: 42.6
-: 42.6
-Wenn also die Bar schließt: 237.44
-Und du dich fühlst als würdest du zusammenbrechen: 237.44
-Werde ich dich nach Hause tragen: 237.44
+[
+  {
+    "value": 0,
+    "key": ""
+  },
+  {
+    "value": 0,
+    "key": ""
+  },
+  {
+    "value": 0,
+    "key": "Gib mir 'ne Sekunde, ich muss meine Geschichte auf die Reihe kriegen"
+  },
+  {
+    "value": 0,
+    "key": "Meine Freunde sind auf dem Klo und werden"
+  },
+  {
+    "value": 15.78,
+    "key": "Höher als der Empire State"
+  },
+  {
+    "value": 15.78,
+    "key": "Meine Geliebte, sie wartet auf mich, auf der anderen Seite der Bar"
+  },
+  {
+    "value": 15.78,
+    "key": "Mein Platz wurde von einer Sonnenbrille eingenommen, die nach einer Narbe fragt, und"
+  },
+  {
+    "value": 25.78,
+    "key": "I know I gave it to you months ago"
+  },
+  {
+    "value": 28.96,
+    "key": "I know you're tryin' to forget"
+  },
+  {
+    "value": 32.76,
+    "key": "But between the drinks and subtle things"
+  },
+  {
+    "value": 35.26,
+    "key": "The holes in my apologies"
+  },
+  {
+    "value": 37.08,
+    "key": "You know, I'm tryin' hard to take it back"
+  },
+  {
+    "value": 37.08,
+    "key": ""
+  },
+  {
+    "value": 42.6,
+    "key": "Wenn also die Bar schließt"
+  },
+  {
+    "value": 42.6,
+    "key": "Und du dich fühlst als würdest du zusammenbrechen"
+  },
+  {
+    "value": 42.6,
+    "key": "Werde ich dich nach Hause tragen"
+  },
+  {
+    "value": 42.6,
+    "key": ""
+  },
+  {
+    "value": 42.6,
+    "key": "Heute Nacht"
+  },
+  {
+    "value": 42.6,
+    "key": "Sind wir jung"
+  },
+  {
+    "value": 42.6,
+    "key": "Also lass uns die Welt in Brand setzen"
+  },
+  {
+    "value": 42.6,
+    "key": "Wir können heller brennen als die Sonne"
+  },
+  {
+    "value": 42.6,
+    "key": "Heute Nacht"
+  },
+  {
+    "value": 42.6,
+    "key": "Sind wir jung"
+  },
+  {
+    "value": 42.6,
+    "key": "Also lasst uns die Welt in Brand setzen"
+  },
+  {
+    "value": 42.6,
+    "key": "Wir können heller brennen als die Sonne"
+  },
+  {
+    "value": 42.6,
+    "key": ""
+  },
+  {
+    "value": 42.6,
+    "key": "Jetzt weiß ich, dass ich nicht alles bin, was du hast"
+  },
+  {
+    "value": 42.6,
+    "key": "Ich schätze, dass ich, ich dachte nur"
+  },
+  {
+    "value": 42.6,
+    "key": "Vielleicht könnten wir neue Wege finden, um auseinander zu fallen"
+  },
+  {
+    "value": 42.6,
+    "key": "Aber unsere Freunde sind zurück, also lasst uns einen Toast aussprechen"
+  },
+  {
+    "value": 42.6,
+    "key": "Denn ich habe jemanden gefunden, der mich nach Hause trägt"
+  },
+  {
+    "value": 42.6,
+    "key": ""
+  },
+  {
+    "value": 42.6,
+    "key": "Heute Nacht"
+  },
+  {
+    "value": 42.6,
+    "key": "Sind wir jung"
+  },
+  {
+    "value": 42.6,
+    "key": "Also lass uns die Welt in Brand setzen"
+  },
+  {
+    "value": 42.6,
+    "key": "Wir können heller brennen als die Sonne"
+  },
+  {
+    "value": 42.6,
+    "key": "Heute Nacht"
+  },
+  {
+    "value": 42.6,
+    "key": "Sind wir jung"
+  },
+  {
+    "value": 42.6,
+    "key": "Also lasst uns die Welt in Brand setzen"
+  },
+  {
+    "value": 42.6,
+    "key": "Wir können heller brennen als die Sonne"
+  },
+  {
+    "value": 42.6,
+    "key": ""
+  },
+  {
+    "value": 42.6,
+    "key": "Trag mich heute Nacht nach Hause"
+  },
+  {
+    "value": 42.6,
+    "key": "(Na-na, na-na-na-na-na-na, na-na-na-na)"
+  },
+  {
+    "value": 42.6,
+    "key": "Trag mich heute Nacht einfach nach Hause"
+  },
+  {
+    "value": 42.6,
+    "key": "(Na-na, na-na-na-na-na-na, na-na-na-na)"
+  },
+  {
+    "value": 42.6,
+    "key": "Trag mich heute Nacht nach Hause"
+  },
+  {
+    "value": 42.6,
+    "key": "(Na-na, na-na-na-na-na-na, na-na-na-na)"
+  },
+  {
+    "value": 42.6,
+    "key": "Trag mich heute Nacht einfach nach Hause"
+  },
+  {
+    "value": 42.6,
+    "key": "(Na-na, na-na-na-na-na-na, na-na-na-na)"
+  },
+  {
+    "value": 42.6,
+    "key": "(Na-na, na-na-na-na-na-na, na-na-na-na)"
+  },
+  {
+    "value": 42.6,
+    "key": "Der Mond ist auf meiner Seite, ich habe keinen Grund zu laufen"
+  },
+  {
+    "value": 42.6,
+    "key": "(Na-na, na-na-na-na-na-na, na-na-na-na)"
+  },
+  {
+    "value": 42.6,
+    "key": "Wird also jemand kommen und mich heute Nacht nach Hause tragen?"
+  },
+  {
+    "value": 42.6,
+    "key": "(Na-na, na-na-na-na-na-na, na-na-na-na)"
+  },
+  {
+    "value": 42.6,
+    "key": "Die Engel sind nie angekommen, aber ich kann den Chor hören"
+  },
+  {
+    "value": 42.6,
+    "key": "(Na-na, na-na-na-na-na-na, na-na-na-na)"
+  },
+  {
+    "value": 42.6,
+    "key": "Wird also jemand kommen und mich nach Hause tragen?"
+  },
+  {
+    "value": 42.6,
+    "key": ""
+  },
+  {
+    "value": 42.6,
+    "key": "Heute Nacht"
+  },
+  {
+    "value": 42.6,
+    "key": "Sind wir jung"
+  },
+  {
+    "value": 42.6,
+    "key": "Also lass uns die Welt in Brand setzen"
+  },
+  {
+    "value": 42.6,
+    "key": "Wir können heller brennen als die Sonne"
+  },
+  {
+    "value": 42.6,
+    "key": "Heute Nacht"
+  },
+  {
+    "value": 42.6,
+    "key": "Sind wir jung"
+  },
+  {
+    "value": 42.6,
+    "key": "Also lasst uns die Welt in Brand setzen"
+  },
+  {
+    "value": 42.6,
+    "key": "Wir können heller brennen als die Sonne"
+  },
+  {
+    "value": 42.6,
+    "key": ""
+  },
+  {
+    "value": 237.44,
+    "key": "Wenn also die Bar schließt"
+  },
+  {
+    "value": 237.44,
+    "key": "Und du dich fühlst als würdest du zusammenbrechen"
+  },
+  {
+    "value": 237.44,
+    "key": "Werde ich dich nach Hause tragen"
+  }
+]
