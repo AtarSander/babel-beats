@@ -1,12 +1,14 @@
 import React from 'react';
 import LoginSite from './LoginSite';
 
-function App() {
+
+function LoginApp() {
   return (
-      <div className="App">
+      <div className="LoginApp">
         <LoginSite />
       </div>
   );
 }
 
-export default App;
+
+export default LoginApp;

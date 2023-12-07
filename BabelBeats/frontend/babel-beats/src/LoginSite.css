@@ -1,16 +1,46 @@
+@font-face {
+    font-family: 'Spotify';
+    src: url('../public/Gotham-Bold.otf') format('opentype');
+}
+
 button {
-    padding: 10px;
-    font-size: 48px;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    font-size: 35px;
     cursor: pointer;
-    color: rgb(0, 0, 0);
+    color: #ffff;
     text-align: center;
     background-color: #1db954;
-    font-family: "Nova Flat";
+    border: none;
+
+    font-family: "Spotify", sans-serif;
     border-radius: 50px;
+    /*text-shadow: -1px -1px 0 #D7D7D7, 1px -1px 0 #D7D7D7, -1px 1px 0 #D7D7D7, 1px 1px 0 #D7D7D7;*/
+    /*-webkit-text-stroke-color: #D7D7D7;*/
+    /*-webkit-text-stroke-width: 1px;*/
 }
 h1 {
     text-align: center;
+    color: #ffff;
+
 }
 .container{
-    text-align: center
+    text-align: center;
+    padding: 40px;
+    margin-top: 5%;
+    margin-left: 35%;
+    margin-right: 35%;
+    border-radius: 15px;
 }
+
+body{
+    background: -webkit-linear-gradient(#121212, #000000); /* Safari/Chrome */
+    background: -moz-linear-gradient(#121212, #000000);    /* Firefox */
+    background: -o-linear-gradient(#121212, #000000);      /* Opera */
+    background: linear-gradient(to bottom, #121212, #000000);
+    background-repeat: no-repeat;
+
+}
+
