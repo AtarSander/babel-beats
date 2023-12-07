@@ -1,0 +1,16 @@
+button {
+    padding: 10px;
+    font-size: 48px;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    background-color: #1db954;
+    font-family: "Nova Flat";
+    border-radius: 50px;
+}
+h1 {
+    text-align: center;
+}
+.container{
+    text-align: center
+}
