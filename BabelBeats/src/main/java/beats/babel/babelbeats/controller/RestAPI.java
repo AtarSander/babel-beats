@@ -1,18 +1,13 @@
 package beats.babel.babelbeats.controller;
-import beats.babel.babelbeats.Song;
-import beats.babel.babelbeats.YoutubeSearcher;
-import beats.babel.babelbeats.Timestamper;
-import beats.babel.babelbeats.SpotifyHandler;
-import beats.babel.babelbeats.MusicDownloader;
-import beats.babel.babelbeats.GeniusHandler;
-import beats.babel.babelbeats.SpotifyUser;
-import beats.babel.babelbeats.SongRecordRepository;
-import beats.babel.babelbeats.SongRecord;
+import beats.babel.babelbeats.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.*;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 
@@ -47,9 +42,25 @@ public class RestAPI {
     }
 
     @GetMapping("/recommendGenres")
-    public String[] recommendGenre(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken){
+    public String recommendGenre(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken){
         SpotifyUser spotifyUser = new SpotifyUser(userToken, refreshToken);
-        return Arrays.copyOfRange(sh.countUsersGenres(spotifyUser), 0, 8);
+        JSONArray ja = new JSONArray();
+        String[] genres = Arrays.copyOfRange(sh.countUsersGenres(spotifyUser), 0, 8);
+        JSONObject jo = new JSONObject();
+        for (String genre : genres) {
+            jo.put("genre", genre);
+            Vector<String> icons = new Vector<String>();
+            for (Artist artist : sh.getArtists()) {
+                if (Arrays.asList(artist.getGenres()).contains(genre)) {
+                    icons.add(artist.getImage().getImageURL());
+                }
+            }
+            jo.put("artistIcon", icons);
+            ja.put(new JSONObject(jo.toString()));
+            jo.clear();
+        }
+
+        return ja.toString();
     }
 
     @GetMapping("/loadRecommendedSong")
@@ -60,7 +71,7 @@ public class RestAPI {
         Timestamper ts = new Timestamper();
         String videoID = "";
         int songIndex = 0;
-        Song[] songs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(1,"english", su), 15, su);
+        Song[] songs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(3,"english", su), 15, su);
 
         for (int i = 0; i < songs.length; i++) {
             videoID = ys.videoID(songs[i].toString());

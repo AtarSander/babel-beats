@@ -4,8 +4,10 @@ import java.util.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import java.text.DecimalFormat;
 
 public class Timestamper {
     List<String[]> plain_lyric_words = new ArrayList<>();
@@ -20,14 +22,14 @@ public class Timestamper {
         JSONArray existingData = readJsonFromFile("src/main/resources/lyrics/processedLyrics/processedSong.json");
         List<Pair> lyrics = getTimestamps(name);
         JSONArray jsonArray = new JSONArray();
+        JSONObject record = new JSONObject();
         for (Pair pair : lyrics) {
             JSONObject pairObject = new JSONObject();
             pairObject.put("key", pair.getKey());
             pairObject.put("value", pair.getValue());
             jsonArray.put(pairObject);
         }
-        JSONObject record = new JSONObject();
-        record.put("_id", jsonArray.length()+1);
+        record.put("_id", existingData.length()+1);
         record.put("title", name);
         record.put("timestamps", jsonArray);
         existingData.put(record);
@@ -38,7 +40,6 @@ public class Timestamper {
         try (FileReader fileReader = new FileReader(fileName)) {
             return new JSONArray(new JSONTokener(fileReader));
         } catch (IOException e) {
-            e.printStackTrace();
             return new JSONArray();
         }
     }
@@ -227,6 +228,7 @@ public class Timestamper {
     private  List<Pair> correctTimestamps(List<Pair> finalLyrics) {
         finalLyrics.removeIf(pair -> pair.getKey().isEmpty());
         Pair prev = finalLyrics.get(0);
+        Pair next;
         double timeBetween=0., counter=0.;
         for (int i = 1; i < finalLyrics.size(); i++)
         {
@@ -239,27 +241,30 @@ public class Timestamper {
             prev = current;
         }
         timeBetween /= counter;
-        timeBetween = Math.round(timeBetween * 100.0) / 100.0;
         if (timeBetween == 0.)
             timeBetween = 1.;
         prev = finalLyrics.get(0);
-        Pair next = finalLyrics.getLast();
         for (int i = 1; i < finalLyrics.size()-1; i++)
         {
             Pair current = finalLyrics.get(i);
+            next = finalLyrics.get(i+1);
             if (current.getValue() <= prev.getValue() && (prev.getValue()+timeBetween < next.getValue() || next.getValue() == current.getValue()))
             {
-                finalLyrics.set(i, new Pair(current.getKey(), prev.getValue()+timeBetween));
+                double result = Math.round((prev.getValue()+timeBetween) * 100)/100.0;
+                finalLyrics.set(i, new Pair(current.getKey(), result));
                 current = finalLyrics.get(i);
             }
             else if (current.getValue() <= prev.getValue() && prev.getValue()+timeBetween > next.getValue() && next.getValue() != current.getValue())
             {
-                double timeBetween2 = next.getValue() + prev.getValue()/2;
-                timeBetween2 = Math.round(timeBetween2 * 100.0) / 100.0;
+                double timeBetween2 = Math.round((next.getValue() + prev.getValue()/2) * 100)/100.0;
                 finalLyrics.set(i, new Pair(current.getKey(), timeBetween2));
                 current = finalLyrics.get(i);
             }
             prev = current;
+        }
+        if (finalLyrics.getLast().getValue() <= current.getValue())
+        {
+
         }
         return finalLyrics;
     }

@@ -13,6 +13,8 @@ public class SpotifyHandler {
     private String accessToken;
     private static String clientID;
     private static String clientSecret;
+    private Artist[] artists;
+
 
     public SpotifyHandler() {
         JSONExtractor JSONe = new JSONExtractor();
@@ -21,6 +23,10 @@ public class SpotifyHandler {
         clientID = credentials[0];
         clientSecret = credentials[1];
         setAccessToken();
+    }
+
+    public Artist[] getArtists() {
+        return artists;
     }
 
     private String fetchAccessTokenJSON() {
@@ -132,9 +138,9 @@ public class SpotifyHandler {
     public String[] countUsersGenres(SpotifyUser spotifyUser){
 //        initialize a map that has genre names as keys and their count as values
         Map<String, Integer> genres = new HashMap<>();
-
 //        iterate over each of users top artists and add their genres to hashmap
-        for (Artist a : getUsersFavArtists(spotifyUser)){
+        artists = getUsersFavArtists(spotifyUser);
+        for (Artist a : artists){
             for (String g : a.getGenres()){
                 if (!genres.containsKey(g)){
                     genres.put(g, 1);
@@ -149,7 +155,7 @@ public class SpotifyHandler {
 
     private String fetchRecommendedPlaylistJSON(int categoryOffset, String language, SpotifyUser spotifyUser){
         String genre = countUsersGenres(spotifyUser)[categoryOffset];
-        String query = genre + "+" + language;
+        String query = language + "+" + genre;
         String url = ("https://api.spotify.com/v1/search?q=" +
                 query.replace(" ", "+") +
                 "&type=playlist&market=" + getUserCountry(spotifyUser) +
@@ -215,7 +221,9 @@ public class SpotifyHandler {
 //                get artistId
                 String artistId = artistIds.getJSONObject(j).getString("id");
                 JSONObject artistJson = new JSONObject(fetchArtistJSON(artistId, spotifyUser));
-                artists[j] = createArtistFromJson(artistJson);
+                Artist tempArtist = createArtistFromJson(artistJson);
+                if (tempArtist != null)
+                    artists[j] = tempArtist;
             }
 
 //            get song image
@@ -234,7 +242,10 @@ public class SpotifyHandler {
         JSONArray images = artistJson.getJSONArray("images");
 
 //            get first image from list
-        JSONObject imageJson = images.getJSONObject(0);
+            if(images.isEmpty())
+                return null;
+            JSONObject imageJson = images.getJSONObject(0);
+
 
 //        create image
         Image image = createImageFromJson(imageJson);
