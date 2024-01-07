@@ -3,6 +3,8 @@ package beats.babel.babelbeats;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import static java.lang.Math.abs;
+
 
 public class YoutubeSearcher {
     private final String authKey;
@@ -38,11 +40,31 @@ public class YoutubeSearcher {
         return id.getString("videoId");
     }
 
-    public String urlSearch(String query){
+    public String videoID(String query){
         String formattedUrl = formatURL("1", "video", "10", query);
-        RequestHandler rh = new RequestHandler();
-        String response = rh.sendHTTPRequest(formattedUrl, new String[]{}, new String[]{}, "GET", "");
+        String response = RequestHandler.sendHTTPRequest(formattedUrl, new String[]{}, new String[]{}, "GET", "");
 
-        return "https://www.youtube.com/watch?v=" + extractVideoId(response);
+        return  extractVideoId(response);
+    }
+
+    private int extractVideoLen(String responseJSON){
+        JSONObject jsonObject = new JSONObject(responseJSON);
+        JSONArray items = jsonObject.getJSONArray("items");
+        JSONObject item = items.getJSONObject(0);
+        JSONObject contentDetails = item.getJSONObject("contentDetails");
+        String durationString = contentDetails.getString("duration");
+        return ((durationString.charAt(2)) - '0') * 60 + ((durationString.charAt(4)) - '0') * 10 + (durationString.charAt(5)) - '0';
+    }
+
+    public int videoLen(String id){
+        RequestHandler rh = new RequestHandler();
+        String[] headerName = {"Accept"};
+        String[] headerValue = {"application/json"};
+        String response = rh.sendHTTPRequest("https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=" + id + "&key=" + authKey, headerName , headerValue);
+        return extractVideoLen(response);
+    }
+
+    public boolean isLenCompatible(String id, int otherVidLen, int maxDelta){
+        return abs(videoLen(id) - otherVidLen) < maxDelta;
     }
 }

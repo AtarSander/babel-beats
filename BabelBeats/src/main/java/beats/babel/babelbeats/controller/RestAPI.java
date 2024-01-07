@@ -12,7 +12,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 
-
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
@@ -22,6 +21,7 @@ public class RestAPI {
     public RestAPI(){
         this.sh = new SpotifyHandler();
     }
+
     @GetMapping("/resume")
     public void resumePlayback(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken){
         SpotifyUser spotifyUser = new SpotifyUser(userToken, refreshToken);
@@ -34,25 +34,37 @@ public class RestAPI {
         sh.pausePlayback(spotifyUser);
     }
 
+    @GetMapping("/getPlaybackState")
+    public boolean getPlaybackState(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken){
+        SpotifyUser spotifyUser = new SpotifyUser(userToken, refreshToken);
+        return sh.getPlaybackState(spotifyUser);
+    }
+
     @GetMapping("/loadRecommendedSong")
     public void loadRecommendedSong(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken){
         SpotifyUser su = new SpotifyUser(userToken, refreshToken);
-//        safe 3
-        Song[] songs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(8,"english", su), 5, su);
-        String name = songs[0].toString();
         YoutubeSearcher ys = new YoutubeSearcher();
-        String url =  ys.urlSearch(name);
-		MusicDownloader.download(url, name);
         GeniusHandler gh = new GeniusHandler();
-		gh.getLyricsToFile(name, "EN", true);
         Timestamper ts = new Timestamper();
+        String videoID = "";
+        int songIndex = 0;
+        Song[] songs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(0,"english", su), 15, su);
+
+        for (int i = 0; i < songs.length; i++) {
+            videoID = ys.videoID(songs[i].toString());
+
+            if (songs[i].getDuration() < 5 * 60 && ys.isLenCompatible(videoID, songs[i].getDuration(), 5)) {
+                songIndex = i;
+                break;
+            }
+        }
+        String name = songs[songIndex].toString();
+        gh.getLyricsToFile(name, "EN", true);
+        MusicDownloader.download("https://www.youtube.com/watch?v=" + videoID, name);
         ts.saveTimestamps(name.replace(" ", "_"));
-        saveTitles(songs);
-//        List<Pair> pairs = ts.getTimestamps(name.replace(" ", "_"));
-//		for(Pair pair:pairs){
-//			System.out.println(pair.toString());
-//		}
+//        saveTitles(songs);
     }
+
     private void saveTitles(Song[] titles)
     {
         String[] songsTitles= new String[titles.length];

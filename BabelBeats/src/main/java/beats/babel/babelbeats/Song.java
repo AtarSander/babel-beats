@@ -5,13 +5,15 @@ public class Song {
     private final String name;
     private final Image image;
     private final String id;
+    private final int duration;
 
-    public Song(Artist[] artists, String name, Image image, String id)
+    public Song(Artist[] artists, String name, Image image, String id, int duration)
     {
         this.artists = artists;
         this.name = name;
         this.image = image;
         this.id = id;
+        this.duration = duration;
     }
 
     public Artist[] getArtist() {
@@ -28,6 +30,10 @@ public class Song {
 
     public String getId() {
         return id;
+    }
+
+    public int getDuration() {
+        return duration;
     }
 
     @Override

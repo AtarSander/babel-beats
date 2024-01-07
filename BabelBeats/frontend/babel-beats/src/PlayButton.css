@@ -1,11 +1,6 @@
-.bottomBar {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    height: 100vh;
-    position: bottom;
-}
-
 .playButton {
     background-color: aqua;
+    margin: 10px 10px 10px 10px;
+    /*top: 50%;*/
+    /*transform: translate(0, -50%);*/
 }

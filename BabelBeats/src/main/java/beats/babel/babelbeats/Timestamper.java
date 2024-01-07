@@ -12,31 +12,12 @@ public class Timestamper {
     List<String> plain_lyric_lines = new ArrayList<>();
     String timestamped_lyric;
     List<Map<String, Double>> timestamped_lines = new ArrayList<>();
-    private final static String plainPath = "src/main/resources/lyrics/songs_data.json";
-
-
+    double accuracy;
+    private final static String plainPath = "src/main/resources/lyrics/plainLyrics/";
+    private String language;
 
     public void saveTimestamps(String name) {
         List<Pair> lyrics = getTimestamps(name);
-//        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/lyrics/processedLyrics/" + name + ".json")))
-//        {
-//            for (Pair pair : lyrics) {
-//                writer.write(pair.toString());
-//                writer.newLine();
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            ObjectMapper mapJson = new ObjectMapper();
-//            String json = mapJson.writeValueAsString(lyrics);
-//            File file = new File("src/main/resources/lyrics/processedLyrics/" + name + ".json");
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            objectMapper.writeValue(file, json);
-//        }
-//        catch (IOException e) {
-//            e.printStackTrace();
-//        }
         JSONArray jsonArray = new JSONArray();
         for (Pair pair : lyrics) {
             JSONObject pairObject = new JSONObject();
@@ -52,15 +33,30 @@ public class Timestamper {
     }
 
     private List<Pair> getTimestamps(String name) {
-        loadPlain(name);
+        Vector<List<String>> versionsLyrics = loadPlain(name);
         callWhisper(name);
+        List<Pair> lyricsTemp = new ArrayList<>();
         loadTimestamped("src/main/resources/lyrics/timestamps/" + name + ".json");
         aggregateLines();
-        return timestamp();
+        List<Pair> finalLyrics = new ArrayList<>();
+        double max_accuracy = 0.;
+        for (int i = 0; i<versionsLyrics.size(); i++) {
+            plain_lyric_lines = versionsLyrics.get(i);
+            plain_lyric_words.clear();
+            for (String line : plain_lyric_lines) {
+                plain_lyric_words.add(separateWords(line));
+            }
+            lyricsTemp = timestamp();
+            if (accuracy > max_accuracy) {
+                max_accuracy = accuracy;
+                finalLyrics = lyricsTemp;
+            }
+        }
+        return finalLyrics;
     }
 
     private void callWhisper(String name) {
-        ProcessBuilder pb = new ProcessBuilder("python", "src/main/python/transcript.py", name);
+        ProcessBuilder pb = new ProcessBuilder("python", "src/main/python/transcript.py", name, language);
         pb.redirectErrorStream(true);
 
         try {
@@ -76,31 +72,30 @@ public class Timestamper {
 
             // Wait for the process to finish
             int exitCode = process.waitFor();
-            System.out.println("Exit Code: " + exitCode);
+            System.out.println("Whisper Exit Code: " + exitCode);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void loadPlain(String name) {
+    private Vector<List<String>> loadPlain(String name) {
+        Vector<List<String>> plain_lines = new Vector<List<String>>();
         try {
-            JSONTokener tokener = new JSONTokener(new FileReader(plainPath));
+            JSONTokener tokener = new JSONTokener(new FileReader(plainPath + name + ".json"));
             JSONArray jsonArray = new JSONArray(tokener);
             JSONObject obj = new JSONObject();
             for (int i = 0; i < jsonArray.length(); i++) {
                 obj = jsonArray.getJSONObject(i);
-                if (obj.getString("title").equals(name))
-                    break;
-            }
-            plain_lyric_lines = Arrays.asList(obj.getString("lyrics").split("\n"));
-            for (String line : plain_lyric_lines) {
-                plain_lyric_words.add(separateWords(line));
+                plain_lines.add(Arrays.asList(obj.getString("lyrics").split("\n")));
+                language = obj.getString("language");
             }
         }
         catch(Exception e){
                 e.printStackTrace();
-            }
         }
+
+        return plain_lines;
+    }
 
     private void loadTimestamped(String path) {
         try {
@@ -165,7 +160,7 @@ public class Timestamper {
 
     private List<Pair> timestamp() {
         int i = 0, j, k, l, count, max_count;
-        double saved = 0., max_saved = 0., previous = -1.;
+        double saved = 0., max_saved = 0., previous = -1., temp_accuracy=0.;
         String[] line_plain;
         Map<String, Double> line_stamped;
         List<Pair> final_lyric = new ArrayList<>();
@@ -200,9 +195,13 @@ public class Timestamper {
                 k++;
             }
             final_lyric.add(new Pair(plain_lyric_lines.get(i), max_saved));
+            if (max_saved!=previous)
+                temp_accuracy++;
             previous = max_saved;
             i++;
+
         }
+        accuracy = temp_accuracy/timestamped_lines.size();
         return final_lyric;
     }
 }

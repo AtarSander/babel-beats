@@ -33,7 +33,7 @@ public class BabelBeatsApplication {
 ////		DeepLHandler dh = new DeepLHandler();
 ////		dh.translate(lyrics, "PL");
 //		Timestamper ts = new Timestamper();
-//		List<Pair> pairs = ts.getTimestamps(name.replace(" ", "_"));
+//		ts.getTimestamps(name.replace(" ", "_"));
 ////		List<Pair> pairs = ts.getTimestamps("Post_Malone_Mourning");
 //		for(Pair pair:pairs){
 //			System.out.println(pair.toString());

@@ -60,7 +60,7 @@ public class SpotifyHandler {
         String[] header = new String[]{"Authorization"};
         String[] headerValues = new String[]{"Bearer " + spotifyUser.getToken()};
         RequestHandler rh = new RequestHandler();
-        String response = rh.sendHTTPRequest(url, header, headerValues, "PUT", "");
+        rh.sendHTTPRequest(url, header, headerValues, "PUT", "");
     }
 
     public void pausePlayback(SpotifyUser spotifyUser) {
@@ -69,6 +69,16 @@ public class SpotifyHandler {
         String[] headerValues = new String[]{"Bearer " + spotifyUser.getToken()};
         RequestHandler rh = new RequestHandler();
         rh.sendHTTPRequest(url, header, headerValues, "PUT", "");
+    }
+
+    public boolean getPlaybackState(SpotifyUser spotifyUser){
+        String url = "https://api.spotify.com/v1/me/player";
+        String[] header = new String[]{"Authorization"};
+        String[] headerValues = new String[]{"Bearer " + spotifyUser.getToken()};
+        RequestHandler rh = new RequestHandler();
+        String response = rh.sendHTTPRequest(url, header, headerValues, "GET", "");
+        JSONObject jo = new JSONObject(response);
+        return jo.getBoolean("is_playing");
     }
 
     public void playSongByID(SpotifyUser spotifyUser, String songID){
@@ -80,7 +90,6 @@ public class SpotifyHandler {
         uris.put("spotify:track:" + songID);
         parameters.put("uris", uris);
         String response = RequestHandler.sendHTTPRequest(url, header, headerValues, "PUT", parameters.toString());
-
     }
 
     private String fetchUsersFavArtistsJSON(SpotifyUser spotifyUser) {
@@ -185,6 +194,9 @@ public class SpotifyHandler {
 //            extract songId
             String songId = track.getString("id");
 
+//            extract duration
+            int duration = track.getInt("duration_ms") / 1000;
+
 //            extract artistIds
             JSONArray artistIds = track.getJSONArray("artists");
 
@@ -204,7 +216,7 @@ public class SpotifyHandler {
             Image image = createImageFromJson(imageJson);
 
 //            add song to songs
-            songs[i] = new Song(artists, name, image, songId);
+            songs[i] = new Song(artists, name, image, songId, duration);
         }
         return songs;
     }

@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.net.URI;
 import java.net.URLEncoder;
+import java.util.Vector;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,13 +30,20 @@ public class GeniusHandler {
         }
     }
 
-    public String getLyrics(String query)
+    public Vector<String> getLyrics(String query)
     {
         String search = searchGenius(query);
-        JSONObject results = getResults(search);
-        String url = getUrl(results.toString());
+        JSONArray results = getResults(search);
+        Vector<String> lyrics = new Vector<String>();
         WebScraper scrape = new WebScraper(6000);
-        return formatText(scrape.scrapeLyrics(url), '[', ']', 2);
+
+        for (int i = 0; i < results.length(); i++) {
+            JSONObject result = results.getJSONObject(i);
+            String url = getUrl(result.toString());
+            lyrics.add(formatText(scrape.scrapeLyrics(url), '[', ']', 2));
+        }
+
+        return lyrics;
     }
 
     private String searchGenius(String query)
@@ -77,12 +85,11 @@ public class GeniusHandler {
         return formattedText.toString();
     }
 
-    private JSONObject getResults(String JSON_string)
+    private JSONArray getResults(String JSON_string)
     {
         JSONObject file = new JSONObject(JSON_string);
         JSONObject response = file.getJSONObject("response");
-        JSONArray hits =response.getJSONArray("hits");
-        return hits.getJSONObject(0);
+        return response.getJSONArray("hits");
     }
 
     private String getUrl(String JSON_file)
@@ -130,27 +137,24 @@ public class GeniusHandler {
         }
     }
 
-    public void getLyricsToFile(String query, String language, boolean formatName){
-        String lyrics = getLyrics(query);
+    public void getLyricsToFile(String title, String language, boolean formatName){
+        Vector<String> lyrics = getLyrics(title);
         JSONObject jo = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
 
-        if(formatName)
-            jo.put("title", query.replace(" ", "_"));
-        else
-            jo.put("title", query);
+        for (int i = 0; i < lyrics.size(); i++) {
+            if (formatName)
+                jo.put("title", title.replace(" ", "_") + "_" + i);
+            else
+                jo.put("title", title + "_" + i);
 
-        jo.put("language", language);
-        jo.put("lyrics", lyrics);
-        try{
-            JSONTokener tokener = new JSONTokener(new FileReader("src/main/resources/lyrics/songs_data.json"));
-            JSONArray jsonArray = new JSONArray(tokener);
-            jsonArray.put(jo);
-            try (FileWriter fileWriter = new FileWriter("src/main/resources/lyrics/songs_data.json")) {
-                fileWriter.write(jsonArray.toString(2));
-            }
-
+            jo.put("language", language);
+            jo.put("lyrics", lyrics.get(i));
+            jsonArray.put(new JSONObject(jo.toString()));
         }
-        catch (Exception e){
+        try (FileWriter fileWriter = new FileWriter("src/main/resources/lyrics/plainLyrics/" + title.replace(" ", "_") + ".json")) {
+            fileWriter.write(jsonArray.toString(2));
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
