@@ -17,6 +17,7 @@ public class Timestamper {
     private String language;
 
     public void saveTimestamps(String name) {
+        JSONArray existingData = readJsonFromFile("src/main/resources/lyrics/processedLyrics/processedSong.json");
         List<Pair> lyrics = getTimestamps(name);
         JSONArray jsonArray = new JSONArray();
         for (Pair pair : lyrics) {
@@ -25,10 +26,28 @@ public class Timestamper {
             pairObject.put("value", pair.getValue());
             jsonArray.put(pairObject);
         }
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/lyrics/processedLyrics/" + name + ".json"))) {
-            writer.write(jsonArray.toString());
+        JSONObject record = new JSONObject();
+        record.put("_id", jsonArray.length()+1);
+        record.put("title", name);
+        record.put("timestamps", jsonArray);
+        existingData.put(record);
+        writeJsonToFile(existingData, "src/main/resources/lyrics/processedLyrics/processedSong.json");
+    }
+
+    private static JSONArray readJsonFromFile(String fileName) {
+        try (FileReader fileReader = new FileReader(fileName)) {
+            return new JSONArray(new JSONTokener(fileReader));
         } catch (IOException e) {
-            e.printStackTrace(); // Handle the exception appropriately
+            e.printStackTrace();
+            return new JSONArray();
+        }
+    }
+
+    private static void writeJsonToFile(JSONArray data, String fileName) {
+        try (FileWriter fileWriter = new FileWriter(fileName)) {
+            fileWriter.write(data.toString(2));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -52,7 +71,7 @@ public class Timestamper {
                 finalLyrics = lyricsTemp;
             }
         }
-        return finalLyrics;
+        return correctTimestamps(finalLyrics);
     }
 
     private void callWhisper(String name) {
@@ -203,6 +222,46 @@ public class Timestamper {
         }
         accuracy = temp_accuracy/timestamped_lines.size();
         return final_lyric;
+    }
+
+    private  List<Pair> correctTimestamps(List<Pair> finalLyrics) {
+        finalLyrics.removeIf(pair -> pair.getKey().isEmpty());
+        Pair prev = finalLyrics.get(0);
+        double timeBetween=0., counter=0.;
+        for (int i = 1; i < finalLyrics.size(); i++)
+        {
+            Pair current = finalLyrics.get(i);
+            if (current.getValue() > prev.getValue() && current.getValue() - prev.getValue() < 5)
+            {
+                timeBetween += current.getValue() - prev.getValue();
+                counter++;
+            }
+            prev = current;
+        }
+        timeBetween /= counter;
+        timeBetween = Math.round(timeBetween * 100.0) / 100.0;
+        if (timeBetween == 0.)
+            timeBetween = 1.;
+        prev = finalLyrics.get(0);
+        Pair next = finalLyrics.getLast();
+        for (int i = 1; i < finalLyrics.size()-1; i++)
+        {
+            Pair current = finalLyrics.get(i);
+            if (current.getValue() <= prev.getValue() && (prev.getValue()+timeBetween < next.getValue() || next.getValue() == current.getValue()))
+            {
+                finalLyrics.set(i, new Pair(current.getKey(), prev.getValue()+timeBetween));
+                current = finalLyrics.get(i);
+            }
+            else if (current.getValue() <= prev.getValue() && prev.getValue()+timeBetween > next.getValue() && next.getValue() != current.getValue())
+            {
+                double timeBetween2 = next.getValue() + prev.getValue()/2;
+                timeBetween2 = Math.round(timeBetween2 * 100.0) / 100.0;
+                finalLyrics.set(i, new Pair(current.getKey(), timeBetween2));
+                current = finalLyrics.get(i);
+            }
+            prev = current;
+        }
+        return finalLyrics;
     }
 }
 

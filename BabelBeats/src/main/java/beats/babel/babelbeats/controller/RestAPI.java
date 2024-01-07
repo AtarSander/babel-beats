@@ -6,10 +6,14 @@ import beats.babel.babelbeats.SpotifyHandler;
 import beats.babel.babelbeats.MusicDownloader;
 import beats.babel.babelbeats.GeniusHandler;
 import beats.babel.babelbeats.SpotifyUser;
+import beats.babel.babelbeats.SongRecordRepository;
+import beats.babel.babelbeats.SongRecord;
 import org.springframework.web.bind.annotation.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 
 @RestController
@@ -17,9 +21,11 @@ import java.io.IOException;
 @RequestMapping("/api")
 public class RestAPI {
     private final SpotifyHandler sh;
+    private final SongRecordRepository songRecordRepository;
 
-    public RestAPI(){
+    public RestAPI(SongRecordRepository songRecordRepository){
         this.sh = new SpotifyHandler();
+        this.songRecordRepository = songRecordRepository;
     }
 
     @GetMapping("/resume")
@@ -37,18 +43,24 @@ public class RestAPI {
     @GetMapping("/getPlaybackState")
     public boolean getPlaybackState(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken){
         SpotifyUser spotifyUser = new SpotifyUser(userToken, refreshToken);
-        return sh.getPlaybackState(spotifyUser);
+        return sh.isPlaying(spotifyUser);
+    }
+
+    @GetMapping("/recommendGenres")
+    public String[] recommendGenre(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken){
+        SpotifyUser spotifyUser = new SpotifyUser(userToken, refreshToken);
+        return Arrays.copyOfRange(sh.countUsersGenres(spotifyUser), 0, 8);
     }
 
     @GetMapping("/loadRecommendedSong")
-    public void loadRecommendedSong(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken){
+    public void loadRecommendedSong(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken, String genre, String Language){
         SpotifyUser su = new SpotifyUser(userToken, refreshToken);
         YoutubeSearcher ys = new YoutubeSearcher();
         GeniusHandler gh = new GeniusHandler();
         Timestamper ts = new Timestamper();
         String videoID = "";
         int songIndex = 0;
-        Song[] songs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(0,"english", su), 15, su);
+        Song[] songs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(1,"english", su), 15, su);
 
         for (int i = 0; i < songs.length; i++) {
             videoID = ys.videoID(songs[i].toString());
@@ -65,6 +77,12 @@ public class RestAPI {
 //        saveTitles(songs);
     }
 
+    @GetMapping("/seekPosition")
+    public void seekPosition(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken, @RequestParam(required = true)int timeDiff){
+        SpotifyUser spotifyUser = new SpotifyUser(userToken, refreshToken);
+        sh.seekPosition(spotifyUser, timeDiff);
+    }
+
     private void saveTitles(Song[] titles)
     {
         String[] songsTitles= new String[titles.length];
@@ -79,5 +97,7 @@ public class RestAPI {
             e.printStackTrace();
         }
     }
+
+
 
 }

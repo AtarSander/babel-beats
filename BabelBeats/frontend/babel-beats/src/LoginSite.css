@@ -3,7 +3,7 @@
     src: url('../public/Gotham-Bold.otf') format('opentype');
 }
 
-button {
+.loginButton {
     padding: 30px 100px;
     font-size: 35px;
     cursor: pointer;
@@ -18,21 +18,22 @@ button {
     /*-webkit-text-stroke-color: #D7D7D7;*/
     /*-webkit-text-stroke-width: 1px;*/
 }
-h1 {
+.loginHeader {
     text-align: center;
     color: #ffff;
 
 }
+
 .container{
     text-align: center;
     padding: 40px;
-    margin-top: 5%;
-    margin-left: 35%;
-    margin-right: 35%;
-    border-radius: 15px;
+    /*border-radius: 15px;*/
+    bottom: 0;
+    height: 94vh;
+    background: linear-gradient(to bottom, #121212, #000000);
 }
 
-body{
+.body{
     background: -webkit-linear-gradient(#121212, #000000); /* Safari/Chrome */
     background: -moz-linear-gradient(#121212, #000000);    /* Firefox */
     background: -o-linear-gradient(#121212, #000000);      /* Opera */

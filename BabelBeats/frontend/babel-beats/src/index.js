@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import LoginApp from './LoginApp';
 import MainApp from './MainApp'
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
+import LoginSite from "./LoginSite";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -12,7 +12,7 @@ const App = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<LoginApp/>} />
+                <Route path="/" element={<LoginSite/>} />
                 <Route path="/home" element={<MainApp/>} />
             </Routes>
         </Router>

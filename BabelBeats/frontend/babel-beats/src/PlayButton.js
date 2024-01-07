@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import {useLocation} from 'react-router-dom';
-import "./PlayButton.css"
+import { SlControlPlay, SlControlPause } from "react-icons/sl";
+import "./PlayButton.css";
 
 const getPlaybackState = async(userToken, refreshToken) => {
     try {
@@ -29,14 +30,14 @@ function PlayButton() {
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-        };
+    };
 
     useEffect(() => {
         play();
     }, [isPlaying]);
 
     return (
-            <button className="playButton" onClick={() => setIsPlaying(prevIsPlaying => !prevIsPlaying)}>Play/Pause</button>
+            <button className="playButton" onClick={() => setIsPlaying(prevIsPlaying => !prevIsPlaying)}>{isPlaying ? <SlControlPlay /> : <SlControlPause />}</button>
     );
 }
 

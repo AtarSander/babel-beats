@@ -1,0 +1,18 @@
+.skipButton {
+    background-color: transparent;
+    border: none;
+    padding: 10px 10px 10px 10px;
+    font-size: 35px;
+    border-radius: 50px;
+    color: black;
+    margin: 10px 0 10px 0;
+}
+
+.skipButton:hover {
+    color: rgba(76, 76, 76, 0.67);
+}
+
+.skipButton:active {
+    color: rgba(255, 0, 0, 0.67);
+    transform: translateY(4px);
+}

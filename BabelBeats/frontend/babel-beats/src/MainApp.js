@@ -1,12 +1,13 @@
 import React from 'react';
-import PlayButton from './PlayButton';
-import SyncedText from './SyncedText';
 import BottomBar from "./BottomBar";
+import LanguagePicker from "./LanguagePicker";
+import "./MainApp.css"
 
 function MainApp() {
     return (
         <div className="MainApp">
             {/*<SyncedText />*/}
+            <LanguagePicker />
             <BottomBar />
         </div>
     );

@@ -55,32 +55,40 @@ public class SpotifyHandler {
         return je.extract(data, "country");
     }
 
-    public void startPlayback(SpotifyUser spotifyUser) {
-        String url = "https://api.spotify.com/v1/me/player/play";
+    private void playerPUT(SpotifyUser spotifyUser, String action){
+        String url = "https://api.spotify.com/v1/me/player/" + action;
         String[] header = new String[]{"Authorization"};
         String[] headerValues = new String[]{"Bearer " + spotifyUser.getToken()};
-        RequestHandler rh = new RequestHandler();
-        rh.sendHTTPRequest(url, header, headerValues, "PUT", "");
+        RequestHandler.sendHTTPRequest(url, header, headerValues, "PUT", "");
+
+    }
+    public void startPlayback(SpotifyUser spotifyUser) {
+        playerPUT(spotifyUser, "play");
     }
 
     public void pausePlayback(SpotifyUser spotifyUser) {
-        String url = "https://api.spotify.com/v1/me/player/pause";
-        String[] header = new String[]{"Authorization"};
-        String[] headerValues = new String[]{"Bearer " + spotifyUser.getToken()};
-        RequestHandler rh = new RequestHandler();
-        rh.sendHTTPRequest(url, header, headerValues, "PUT", "");
+        playerPUT(spotifyUser, "pause");
     }
 
-    public boolean getPlaybackState(SpotifyUser spotifyUser){
+    public void seekPosition(SpotifyUser spotifyUser, int time){
+        String response = getPlaybackState(spotifyUser);
+        JSONObject jo = new JSONObject(response);int newTime = jo.getInt("progress_ms") + time;
+        newTime = (newTime < 0) ? 0 : newTime;
+        playerPUT(spotifyUser, "seek?position_ms=" + newTime);
+    }
+
+    public String getPlaybackState(SpotifyUser spotifyUser){
         String url = "https://api.spotify.com/v1/me/player";
         String[] header = new String[]{"Authorization"};
         String[] headerValues = new String[]{"Bearer " + spotifyUser.getToken()};
-        RequestHandler rh = new RequestHandler();
-        String response = rh.sendHTTPRequest(url, header, headerValues, "GET", "");
+        return RequestHandler.sendHTTPRequest(url, header, headerValues, "GET", "");
+    }
+
+    public boolean isPlaying(SpotifyUser spotifyUser){
+        String response = getPlaybackState(spotifyUser);
         JSONObject jo = new JSONObject(response);
         return jo.getBoolean("is_playing");
     }
-
     public void playSongByID(SpotifyUser spotifyUser, String songID){
         String url = "https://api.spotify.com/v1/me/player/play";
         String[] header = new String[]{"Authorization"};
@@ -121,7 +129,7 @@ public class SpotifyHandler {
         return topArtists;
     }
 
-    public Map<String, Integer> countUsersGenres(SpotifyUser spotifyUser){
+    public String[] countUsersGenres(SpotifyUser spotifyUser){
 //        initialize a map that has genre names as keys and their count as values
         Map<String, Integer> genres = new HashMap<>();
 
@@ -136,11 +144,11 @@ public class SpotifyHandler {
                 }
             }
         }
-        return genres;
+        return sortByValue(genres);
     }
 
     private String fetchRecommendedPlaylistJSON(int categoryOffset, String language, SpotifyUser spotifyUser){
-        String genre = sortByValue(countUsersGenres(spotifyUser))[categoryOffset];
+        String genre = countUsersGenres(spotifyUser)[categoryOffset];
         String query = genre + "+" + language;
         String url = ("https://api.spotify.com/v1/search?q=" +
                 query.replace(" ", "+") +
