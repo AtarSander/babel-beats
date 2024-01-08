@@ -13,7 +13,8 @@ function LanguagePicker({ selectedLanguage, setSelectedLanguage, genreImagesJSON
 
     const sendRequest = async (userToken, refreshToken) => {
         try {
-            return await axios.get(`http://localhost:8080/api/recommendGenres?userToken=${userToken}&refreshToken=${refreshToken}`, );
+            const response = await axios.get(`http://localhost:8080/api/recommendGenres?userToken=${userToken}&refreshToken=${refreshToken}`, );
+            return response.data;
         } catch (error) {
             console.error('Error fetching data:', error);
         }

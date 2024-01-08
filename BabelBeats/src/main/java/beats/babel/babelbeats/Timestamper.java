@@ -4,10 +4,8 @@ import java.util.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import java.text.DecimalFormat;
 
 public class Timestamper {
     List<String[]> plain_lyric_words = new ArrayList<>();
@@ -18,8 +16,9 @@ public class Timestamper {
     private final static String plainPath = "src/main/resources/lyrics/plainLyrics/";
     private String language;
 
-    public void saveTimestamps(String name) {
-        JSONArray existingData = readJsonFromFile("src/main/resources/lyrics/processedLyrics/processedSong.json");
+
+    public JSONObject saveTimestamps(String name, long size) {
+//        JSONArray existingData = readJsonFromFile("src/main/resources/lyrics/processedLyrics/processedSong.json");
         List<Pair> lyrics = getTimestamps(name);
         JSONArray jsonArray = new JSONArray();
         JSONObject record = new JSONObject();
@@ -29,11 +28,12 @@ public class Timestamper {
             pairObject.put("value", pair.getValue());
             jsonArray.put(pairObject);
         }
-        record.put("_id", existingData.length()+1);
+        record.put("_id", size+1);
         record.put("title", name);
         record.put("timestamps", jsonArray);
-        existingData.put(record);
-        writeJsonToFile(existingData, "src/main/resources/lyrics/processedLyrics/processedSong.json");
+//        existingData.put(record);
+//        writeJsonToFile(existingData, "src/main/resources/lyrics/processedLyrics/processedSong.json");
+        return record;
     }
 
     private static JSONArray readJsonFromFile(String fileName) {
@@ -228,11 +228,11 @@ public class Timestamper {
     private  List<Pair> correctTimestamps(List<Pair> finalLyrics) {
         finalLyrics.removeIf(pair -> pair.getKey().isEmpty());
         Pair prev = finalLyrics.get(0);
-        Pair next;
-        double timeBetween=0., counter=0.;
+        Pair next, current = finalLyrics.get(1);
+        double timeBetween=0., counter=0., result;
         for (int i = 1; i < finalLyrics.size(); i++)
         {
-            Pair current = finalLyrics.get(i);
+            current = finalLyrics.get(i);
             if (current.getValue() > prev.getValue() && current.getValue() - prev.getValue() < 5)
             {
                 timeBetween += current.getValue() - prev.getValue();
@@ -246,11 +246,11 @@ public class Timestamper {
         prev = finalLyrics.get(0);
         for (int i = 1; i < finalLyrics.size()-1; i++)
         {
-            Pair current = finalLyrics.get(i);
+            current = finalLyrics.get(i);
             next = finalLyrics.get(i+1);
             if (current.getValue() <= prev.getValue() && (prev.getValue()+timeBetween < next.getValue() || next.getValue() == current.getValue()))
             {
-                double result = Math.round((prev.getValue()+timeBetween) * 100)/100.0;
+                result = Math.round((prev.getValue()+timeBetween) * 100)/100.0;
                 finalLyrics.set(i, new Pair(current.getKey(), result));
                 current = finalLyrics.get(i);
             }
@@ -264,32 +264,9 @@ public class Timestamper {
         }
         if (finalLyrics.getLast().getValue() <= current.getValue())
         {
-
+            result = Math.round(((current.getValue()+timeBetween)*100)/100.0);
+            finalLyrics.set(finalLyrics.size()-1, new Pair(finalLyrics.getLast().getKey(), result));
         }
         return finalLyrics;
-    }
-}
-
-
-class Pair {
-    private final String key;
-    private final double value;
-
-    public Pair(String key, double value) {
-        this.key = key;
-        this.value = value;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public double getValue() {
-        return value;
-    }
-
-    @Override
-    public String toString() {
-        return key + ": " + value;
     }
 }

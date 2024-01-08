@@ -1,0 +1,41 @@
+.chooseGenreTitle {
+    user-select: none;
+    text-align: center;
+    margin-top: 0;
+    padding-top: 2%;
+    font-size: 100px;
+    color: white;
+}
+
+.genreList {
+    display: flex;
+    justify-content: center;
+    padding: 1% 200px 0 200px;
+    flex-wrap: wrap;
+}
+
+.genreListElement {
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    text-align: center;
+    font-size: 40px;
+    font-family: Spotify, sans-serif;
+    color: white;
+    margin: 10px 10px 10px 10px;
+    background-color: #565252;
+    padding: 10px 1px 10px 1px;
+    border-radius: 3%;
+    cursor: pointer;
+    width: calc(20%);
+    display: flex;
+    flex-direction: column;
+}
+
+.genreListElement:hover {
+    background-color: #3f3c3c;
+}
+
+.genreListElement:active {
+    background-color: rgba(255, 0, 0, 0.67);
+}

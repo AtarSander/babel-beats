@@ -8,19 +8,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
-
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
 public class RestAPI {
     private final SpotifyHandler sh;
-    private final SongRecordRepository songRecordRepository;
+    private final SongDBService songDBService;
 
-    public RestAPI(SongRecordRepository songRecordRepository){
+    public RestAPI(SongDBService songDBService){
         this.sh = new SpotifyHandler();
-        this.songRecordRepository = songRecordRepository;
+        this.songDBService = songDBService;
     }
 
     @GetMapping("/resume")
@@ -71,7 +69,10 @@ public class RestAPI {
         Timestamper ts = new Timestamper();
         String videoID = "";
         int songIndex = 0;
-        Song[] songs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(3,"english", su), 15, su);
+        JSONObject songData;
+        SongRecord newRecord;
+        long size;
+        Song[] songs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(4,"english", su), 15, su);
 
         for (int i = 0; i < songs.length; i++) {
             videoID = ys.videoID(songs[i].toString());
@@ -82,9 +83,19 @@ public class RestAPI {
             }
         }
         String name = songs[songIndex].toString();
-        gh.getLyricsToFile(name, "EN", true);
-        MusicDownloader.download("https://www.youtube.com/watch?v=" + videoID, name);
-        ts.saveTimestamps(name.replace(" ", "_"));
+        if (isSongInDatabase(name.replace(" ", "_")))
+        {
+            newRecord = getRecordByTitle(name.replace(" ", "_"));
+        }
+        else
+        {
+            gh.getLyricsToFile(name, "EN", true);
+            MusicDownloader.download("https://www.youtube.com/watch?v=" + videoID, name);
+            size = getNumberOfRecords();
+            songData = ts.saveTimestamps(name.replace(" ", "_"), size);
+            newRecord = new SongRecord(songData);
+            addRecord(newRecord);
+        }
 //        saveTitles(songs);
     }
 
@@ -92,6 +103,26 @@ public class RestAPI {
     public void seekPosition(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken, @RequestParam(required = true)int timeDiff){
         SpotifyUser spotifyUser = new SpotifyUser(userToken, refreshToken);
         sh.seekPosition(spotifyUser, timeDiff);
+    }
+
+    @PostMapping("/add")
+    public void addRecord(@RequestBody SongRecord newRecord) {
+        songDBService.addRecord(newRecord);
+    }
+
+    @GetMapping("/checkSong/{title}")
+    public boolean isSongInDatabase(@PathVariable String title) {
+        return songDBService.isSongInDatabase(title);
+    }
+
+    @GetMapping("/byTitle/{title}")
+    public SongRecord getRecordByTitle(@PathVariable String title) {
+        return songDBService.getRecordByTitle(title);
+    }
+
+    @GetMapping("/count")
+    public long getNumberOfRecords() {
+        return songDBService.getNumberOfRecords();
     }
 
     private void saveTitles(Song[] titles)
@@ -108,7 +139,4 @@ public class RestAPI {
             e.printStackTrace();
         }
     }
-
-
-
 }
