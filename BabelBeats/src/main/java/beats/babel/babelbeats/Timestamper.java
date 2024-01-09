@@ -72,7 +72,8 @@ public class Timestamper {
                 finalLyrics = lyricsTemp;
             }
         }
-        return correctTimestamps(finalLyrics);
+//        correctTimestamps(finalLyrics);
+        return finalLyrics;
     }
 
     private void callWhisper(String name) {

@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
-import {useLocation} from 'react-router-dom';
 import { SlControlPlay, SlControlPause } from "react-icons/sl";
 import "./PlayButton.css";
 
@@ -11,11 +10,7 @@ const getPlaybackState = async(userToken, refreshToken) => {
         console.error('Error fetching data:', error);
     }
 };
-function PlayButton() {
-    const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
-    const userToken = searchParams.get('userToken');
-    const refreshToken = searchParams.get('refreshToken');
+function PlayButton({ userToken, refreshToken }) {
     const [isPlaying, setIsPlaying] = useState(getPlaybackState(userToken, refreshToken));
     const play = async() => {
         try {
@@ -37,7 +32,9 @@ function PlayButton() {
     }, [isPlaying]);
 
     return (
-            <button className="playButton" onClick={() => setIsPlaying(prevIsPlaying => !prevIsPlaying)}>{isPlaying ? <SlControlPlay /> : <SlControlPause />}</button>
+        <button className="playButton" onClick={() => setIsPlaying(prevIsPlaying => !prevIsPlaying)}>
+            {isPlaying ? <SlControlPlay/> : <SlControlPause/>}
+        </button>
     );
 }
 

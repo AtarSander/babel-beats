@@ -1,5 +1,6 @@
 package beats.babel.babelbeats;
 
+
 public class SpotifyUser {
     private final String token;
     private final String refreshToken;
@@ -31,7 +32,7 @@ public class SpotifyUser {
 //        return topArtists;
 //    }
 //
-//    public boolean isConnected(){
-//        return token != null;
-//    }
+    public boolean isConnected(){
+        return token != null;
+    }
 }

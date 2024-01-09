@@ -1,14 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import {useLocation} from 'react-router-dom';
+import React, {useEffect } from 'react';
 import { SlActionUndo, SlActionRedo } from "react-icons/sl";
 import axios from "axios";
 import "./SkipButton.css";
 
-function SkipButton({direction}) {
-    const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
-    const userToken = searchParams.get('userToken');
-    const refreshToken = searchParams.get('refreshToken');
+function SkipButton({direction, userToken, refreshToken}) {
     let isForward = direction === "forward";
     let timeDiff = 15000;
 

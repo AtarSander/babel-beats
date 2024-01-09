@@ -3,13 +3,8 @@ import "./LanguagePicker.css";
 import {useLocation} from "react-router-dom";
 import axios from "axios";
 
-function LanguagePicker({ selectedLanguage, setSelectedLanguage, genreImagesJSON, setGenreImagesJSON }) {
-    let languages = ["spanish", "italian", "korean", "english", "portuguese", "german", "chinese", "french"]
-    const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
-    const userToken = searchParams.get('userToken');
-    const refreshToken = searchParams.get('refreshToken');
-
+function LanguagePicker({setSelectedLanguage, setGenreImagesJSON, userToken, refreshToken }) {
+    let languages = ["Spanish", "Italian", "Korean", "English", "Portuguese", "German", "Chinese", "French"];
 
     const sendRequest = async (userToken, refreshToken) => {
         try {

@@ -9,14 +9,16 @@ import java.util.ArrayList;
 @Document(collection = "savedSongs")
 public class SongRecord {
     @Id
-    private int _id;
+    private long _id;
     private String title;
     private List<Timestamp> timestamps = new ArrayList<>();
+    private List<Timestamp> timestampsTranslated = new ArrayList<>();
 
 
     public static class Timestamp {
         private double value;
         private String key;
+
         public double getValue() {
             return value;
         }
@@ -34,10 +36,10 @@ public class SongRecord {
         }
 
     }
-    public SongRecord(JSONObject songData)
-    {
+
+    public SongRecord(JSONObject songData) {
         this.title = (String) songData.get("title");
-        this._id = (int) songData.get("_id");
+        this._id = (long) songData.get("_id");
         JSONArray timestampsArray = (JSONArray) songData.get("timestamps");
         for (Object obj : timestampsArray) {
             JSONObject timestampJson = (JSONObject) obj;
@@ -45,9 +47,11 @@ public class SongRecord {
             timestamp.setValue((Double) timestampJson.get("value"));
             timestamp.setKey((String) timestampJson.get("key"));
             this.timestamps.add(timestamp);
+            this.timestampsTranslated.add(timestamp);
         }
     }
-    public int get_id() {
+
+    public long get_id() {
         return _id;
     }
 
@@ -69,5 +73,10 @@ public class SongRecord {
 
     public void setTimestamps(List<Timestamp> timestamps) {
         this.timestamps = timestamps;
+    }
+
+
+    public List<Timestamp> getTimestampsTranslated() {
+        return timestampsTranslated;
     }
 }

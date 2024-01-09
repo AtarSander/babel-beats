@@ -32,7 +32,7 @@ public class YoutubeSearcher {
         return newUrl;
     }
 
-    private String extractVideoId(String responseJSON){
+    protected String extractVideoId(String responseJSON){
         JSONExtractor je = new JSONExtractor();
         JSONArray items = je.extractList(responseJSON, "items");
         JSONObject item = items.getJSONObject(0);

@@ -11,9 +11,11 @@
     text-align: center;
     background-color: #1db954;
     border: none;
+    user-select: none;
 
     font-family: "Spotify", sans-serif;
     border-radius: 50px;
+
     /*text-shadow: -1px -1px 0 #D7D7D7, 1px -1px 0 #D7D7D7, -1px 1px 0 #D7D7D7, 1px 1px 0 #D7D7D7;*/
     /*-webkit-text-stroke-color: #D7D7D7;*/
     /*-webkit-text-stroke-width: 1px;*/
@@ -21,6 +23,7 @@
 .loginHeader {
     text-align: center;
     color: #ffff;
+    user-select: none;
 
 }
 

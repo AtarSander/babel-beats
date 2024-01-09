@@ -28,3 +28,22 @@
     transform: translateX(100%);
     pointer-events: none;
 }
+
+.genre-wrapper.hidden {
+    opacity: 0;
+    transform: translateX(-100%);
+    pointer-events: none;
+}
+
+.wait-wrapper {
+    user-select: none;
+    text-align: center;
+    margin-top: 0;
+    padding-top: 4%;
+    font-size: 100px;
+    color: white;
+}
+
+.wait-wrapper.before {
+
+}

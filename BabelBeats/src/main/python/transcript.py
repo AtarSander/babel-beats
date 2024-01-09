@@ -25,4 +25,5 @@ if __name__ == "__main__":
         raise Exception("Script takes exactly 2 arguments")
     song_name = sys.argv[1]
     language = sys.argv[2]
+    print(language)
     generate_transcripts(song_name, language)

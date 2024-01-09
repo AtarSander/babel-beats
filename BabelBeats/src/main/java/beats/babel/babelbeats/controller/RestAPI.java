@@ -15,7 +15,7 @@ import java.util.*;
 public class RestAPI {
     private final SpotifyHandler sh;
     private final SongDBService songDBService;
-
+    private final Map<String, String> mapLanguages = Map.of("English", "en", "Japanese", "ja", "Spanish", "es", "Italian", "it", "Portuguese", "pt", "Chinese", "zh", "German", "de", "Korean", "ko");
     public RestAPI(SongDBService songDBService){
         this.sh = new SpotifyHandler();
         this.songDBService = songDBService;
@@ -62,7 +62,7 @@ public class RestAPI {
     }
 
     @GetMapping("/loadRecommendedSong")
-    public void loadRecommendedSong(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken, String genre, String Language){
+    public SongRecord loadRecommendedSong(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken, @RequestParam(required = true)int genre, @RequestParam(required = true)String language){
         SpotifyUser su = new SpotifyUser(userToken, refreshToken);
         YoutubeSearcher ys = new YoutubeSearcher();
         GeniusHandler gh = new GeniusHandler();
@@ -72,31 +72,39 @@ public class RestAPI {
         JSONObject songData;
         SongRecord newRecord;
         long size;
-        Song[] songs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(4,"english", su), 15, su);
+        Song[] preShuffleSongs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(genre, language, su), 15, su);
+        List<Song> songs = Arrays.asList(preShuffleSongs);
+//        Collections.shuffle(songs);
 
-        for (int i = 0; i < songs.length; i++) {
-            videoID = ys.videoID(songs[i].toString());
+//        for (int i = 0; i < songs.size(); i++) {
+//            videoID = ys.videoID(songs.get(i).toString());
+//
+//            if (songs.get(i).getDuration() < 5 * 60 && ys.isLenCompatible(videoID, songs.get(i).getDuration(), 5)) {
+//                songIndex = i;
+//                break;
+//            }
+//        }
 
-            if (songs[i].getDuration() < 5 * 60 && ys.isLenCompatible(videoID, songs[i].getDuration(), 5)) {
-                songIndex = i;
-                break;
-            }
-        }
-        String name = songs[songIndex].toString();
+        songIndex = 8;
+        videoID = ys.videoID(songs.get(8).toString());
+
+        String name = songs.get(songIndex).toString();
         if (isSongInDatabase(name.replace(" ", "_")))
         {
             newRecord = getRecordByTitle(name.replace(" ", "_"));
         }
         else
         {
-            gh.getLyricsToFile(name, "EN", true);
+            gh.getLyricsToFile(name, mapLanguages.get(language), true);
             MusicDownloader.download("https://www.youtube.com/watch?v=" + videoID, name);
             size = getNumberOfRecords();
             songData = ts.saveTimestamps(name.replace(" ", "_"), size);
             newRecord = new SongRecord(songData);
             addRecord(newRecord);
         }
+
 //        saveTitles(songs);
+        return newRecord;
     }
 
     @GetMapping("/seekPosition")

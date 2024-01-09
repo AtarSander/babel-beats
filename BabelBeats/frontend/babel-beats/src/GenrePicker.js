@@ -2,6 +2,7 @@ import React from 'react';
 import "./GenrePicker.css";
 import { ReactPhotoCollage } from "react-photo-collage";
 
+
 function processImages(imgList) {
     let layout;
     let height = ['150px', '150px'];
@@ -27,17 +28,24 @@ function processImages(imgList) {
     };
 }
 
-function GenrePicker({ genreImagesJSON }) {
+function GenrePicker({ genreImagesJSON, setSelectedGenre }) {
     let genres = genreImagesJSON.map(element => element.genre)
     let imgSettings = genreImagesJSON.map(element => processImages(element.artistIcon));
-    console.log(genres);
+
+
+    const handleGenreSelection = (index) => {
+        setSelectedGenre(index);
+        console.log(`Selected genre: ${genres[index]}`);
+    }
 
     return (
         <>
             <h1 className={"chooseGenreTitle"}>Choose a genre:</h1>
             <div className={"genreList"}>
                 {imgSettings.map((setting, index) => (
-                    <div key={index} className={"genreListElement"}>
+                    <div key={index} className={"genreListElement"} onClick={() => {
+                        handleGenreSelection(index);
+                    }}>
                         <ReactPhotoCollage {...setting}/>
                         <br />
                         {genres[index]}
