@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
+import './SyncedText.css';
+
 
 function SyncedText({ songData, isPlaying, songPosition }) {
     const [text, setText] = useState('');
-    let songTitle = songData.title;
+    let songTitle = songData.title.replace(/_/g, " ");
     let timestamps = songData.timestamps;
     // console.log(timestamps);
     let translated = songData.translatedTimestamps;
@@ -51,14 +52,28 @@ function SyncedText({ songData, isPlaying, songPosition }) {
         return new Date().getTime() - startTime;
     }
 
+    function formattedTime(){
+        let currTime = songPosition + passedTime;
+        let seconds = Math.floor(currTime/1000) % 60
+        return Math.floor(currTime/60000) + (seconds < 10 ? ":0" : ":") + seconds;
+    }
     return (
-        <div>
-            <h1>{songPosition + passedTime}</h1>
-            <h1>{songTitle}</h1>
-            <h1>{prevLine}</h1>
-            <h1>{currLine}</h1>
-        </div>
-    );
+        <>
+            <div className={"title-wrapper"}>
+                <h1 className={"timer"}>{formattedTime()}</h1>
+                <h1 className={"songTitle"}>{songTitle}</h1>
+            </div>
+            <div className={"lyricsWrapper"}>
+                <div className={"originalLyrics"}>
+                    <h1 className={"prevLine"}>{prevLine}</h1>
+                    <h1 className={"currLine"}>{currLine}</h1>
+                </div>
+                <div className={"translatedLyrics"}>
+                    <h1 className={"prevLine"}>{prevLine}</h1>
+                    <h1 className={"currLine"}>{currLine}</h1>
+                </div>
+            </div>
+        </>);
 }
 
-export default SyncedText;
+                export default SyncedText;

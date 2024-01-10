@@ -4,6 +4,17 @@
     bottom: 0;
     width: 100%;
     overflow: hidden;
+    user-select: none;
+    color: white;
+}
+
+.logo {
+    width: 5%;
+    height: auto;
+    margin-left: 1%;
+    margin-top: 1%;
+    position: absolute;
+    pointer-events: none;
 }
 
 .content-wrapper {
@@ -40,12 +51,11 @@
     transform: translateX(0%);
     opacity: 1;
     pointer-events: auto;
-    user-select: none;
     text-align: center;
     margin-top: 0;
     padding-top: 4%;
     font-size: 100px;
-    color: white;
+    height: 100%;
 }
 
 .wait-wrapper.before {
@@ -58,6 +68,7 @@
     opacity: 0;
     transform: translateY(100%);
     pointer-events: none;
+    position: absolute;
 }
 
 .waitTitle {
@@ -74,7 +85,6 @@
     text-align: center;
     background-color: #1db954;
     border: none;
-    user-select: none;
     font-family: "Spotify", sans-serif;
     border-radius: 50px;
 
@@ -83,5 +93,21 @@
 .musicReadyButton.before {
     opacity: 0;
     transform: translateX(100%);
+    pointer-events: none;
+}
+
+.syncedText-wrapper {
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    transform: translateY(0%);
+    bottom: 0;
+    /*margin-top: 5%;*/
+    height: 100%;
+
+    /*height: 100%;*/
+}
+
+.syncedText-wrapper.before {
+    opacity: 0;
+    transform: translateY(-100%);
     pointer-events: none;
 }

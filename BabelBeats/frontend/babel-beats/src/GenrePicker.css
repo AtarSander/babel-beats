@@ -1,5 +1,4 @@
 .chooseGenreTitle {
-    user-select: none;
     text-align: center;
     margin-top: 0;
     padding-top: 2%;
@@ -17,7 +16,6 @@
 .genreListElement {
     align-items: center;
     justify-content: center;
-    user-select: none;
     text-align: center;
     font-size: 40px;
     font-family: Spotify, sans-serif;

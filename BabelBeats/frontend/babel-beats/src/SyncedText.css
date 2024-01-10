@@ -1,0 +1,41 @@
+.title-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 5fr);
+    grid-gap: 10px;
+    margin-top: 0.7%;
+    align-items: center;
+}
+
+.songTitle {
+    text-align: center;
+    font-size: 50px;
+}
+
+.timer{
+    margin-left: 22%;
+    /*margin-top: 1.5%;*/
+}
+
+.lyricsWrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 5fr);
+    grid-gap: 5%;
+    margin-top: 10%;
+    font-size: 200%;
+}
+
+.originalLyrics {
+    text-align: right;
+}
+
+.translatedLyrics {
+    text-align: left;
+}
+
+.prevLine {
+
+}
+
+.currLine {
+
+}

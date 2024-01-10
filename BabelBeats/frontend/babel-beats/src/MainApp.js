@@ -60,6 +60,7 @@ function MainApp() {
 
     return (
         <div className={`MainApp`}>
+            <img className={"logo"} src={"babelBeats.png"}  alt={"babelBeats"} />
             <div className={`content-wrapper ${appState === 0 ? '' : 'hidden'}`}>
                 {appState < 2 && (
                     <LanguagePicker
@@ -85,8 +86,8 @@ function MainApp() {
                 {appState >= 5 && appState <= 7 && <button className={`musicReadyButton ${appState === 5 ? 'before' : ''}`}
                                                            onClick={() => appStateTransition(7)}>Ready</button>}
             </div>
-            <div className={`syncedText-wrapper`}>
-                {appState >= 6 && <SyncedText songData={songData} isPlaying={isPlaying} songPosition={songPosition}/>}
+            <div className={`syncedText-wrapper ${appState === 7 ? 'before' : appState >= 9 ? 'hidden' : ''}`}>
+                {appState >= 7 && <SyncedText songData={songData} isPlaying={isPlaying} songPosition={songPosition}/>}
             </div>
             <BottomBar userToken={userToken} refreshToken={refreshToken} isPlaying={isPlaying} setIsPlaying={setIsPlaying} songPosition={songPosition} setSongPosition={setSongPosition}/>
         </div>

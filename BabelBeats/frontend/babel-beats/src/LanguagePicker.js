@@ -25,7 +25,7 @@ function LanguagePicker({setSelectedLanguage, setGenreImagesJSON, userToken, ref
                         // console.log(response);
                         setSelectedLanguage(value);
                     }}>
-                        <img src={`${value}.png`} width={300} height={200} alt={"not found"}/>
+                        <img src={`${value}.png`} width={300} height={200} alt={"not found"} style={{pointerEvents: 'none'}}/>
                         <br/>
                         {value}
                     </div>
