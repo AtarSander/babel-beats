@@ -1,54 +1,62 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
 
-async function extractFromQueue() {
-    try {
-        const response = await fetch('/src/main/resources/lyrics/songsQueue.txt');
-        const text = await response.text();
-        const lines = text.split('\n');
-        return lines[0].trim();
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        throw error;
-    }
-}
-
-async function readFromFile(name) {
-    let path = '../../src/main/resources/lyrics/processedLyrics/';
-
-    try {
-        const response = await fetch(path + name + '.json');
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        throw error;
-    }
-}
-
-const SyncedText = () => {
+function SyncedText({ songData, isPlaying, songPosition }) {
     const [text, setText] = useState('');
-    let data = "";
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const title = await extractFromQueue();
-                data = await readFromFile(title);
-                console.log(data);
-                setText(data);
-            } catch (error) {
-                // Handle errors here
-                console.error('Error:', error);
-            }
-        };
+    let songTitle = songData.title;
+    let timestamps = songData.timestamps;
+    // console.log(timestamps);
+    let translated = songData.translatedTimestamps;
+    const [startTime, setStartTime] = useState(new Date().getTime());
+    const [passedTime, setPassedTime] = useState(0);
+    const [currLine, setCurrLine] = useState("");
+    const [prevLine, setPrevLine] = useState("");
 
-        fetchData();
-    }, []);
+    function currentLyric() {
+        // console.log(songData.length);
+        for (let i = 0; i < timestamps.length; i++) {
+            if (songPosition + passedTime < timestamps[i].value) {
+                setPrevLine((i === 0) ? "": timestamps[i-1].key);
+                setCurrLine(timestamps[i].key);
+                // console.log(timestamps[i].value);
+                console.log(currLine);
+                break;
+            }
+            // console.log(timestamps[i]);
+        }
+
+    }
+
+    useEffect(() => {
+        let intervalID = 0;
+        if(isPlaying) {
+            intervalID = setInterval(() => {
+                setPassedTime(getPassedTime());
+                currentLyric();
+            }, 10)
+            return () => clearInterval(intervalID);
+        }
+    }, [passedTime, isPlaying])
+
+    useEffect(() => {
+        resetTimer();
+    }, [songPosition])
+
+
+    function resetTimer() {
+        setStartTime(new Date().getTime());
+    }
+
+    function getPassedTime(){
+        return new Date().getTime() - startTime;
+    }
 
     return (
         <div>
-            <h1>{data}</h1>
+            <h1>{songPosition + passedTime}</h1>
+            <h1>{songTitle}</h1>
+            <h1>{prevLine}</h1>
+            <h1>{currLine}</h1>
         </div>
     );
 }

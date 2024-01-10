@@ -5,6 +5,7 @@ import './MainApp.css';
 import GenrePicker from "./GenrePicker";
 import axios from "axios";
 import {useLocation} from "react-router-dom";
+import SyncedText from "./SyncedText";
 
 function MainApp() {
     const location = useLocation();
@@ -13,7 +14,16 @@ function MainApp() {
     const [refreshToken, setRefreshToken] = useState(searchParams.get('refreshToken'));
     const [isLangSiteHidden, setIsLangSiteHidden] = useState(false);
     const [appState, setAppState] = useState(0);
+    const [isPlaying, setIsPlaying] = useState(null);
+    const [songPosition, setSongPosition] = useState(0);
+    const [songData, setSongData] = useState(null);
 
+    function appStateTransition(firstValue, seconds=1) {
+        setAppState(firstValue);
+        setTimeout(() => {
+            setAppState(firstValue + 1);
+        }, seconds * 1000);
+    }
 
     const [selectedLanguage, setSelectedLanguage] = useState(null);
     useEffect(() => {
@@ -31,18 +41,13 @@ function MainApp() {
     useEffect(() => {
         async function sendRequest() {
             const response = await axios.get(`http://localhost:8080/api/loadRecommendedSong?userToken=${userToken}&refreshToken=${refreshToken}&genre=${selectedGenre}&language=${selectedLanguage}`,);
-            setAppState(5);
-            setTimeout(() => {
-                setAppState(6);
-            }, 2000);
-            console.log(`Recommended song json: ${response}`)
+            appStateTransition(5);
+            console.log(`Recommended song json: `, response.data)
+            setSongData(response.data);
         }
         if (selectedGenre != null) {
             sendRequest();
-            setAppState(3);
-            setTimeout(() => {
-                setAppState(4);
-            }, 2000);
+            appStateTransition(3);
         }
     }, [selectedGenre]);
 
@@ -50,10 +55,7 @@ function MainApp() {
 
     const handleLanguageSelection = (language) => {
         setSelectedLanguage(language);
-        setAppState(1);
-        setTimeout(() => {
-            setAppState(2);
-        }, 2000);
+        appStateTransition(1);
     };
 
     return (
@@ -76,12 +78,19 @@ function MainApp() {
                     />
                 )}
             </div>
-            <div className={`wait-wrapper ${appState === 3 ? 'before': appState >= 7 && appState < 3 ? 'hidden' : ''}`}>
+            <div className={`wait-wrapper ${appState === 3 ? 'before' : appState >= 7 ? 'hidden' : ''}`}>
+                {(appState >= 3 && appState <= 7) && (
                     <h1 className={"waitTitle"}>YOUR MUSIC IS BEING PREPARED!</h1>
-                {appState === 5 || appState === 6 && <button className={"musicReadyButton"}>Ready</button>}
+                )}
+                {appState >= 5 && appState <= 7 && <button className={`musicReadyButton ${appState === 5 ? 'before' : ''}`}
+                                                           onClick={() => appStateTransition(7)}>Ready</button>}
             </div>
-            <BottomBar userToken={userToken} refreshToken={refreshToken}/>
+            <div className={`syncedText-wrapper`}>
+                {appState >= 6 && <SyncedText songData={songData} isPlaying={isPlaying} songPosition={songPosition}/>}
+            </div>
+            <BottomBar userToken={userToken} refreshToken={refreshToken} isPlaying={isPlaying} setIsPlaying={setIsPlaying} songPosition={songPosition} setSongPosition={setSongPosition}/>
         </div>
     );
 }
+
 export default MainApp;

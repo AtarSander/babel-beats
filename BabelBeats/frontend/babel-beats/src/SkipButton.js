@@ -21,10 +21,6 @@ function SkipButton({direction, userToken, refreshToken}) {
         }
     }
 
-    useEffect(() => {
-        sendRequest();
-    }, [isForward]);
-
     return (
         <>
             <button className="skipButton" onClick={() => sendRequest()}>{isForward ? <SlActionRedo/> : <SlActionUndo/>}</button>
