@@ -144,10 +144,10 @@ public class SpotifyHandler {
     public String[] countUsersGenres(SpotifyUser spotifyUser){
 //        initialize a map that has genre names as keys and their count as values
         Map<String, Integer> genres = new HashMap<>();
-        String[] officialGenres = {"pop", "rock", "hip hop", "r&b", "country",
+        String[] officialGenres = {"rock", "hip hop", "trap", "rap", "r&b", "country",
                 "jazz", "blues", "soul", "funk", "gospel",
                 "reggae", "indie", "classical", "folk",
-                "metal", "punk", "alternative", "dance", "hyperpop", "party"};
+                "metal", "punk", "alternative", "dance", "hyperpop", "pop", "party", "pluggnb"};
         Vector<String> userGenres = new Vector<>();
 //        iterate over each of users top artists and add their genres to hashmap
         artists = getUsersFavArtists(spotifyUser);
@@ -165,6 +165,7 @@ public class SpotifyHandler {
             boolean changed = false;
             for (String og : officialGenres) {
                 if (userGenres.get(i).contains(og)) {
+                    changed = true;
                     userGenres.set(i, og);
                     break;
                 }

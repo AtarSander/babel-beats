@@ -49,8 +49,11 @@ public class RestAPI {
             jo.put("genre", genre);
             Vector<String> icons = new Vector<String>();
             for (Artist artist : sh.getArtists()) {
-                if (Arrays.asList(artist.getGenres()).contains(genre)) {
-                    icons.add(artist.getImage().getImageURL());
+                for (String g : artist.getGenres()) {
+                    if (g.contains(genre) || icons.size() >= 4) {
+                        icons.add(artist.getImage().getImageURL());
+                        break;
+                    }
                 }
             }
             jo.put("artistIcon", icons);
