@@ -8,15 +8,6 @@
     color: white;
 }
 
-.logo {
-    width: 5%;
-    height: auto;
-    margin-left: 1%;
-    margin-top: 1%;
-    position: absolute;
-    pointer-events: none;
-}
-
 .content-wrapper {
     transition: opacity 1s ease-in-out, transform 1s ease-in-out;
 }

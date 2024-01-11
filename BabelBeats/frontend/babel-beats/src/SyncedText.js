@@ -7,11 +7,15 @@ function SyncedText({ songData, isPlaying, songPosition }) {
     let songTitle = songData.title.replace(/_/g, " ");
     let timestamps = songData.timestamps;
     // console.log(timestamps);
-    let translated = songData.translatedTimestamps;
+    let translated = songData.timestampsTranslated;
     const [startTime, setStartTime] = useState(new Date().getTime());
     const [passedTime, setPassedTime] = useState(0);
     const [currLine, setCurrLine] = useState("");
     const [prevLine, setPrevLine] = useState("");
+
+    const [currTransLine, setCurrTransLine] = useState("");
+    const [prevTransLine, setPrevTransLine] = useState("");
+
 
     function currentLyric() {
         // console.log(songData.length);
@@ -19,8 +23,11 @@ function SyncedText({ songData, isPlaying, songPosition }) {
             if (songPosition + passedTime < timestamps[i].value) {
                 setPrevLine((i === 0) ? "": timestamps[i-1].key);
                 setCurrLine(timestamps[i].key);
+                setPrevTransLine((i === 0) ? "": translated[i-1].key);
+                setCurrTransLine(translated[i].key);
                 // console.log(timestamps[i].value);
-                console.log(currLine);
+                // console.log(currLine);
+                console.log(currTransLine);
                 break;
             }
             // console.log(timestamps[i]);
@@ -69,11 +76,11 @@ function SyncedText({ songData, isPlaying, songPosition }) {
                     <h1 className={"currLine"}>{currLine}</h1>
                 </div>
                 <div className={"translatedLyrics"}>
-                    <h1 className={"prevLine"}>{prevLine}</h1>
-                    <h1 className={"currLine"}>{currLine}</h1>
+                    <h1 className={"prevLine"}>{prevTransLine}</h1>
+                    <h1 className={"currLine"}>{currTransLine}</h1>
                 </div>
             </div>
         </>);
 }
 
-                export default SyncedText;
+export default SyncedText;

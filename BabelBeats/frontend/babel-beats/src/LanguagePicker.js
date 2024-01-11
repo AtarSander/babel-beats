@@ -3,8 +3,8 @@ import "./LanguagePicker.css";
 import {useLocation} from "react-router-dom";
 import axios from "axios";
 
-function LanguagePicker({setSelectedLanguage, setGenreImagesJSON, userToken, refreshToken }) {
-    let languages = ["Spanish", "Italian", "Korean", "English", "Portuguese", "German", "Chinese", "French"];
+function LanguagePicker({ setSelectedLanguage, setGenreImagesJSON, userToken, refreshToken, title, languages }) {
+    // let languages = ["Spanish", "Italian", "Korean", "English", "Portuguese", "German", "Chinese", "French"];
 
     const sendRequest = async (userToken, refreshToken) => {
         try {
@@ -17,7 +17,7 @@ function LanguagePicker({setSelectedLanguage, setGenreImagesJSON, userToken, ref
 
     return (
         <>
-            <h1 className={"languageTitle"}>Pick a language:</h1>
+            <h1 className={"languageTitle"}>{title}</h1>
             <div className={"languageList"}>
                 {languages.map((value, index) => (
                     <div key={index} className={`languageListElement`} onClick={async () => {
