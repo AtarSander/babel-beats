@@ -43,7 +43,8 @@ public class RestAPI {
     public String recommendGenre(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken){
         SpotifyUser spotifyUser = new SpotifyUser(userToken, refreshToken);
         JSONArray ja = new JSONArray();
-        String[] genres = Arrays.copyOfRange(sh.countUsersGenres(spotifyUser), 0, 8);
+        String[] usersGenres = sh.countUsersGenres(spotifyUser);
+        String[] genres = Arrays.copyOfRange(usersGenres, 0, Math.min(usersGenres.length, 8));
         JSONObject jo = new JSONObject();
         for (String genre : genres) {
             jo.put("genre", genre);

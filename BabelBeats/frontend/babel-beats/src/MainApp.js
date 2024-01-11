@@ -25,6 +25,9 @@ function MainApp() {
     const [selectedTargetLanguage, setSelectedTargetLanguage] = useState(null);
     const [selectedUserLanguage, setSelectedUserLanguage] = useState(null);
 
+    const [targetLangChosen, setTargetLangChosen] = useState(null);
+    const [userLangChosen, setUserLangChosen] = useState(null);
+
     function appStateTransition(firstValue, seconds=1) {
         setAppState(firstValue);
         setTimeout(() => {
@@ -40,7 +43,7 @@ function MainApp() {
     const [genreImagesJSON, setGenreImagesJSON] = useState(null);
     useEffect(() => {
         if (genreImagesJSON != null)
-            console.log(genreImagesJSON);
+            console.log("Genre images JSON: ", genreImagesJSON);
     }, [genreImagesJSON]);
 
     const [selectedGenre, setSelectedGenre] = useState(null);
@@ -57,12 +60,41 @@ function MainApp() {
         }
     }, [selectedGenre]);
 
-    const [delayed, setDelayed] = useState(false);
-
-    const handleLanguageSelection = (language) => {
+    const handleTargetLangSelection = (language) => {
         setSelectedTargetLanguage(language);
+        console.log('Target Language: ', selectedTargetLanguage)
         appStateTransition(1);
     };
+
+    useEffect(() => {
+        const sendGenreRequest = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/recommendGenres?userToken=${userToken}&refreshToken=${refreshToken}`);
+                return response.data;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        const fetchData = async () => {
+            const genreImagesData = await sendGenreRequest();
+            setGenreImagesJSON(genreImagesData);
+        };
+
+        if (targetLangChosen != null) {
+            fetchData();
+        }
+    }, [targetLangChosen]);
+
+    useEffect(() => {
+
+    }, [userLangChosen])
+
+    const handleUserLangSelection = (language) => {
+        setSelectedUserLanguage(language);
+        console.log('User Language: ', selectedTargetLanguage);
+        // appStateTransition();
+    }
 
     return (
         <div className={`MainApp`}>
@@ -70,23 +102,19 @@ function MainApp() {
             <div className={`content-wrapper ${appState === 0 ? '' : 'hidden'}`}>
                 {appState < 2 && (
                     <LanguagePicker
-                        setSelectedLanguage={handleLanguageSelection}
-                        setGenreImagesJSON={setGenreImagesJSON}
-                        userToken={userToken}
-                        refreshToken={refreshToken}
+                        setSelectedLanguage={handleUserLangSelection}
+                        setFlag={setTargetLangChosen}
                         title={"What language do you speak?"}
                         languages={languages}
                     />
                 )}
             </div>
 
-            {/*<div className={`content-wrapper ${appState === 0 ? '' : 'hidden'}`}>*/}
+            {/*<div className={`content-wrapper ${appState === 0 ? 'before' : appState 'hidden'}`}>*/}
             {/*    {appState < 2 && (*/}
             {/*        <LanguagePicker*/}
-            {/*            setSelectedLanguage={handleLanguageSelection}*/}
-            {/*            setGenreImagesJSON={setGenreImagesJSON}*/}
-            {/*            userToken={userToken}*/}
-            {/*            refreshToken={refreshToken}*/}
+            {/*            setSelectedLanguage={handleTargetLangSelection}*/}
+            {/*            setFlag={setUserLangChosen}*/}
             {/*            title={"What language do you want to learn?"}*/}
             {/*        />*/}
             {/*    )}*/}
