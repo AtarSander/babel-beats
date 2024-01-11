@@ -10,39 +10,28 @@ public class YoutubeSearcherTests {
 
     @Test
     public void testVideoID() {
-        YoutubeSearcher youtubeSearcher = createMockedYoutubeSearcher("videoId123");
-        String result = youtubeSearcher.videoID("testQuery");
+        YoutubeSearcher youtubeSearcher = new YoutubeSearcher();
+        String result = youtubeSearcher.videoID("rockstar");
 
-        assertThat(result).isEqualTo("videoId123");
+        assertThat(result).isNotEmpty();
     }
 
     @Test
     public void testVideoLen() {
-        YoutubeSearcher youtubeSearcher = createMockedYoutubeSearcherWithLen("5");
-        int result = youtubeSearcher.videoLen("testVideoId");
+        YoutubeSearcher youtubeSearcher = new YoutubeSearcher();
+        String result = youtubeSearcher.videoID("rockstar");
+        int len = youtubeSearcher.videoLen(result);
 
-        assertThat(result).isEqualTo(5);
+        assertThat(len).isEqualTo(218000);
     }
 
     @Test
     public void testIsLenCompatible() {
-        YoutubeSearcher youtubeSearcher = createMockedYoutubeSearcherWithLen("10");
-        boolean result = youtubeSearcher.isLenCompatible("testVideoId", 8, 3);
+        YoutubeSearcher youtubeSearcher = new YoutubeSearcher();
+        String id = youtubeSearcher.videoID("rockstar");
+        boolean result = youtubeSearcher.isLenCompatible(id, 216000, 3000);
 
         assertThat(result).isTrue();
     }
 
-    private YoutubeSearcher createMockedYoutubeSearcher(String videoId) {
-        YoutubeSearcher youtubeSearcher = Mockito.spy(new YoutubeSearcher());
-        when(youtubeSearcher.videoID(any())).thenCallRealMethod();
-        when(youtubeSearcher.extractVideoId(any())).thenReturn(videoId);
-        when(youtubeSearcher.videoLen(any())).thenReturn(0);
-        return youtubeSearcher;
-    }
-
-    private YoutubeSearcher createMockedYoutubeSearcherWithLen(String videoLen) {
-        YoutubeSearcher youtubeSearcher = Mockito.spy(new YoutubeSearcher());
-        when(youtubeSearcher.videoLen(any())).thenReturn(Integer.parseInt(videoLen));
-        return youtubeSearcher;
-    }
 }

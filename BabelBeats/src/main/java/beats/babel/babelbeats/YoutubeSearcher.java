@@ -18,7 +18,10 @@ public class YoutubeSearcher {
         this.url = credentials[1];
     }
 
-    private String formatQuery(String query){
+    private String formatQuery(String query) {
+        if (query == null) {
+            throw new IllegalArgumentException("Query cannot be null");
+        }
         return query.replace(" ", "%20") + "%20audio";
     }
 
@@ -53,7 +56,20 @@ public class YoutubeSearcher {
         JSONObject item = items.getJSONObject(0);
         JSONObject contentDetails = item.getJSONObject("contentDetails");
         String durationString = contentDetails.getString("duration");
-        return ((durationString.charAt(2)) - '0') * 60 + ((durationString.charAt(4)) - '0') * 10 + (durationString.charAt(5)) - '0';
+
+        int indexT = durationString.indexOf('T');
+        int indexM = durationString.indexOf('M');
+        int indexS = durationString.indexOf('S');
+        int time = (durationString.charAt(indexT + 1) - '0') * 60000;
+
+        if(indexS != -1) {
+            if (indexS - indexM == 2)
+                time += (durationString.charAt(indexM + 1) - '0') * 1000;
+            else {
+                time += (durationString.charAt(indexM + 1) - '0') * 10000 + (durationString.charAt(indexM + 2) - '0') * 1000;
+            }
+        }
+        return time;
     }
 
     public int videoLen(String id){

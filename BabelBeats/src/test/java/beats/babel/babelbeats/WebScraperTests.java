@@ -1,47 +1,33 @@
 package beats.babel.babelbeats;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.junit.jupiter.api.Test;
-import java.io.IOException;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+
 
 
 public class WebScraperTests {
 
     @Test
-    public void testScrapeLyrics() throws IOException {
-        String url = "https://example.com";
-        String mockHtml = "<div data-lyrics-container=\"true\">Lyrics line 1<br>Lyrics line 2<br></div>";
-        WebScraper webScraper = createMockedWebScraper(mockHtml);
+    public void testScrapeLyrics() {
+        String url = "https://genius.com/Kendrick-lamar-humble-lyrics";
+        WebScraper webScraper = new WebScraper(6000);
         String result = webScraper.scrapeLyrics(url);
-
-        assertThat(result).isEqualTo("Lyrics line 1\nLyrics line 2\n");
+        String expected = "[Intro]\n" +
+                "\n" +
+                "Nobody pray for me\n" +
+                "It been that day for me\n" +
+                "Way (Yeah, yeah)";
+        result = result.substring(0, Math.min(result.length(), 68));
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
-    public void testScrapeLyricsWithIOException() throws IOException {
+    public void testScrapeLyricsWithIOException(){
         String url = "https://example.com";
-        WebScraper webScraper = createMockedWebScraperWithIOException();
+        WebScraper webScraper = new WebScraper(5000);
         String result = webScraper.scrapeLyrics(url);
 
         assertThat(result).isEmpty();
     }
 
-    private WebScraper createMockedWebScraper(String mockHtml) throws IOException {
-        Document mockDocument = Jsoup.parse(mockHtml);
-        WebScraper webScraper = mock(WebScraper.class);
-        when(webScraper.scrapeLyrics(any())).thenCallRealMethod();
-        when(Jsoup.connect(any()).userAgent(any()).timeout(any()).get()).thenReturn(mockDocument);
-        return webScraper;
-    }
 
-    private WebScraper createMockedWebScraperWithIOException() throws IOException {
-        WebScraper webScraper = mock(WebScraper.class);
-        when(webScraper.scrapeLyrics(any())).thenCallRealMethod();
-        when(Jsoup.connect(any()).userAgent(any()).timeout(any()).get()).thenThrow(IOException.class);
-        return webScraper;
-    }
 }

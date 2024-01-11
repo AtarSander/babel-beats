@@ -21,4 +21,9 @@ public class Image {
     public String getImageURL() {
         return imageURL;
     }
+
+    @Override
+    public String toString() {
+        return "Image{width="+width+", height="+height+", imageURL='"+imageURL+"'}";
+    }
 }

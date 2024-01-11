@@ -21,9 +21,9 @@ public class DeepLHandler {
         this.url = values[1];
     }
 
-    public String translate(String text, String targetLang){
+    public String translate(String text, String targetLang, String srcLang){
 //        construct api call parameters
-        String parameters = "{\"text\": [\"" + text + "\"], \"target_lang\":\"" + targetLang + "\"}";
+        String parameters = "{\"text\": [\"" + text + "\"], \"target_lang\":\"" + targetLang + "\", \"source_lang\": \"" + srcLang + "\", \"split_sentences\": \"1\", \"preserve_formatting\": true, \"context\": \"text of a song\"}";
 
 //        create http client and build http request
         var client = HttpClient.newHttpClient();

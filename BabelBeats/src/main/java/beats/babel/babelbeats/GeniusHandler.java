@@ -35,7 +35,7 @@ public class GeniusHandler {
         String search = searchGenius(query);
         JSONArray results = getResults(search);
         Vector<String> lyrics = new Vector<String>();
-        WebScraper scrape = new WebScraper(6000);
+        WebScraper scrape = new WebScraper(100000);
 
         for (int i = 0; i < results.length(); i++) {
             JSONObject result = results.getJSONObject(i);

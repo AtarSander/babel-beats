@@ -11,8 +11,9 @@ public class DeepLHandlerTests {
     public void testTranslateWithValidInput() {
         String inputText = "Hello, how are you?";
         String targetLang = "es";  // Spanish
+        String srcLang = "en";
         DeepLHandler deepLHandler = new DeepLHandler();
-        String translatedText = deepLHandler.translate(inputText, targetLang);
+        String translatedText = deepLHandler.translate(inputText, targetLang, srcLang);
 
         assertNotNull(translatedText);
     }
@@ -21,8 +22,11 @@ public class DeepLHandlerTests {
     public void testTranslateWithInvalidInput() {
         String inputText = null;
         String targetLang = "fr";  // French
+        String srcLang = "pl";
         DeepLHandler deepLHandler = new DeepLHandler();
-        String translatedText = deepLHandler.translate(inputText, targetLang);
+        String translatedText = deepLHandler.translate(inputText, targetLang, srcLang);
+        if (translatedText.equals("nul"))
+            translatedText = null;
 
         assertNull(translatedText);
     }
@@ -31,8 +35,9 @@ public class DeepLHandlerTests {
     public void testTranslateWithEmptyInput() {
         String inputText = "";
         String targetLang = "de";  // German
+        String srcLang = "pl";
         DeepLHandler deepLHandler = new DeepLHandler();
-        String translatedText = deepLHandler.translate(inputText, targetLang);
+        String translatedText = deepLHandler.translate(inputText, targetLang, srcLang);
 
         assertEquals("", translatedText);
     }

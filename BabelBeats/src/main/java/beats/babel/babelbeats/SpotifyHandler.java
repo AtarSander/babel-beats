@@ -76,10 +76,15 @@ public class SpotifyHandler {
         playerPUT(spotifyUser, "pause");
     }
 
-    public void seekPosition(SpotifyUser spotifyUser, int time){
+    public int getPosition(SpotifyUser spotifyUser) {
         String response = getPlaybackState(spotifyUser);
-        JSONObject jo = new JSONObject(response);int newTime = jo.getInt("progress_ms") + time;
-        newTime = (newTime < 0) ? 0 : newTime;
+        JSONObject jo = new JSONObject(response);
+        return jo.getInt("progress_ms");
+    }
+
+    public void seekPosition(SpotifyUser spotifyUser, int time){
+        int newTime = getPosition(spotifyUser)+ time;
+        newTime = Math.max(newTime, 0);
         playerPUT(spotifyUser, "seek?position_ms=" + newTime);
     }
 
@@ -95,6 +100,7 @@ public class SpotifyHandler {
         JSONObject jo = new JSONObject(response);
         return jo.getBoolean("is_playing");
     }
+
     public void playSongByID(SpotifyUser spotifyUser, String songID){
         String url = "https://api.spotify.com/v1/me/player/play";
         String[] header = new String[]{"Authorization"};
@@ -138,18 +144,47 @@ public class SpotifyHandler {
     public String[] countUsersGenres(SpotifyUser spotifyUser){
 //        initialize a map that has genre names as keys and their count as values
         Map<String, Integer> genres = new HashMap<>();
+        String[] officialGenres = {"pop", "rock", "hip hop", "r&b", "country",
+                "jazz", "blues", "soul", "funk", "gospel",
+                "reggae", "indie", "classical", "folk",
+                "metal", "punk", "alternative", "dance", "hyperpop", "party"};
+        Vector<String> userGenres = new Vector<>();
 //        iterate over each of users top artists and add their genres to hashmap
         artists = getUsersFavArtists(spotifyUser);
         for (Artist a : artists){
-            for (String g : a.getGenres()){
-                if (!genres.containsKey(g)){
-                    genres.put(g, 1);
-                }
-                else{
-                    genres.put(g, genres.get(g) + 1);
+            //                if (!genres.containsKey(g)){
+            //                    genres.put(g, 1);
+            //                }
+            //                else{
+            //                    genres.put(g, genres.get(g) + 1);
+            //                }
+            userGenres.addAll(Arrays.asList(a.getGenres()));
+        }
+
+        for (int i = 0; i < userGenres.size(); i++) {
+            boolean changed = false;
+            for (String og : officialGenres) {
+                if (userGenres.get(i).contains(og)) {
+                    userGenres.set(i, og);
+                    break;
                 }
             }
+            if (!changed) {
+                userGenres.set(i, "");
+            }
         }
+
+        userGenres.removeIf(String::isEmpty);
+
+        for (String g : userGenres) {
+            if (!genres.containsKey(g)) {
+                genres.put(g, 1);
+            }
+            else {
+                genres.put(g, genres.get(g) + 1);
+            }
+        }
+
         return sortByValue(genres);
     }
 

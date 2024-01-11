@@ -13,7 +13,7 @@ public class Song {
         this.name = name;
         this.image = image;
         this.id = id;
-        this.duration = duration;
+        this.duration = duration * 1000;
     }
 
     public Artist[] getArtist() {

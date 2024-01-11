@@ -74,19 +74,19 @@ public class RestAPI {
         long size;
         Song[] preShuffleSongs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(genre, language, su), 15, su);
         List<Song> songs = Arrays.asList(preShuffleSongs);
-//        Collections.shuffle(songs);
+        Collections.shuffle(songs);
 
-//        for (int i = 0; i < songs.size(); i++) {
-//            videoID = ys.videoID(songs.get(i).toString());
-//
-//            if (songs.get(i).getDuration() < 5 * 60 && ys.isLenCompatible(videoID, songs.get(i).getDuration(), 5)) {
-//                songIndex = i;
-//                break;
-//            }
-//        }
+        for (int i = 0; i < songs.size(); i++) {
+            videoID = ys.videoID(songs.get(i).toString());
 
-        songIndex = 8;
-        videoID = ys.videoID(songs.get(8).toString());
+            if (songs.get(i).getDuration() < 5 * 60000 && ys.isLenCompatible(videoID, songs.get(i).getDuration(), 5000)) {
+                songIndex = i;
+                break;
+            }
+        }
+
+//        songIndex = 6;
+//        videoID = ys.videoID(songs.get(6).toString());
 
         String name = songs.get(songIndex).toString();
         if (isSongInDatabase(name.replace(" ", "_")))
@@ -98,11 +98,13 @@ public class RestAPI {
             gh.getLyricsToFile(name, mapLanguages.get(language), true);
             MusicDownloader.download("https://www.youtube.com/watch?v=" + videoID, name);
             size = getNumberOfRecords();
-            songData = ts.saveTimestamps(name.replace(" ", "_"), size);
-            newRecord = new SongRecord(songData);
+            songData = ts.saveTimestamps(name.replace(" ", "_"), size, "pl", mapLanguages.get(language));
+            newRecord = new SongRecord();
+            newRecord.loadFromJSON(songData);
             addRecord(newRecord);
         }
-
+        sh.playSongByID(su, songs.get(songIndex).getId());
+        sh.pausePlayback(su);
 //        saveTitles(songs);
         return newRecord;
     }
@@ -111,6 +113,12 @@ public class RestAPI {
     public void seekPosition(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken, @RequestParam(required = true)int timeDiff){
         SpotifyUser spotifyUser = new SpotifyUser(userToken, refreshToken);
         sh.seekPosition(spotifyUser, timeDiff);
+    }
+
+    @GetMapping("/getSongPosition")
+    public int getPosition(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken){
+        SpotifyUser spotifyUser = new SpotifyUser(userToken, refreshToken);
+        return sh.getPosition(spotifyUser);
     }
 
     @PostMapping("/add")

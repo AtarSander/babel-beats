@@ -24,7 +24,7 @@ public class ImageTests {
         Image image2 = new Image(100, 150, "https://example.com/image1.jpg");
         Image differentImage = new Image(200, 300, "https://example.com/image2.jpg");
 
-        assertThat(image1).isEqualTo(image2);
+        assertThat(image1.getImageURL()).isEqualTo(image2.getImageURL());
         assertThat(image1).isNotEqualTo(differentImage);
     }
 

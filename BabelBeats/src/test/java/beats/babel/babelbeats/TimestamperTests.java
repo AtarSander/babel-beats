@@ -1,19 +1,17 @@
 package beats.babel.babelbeats;
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
-import java.io.File;
 import org.json.JSONObject;
 
 
 public class TimestamperTests {
     @Test
     public void testSaveTimestamps() {
-        String name = "okudakun_oeoe";
+        String name = "Juice_WRLD_Wishing_Well";
         long size = 0;
         Timestamper timestamper = new Timestamper();
-        JSONObject result = timestamper.saveTimestamps(name, size);
+        JSONObject result = timestamper.saveTimestamps(name, size, "en", "pl");
         try {
             long resultId = result.getInt("_id");
             String resultTitle = result.getString("title");
@@ -25,7 +23,6 @@ public class TimestamperTests {
             e.printStackTrace();
         }
         assertNotNull(result);
-
-        }
+    }
 }
 

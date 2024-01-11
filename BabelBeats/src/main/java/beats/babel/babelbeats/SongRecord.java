@@ -37,17 +37,23 @@ public class SongRecord {
 
     }
 
-    public SongRecord(JSONObject songData) {
+    public void loadFromJSON(JSONObject songData) {
         this.title = (String) songData.get("title");
         this._id = (long) songData.get("_id");
         JSONArray timestampsArray = (JSONArray) songData.get("timestamps");
-        for (Object obj : timestampsArray) {
-            JSONObject timestampJson = (JSONObject) obj;
+        JSONArray timestampsTranslated = (JSONArray) songData.get("timestampsTranslated");
+        for (int i = 0; i < timestampsArray.length(); i++) {
+            JSONObject timestampJson = timestampsArray .getJSONObject(i);
+            JSONObject translatedJSON = timestampsTranslated.getJSONObject(i);
             Timestamp timestamp = new Timestamp();
             timestamp.setValue((Double) timestampJson.get("value"));
             timestamp.setKey((String) timestampJson.get("key"));
+            Timestamp timestampTranslated = new Timestamp();
+            timestampTranslated.setValue((Double) translatedJSON.get("value"));
+            timestampTranslated.setKey((String) translatedJSON.get("key"));
+
             this.timestamps.add(timestamp);
-            this.timestampsTranslated.add(timestamp);
+            this.timestampsTranslated.add(timestampTranslated);
         }
     }
 
@@ -55,7 +61,7 @@ public class SongRecord {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void set_id(long _id) {
         this._id = _id;
     }
 
@@ -75,8 +81,12 @@ public class SongRecord {
         this.timestamps = timestamps;
     }
 
-
     public List<Timestamp> getTimestampsTranslated() {
         return timestampsTranslated;
     }
+
+    public void setTimestampsTranslated(List<Timestamp> timestamps) {
+        this.timestampsTranslated = timestamps;
+    }
+
 }

@@ -6,31 +6,56 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Timestamper {
     List<String[]> plain_lyric_words = new ArrayList<>();
     List<String> plain_lyric_lines = new ArrayList<>();
-    String timestamped_lyric;
+    private List<String> chosenLyrics = new ArrayList<>();
+    private String timestamped_lyric;
+    private String language;
     List<Map<String, Double>> timestamped_lines = new ArrayList<>();
     double accuracy;
     private final static String plainPath = "src/main/resources/lyrics/plainLyrics/";
-    private String language;
 
 
-    public JSONObject saveTimestamps(String name, long size) {
+    public String matchTranslated(String targetLang, String srcLang){
+        List<String> mutableList = new ArrayList<>(chosenLyrics);
+
+
+        mutableList.removeIf(String::isEmpty);
+
+        String text = String.join(". ", mutableList);
+        DeepLHandler dl = new DeepLHandler();
+        return dl.translate(text, targetLang, srcLang);
+    }
+
+    public JSONObject saveTimestamps(String name, long size, String targetLang, String srcLang) {
 //        JSONArray existingData = readJsonFromFile("src/main/resources/lyrics/processedLyrics/processedSong.json");
         List<Pair> lyrics = getTimestamps(name);
-        JSONArray jsonArray = new JSONArray();
+        JSONArray timestampsJsonArray = new JSONArray();
+        JSONArray translatedJsonArray = new JSONArray();
         JSONObject record = new JSONObject();
-        for (Pair pair : lyrics) {
-            JSONObject pairObject = new JSONObject();
-            pairObject.put("key", pair.getKey());
-            pairObject.put("value", pair.getValue());
-            jsonArray.put(pairObject);
+        String test = matchTranslated(targetLang, srcLang);
+        List<String> translatedLines = Arrays.asList(test.split("\\. "));
+        assert(translatedLines.size() == lyrics.size());
+        for (int i = 0; i < lyrics.size(); i++) {
+            Pair pair = lyrics.get(i);
+            JSONObject pairObjectTimestamp = new JSONObject();
+            JSONObject pairObjectTranslate = new JSONObject();
+            pairObjectTimestamp.put("key", pair.getKey());
+            pairObjectTimestamp.put("value", pair.getValue());
+
+            pairObjectTranslate.put("key", translatedLines.get(i));
+            pairObjectTranslate.put("value", pair.getValue());
+            timestampsJsonArray.put(pairObjectTimestamp);
+            translatedJsonArray.put(pairObjectTranslate);
         }
         record.put("_id", size+1);
         record.put("title", name);
-        record.put("timestamps", jsonArray);
+        record.put("timestamps", timestampsJsonArray);
+        record.put("timestampsTranslated", translatedJsonArray);
 //        existingData.put(record);
 //        writeJsonToFile(existingData, "src/main/resources/lyrics/processedLyrics/processedSong.json");
         return record;
@@ -52,7 +77,7 @@ public class Timestamper {
         }
     }
 
-    private List<Pair> getTimestamps(String name) {
+    protected List<Pair> getTimestamps(String name) {
         Vector<List<String>> versionsLyrics = loadPlain(name);
         callWhisper(name);
         List<Pair> lyricsTemp = new ArrayList<>();
@@ -70,10 +95,11 @@ public class Timestamper {
             if (accuracy > max_accuracy) {
                 max_accuracy = accuracy;
                 finalLyrics = lyricsTemp;
+                chosenLyrics = versionsLyrics.get(i);
             }
         }
-//        correctTimestamps(finalLyrics);
-        return finalLyrics;
+
+        return correctTimestamps(finalLyrics);
     }
 
     private void callWhisper(String name) {
@@ -99,20 +125,39 @@ public class Timestamper {
         }
     }
 
+//    private Vector<List<String>> loadPlain(String name) {
+//        Vector<List<String>> plain_lines = new Vector<List<String>>();
+//        try {
+//            JSONTokener tokener = new JSONTokener(new FileReader(plainPath + name + ".json"));
+//            JSONArray jsonArray = new JSONArray(tokener);
+//            JSONObject obj = new JSONObject();
+//            for (int i = 0; i < jsonArray.length(); i++) {
+//                obj = jsonArray.getJSONObject(i);
+//                plain_lines.add(Arrays.asList(obj.getString("lyrics").split("\n")));
+//                language = obj.getString("language");
+//            }
+//        }
+//        catch(Exception e){
+//                e.printStackTrace();
+//        }
+//
+//        return plain_lines;
+//    }
+
     private Vector<List<String>> loadPlain(String name) {
-        Vector<List<String>> plain_lines = new Vector<List<String>>();
+        Vector<List<String>> plain_lines = new Vector<>();
+
         try {
-            JSONTokener tokener = new JSONTokener(new FileReader(plainPath + name + ".json"));
-            JSONArray jsonArray = new JSONArray(tokener);
-            JSONObject obj = new JSONObject();
+            String jsonString = new String(Files.readAllBytes(Paths.get(plainPath + name + ".json")));
+            JSONArray jsonArray = new JSONArray(jsonString);
+
             for (int i = 0; i < jsonArray.length(); i++) {
-                obj = jsonArray.getJSONObject(i);
+                JSONObject obj = jsonArray.getJSONObject(i);
                 plain_lines.add(Arrays.asList(obj.getString("lyrics").split("\n")));
                 language = obj.getString("language");
             }
-        }
-        catch(Exception e){
-                e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return plain_lines;
@@ -215,7 +260,7 @@ public class Timestamper {
                 }
                 k++;
             }
-            final_lyric.add(new Pair(plain_lyric_lines.get(i), max_saved));
+            final_lyric.add(new Pair(plain_lyric_lines.get(i), max_saved * 1000));
             if (max_saved!=previous)
                 temp_accuracy++;
             previous = max_saved;
@@ -234,7 +279,7 @@ public class Timestamper {
         for (int i = 1; i < finalLyrics.size(); i++)
         {
             current = finalLyrics.get(i);
-            if (current.getValue() > prev.getValue() && current.getValue() - prev.getValue() < 5)
+            if (current.getValue() > prev.getValue() && current.getValue() - prev.getValue() < 5000)
             {
                 timeBetween += current.getValue() - prev.getValue();
                 counter++;
@@ -243,7 +288,7 @@ public class Timestamper {
         }
         timeBetween /= counter;
         if (timeBetween == 0.)
-            timeBetween = 1.;
+            timeBetween = 1000.;
         prev = finalLyrics.get(0);
         for (int i = 1; i < finalLyrics.size()-1; i++)
         {

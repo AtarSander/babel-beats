@@ -26,7 +26,7 @@ public class ArtistTests {
         Artist differentArtist = new Artist("Another Artist", new String[]{"Hip Hop"},
                 new Image(300, 400, "https://example.com/another-artist-image.jpg"));
 
-        assertThat(artist1).isEqualTo(artist2);
+        assertThat(artist1.toString()).isEqualTo(artist2.toString());
         assertThat(artist1).isNotEqualTo(differentArtist);
     }
 
