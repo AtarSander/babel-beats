@@ -12,27 +12,27 @@ function SyncedText({ songData, isPlaying, songPosition }) {
     const [passedTime, setPassedTime] = useState(0);
     const [currLine, setCurrLine] = useState("");
     const [prevLine, setPrevLine] = useState("");
+    const [prevPrevLine, setPrevPrevLine] = useState("");
 
     const [currTransLine, setCurrTransLine] = useState("");
     const [prevTransLine, setPrevTransLine] = useState("");
+    const [prevPrevTransLine, setPrevPrevTransLine] = useState("");
 
 
     function currentLyric() {
         // console.log(songData.length);
         for (let i = 0; i < timestamps.length; i++) {
             if (songPosition + passedTime < timestamps[i].value) {
-                setPrevLine((i === 0) ? "": timestamps[i-1].key);
+                setPrevPrevLine(i === 0 || i === 1 ? "" : timestamps[i - 2].key);
+                setPrevLine((i === 0) ? "" : timestamps[i-1].key);
                 setCurrLine(timestamps[i].key);
-                setPrevTransLine((i === 0) ? "": translated[i-1].key);
+
+                setPrevPrevTransLine(i === 0 || i === 1 ? "" : translated[i - 2].key);
+                setPrevTransLine((i === 0) ? "" : translated[i-1].key);
                 setCurrTransLine(translated[i].key);
-                // console.log(timestamps[i].value);
-                // console.log(currLine);
-                console.log(currTransLine);
                 break;
             }
-            // console.log(timestamps[i]);
         }
-
     }
 
     useEffect(() => {
@@ -72,10 +72,12 @@ function SyncedText({ songData, isPlaying, songPosition }) {
             </div>
             <div className={"lyricsWrapper"}>
                 <div className={"originalLyrics"}>
+                    <h1 className={"prevPrevLine"}>{prevPrevLine}</h1>
                     <h1 className={"prevLine"}>{prevLine}</h1>
                     <h1 className={"currLine"}>{currLine}</h1>
                 </div>
                 <div className={"translatedLyrics"}>
+                    <h1 className={"prevPrevLine"}>{prevPrevTransLine}</h1>
                     <h1 className={"prevLine"}>{prevTransLine}</h1>
                     <h1 className={"currLine"}>{currTransLine}</h1>
                 </div>

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "./Logo.css";
 
-function Logo() {
+function Logo({ isPlaying }) {
     const [blinkStatus, setBlinkStatus] = useState(false);
     const [logoSrc, setLogoSrc] = useState("babelBeats.png");
 
@@ -20,7 +20,7 @@ function Logo() {
 
     return (
         <div className={"logo-container"}>
-            <img className={"logo"} src={logoSrc} alt={"babelBeats"}/>
+            <img className={`logo ${isPlaying ? 'rotating' : 'notRotating'}`} src={logoSrc} alt={"babelBeats"}/>
         </div>
     );
 }

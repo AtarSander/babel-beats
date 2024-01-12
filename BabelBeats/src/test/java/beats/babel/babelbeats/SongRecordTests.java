@@ -15,20 +15,31 @@ public class SongRecordTests {
     public void testSongRecordProperties() {
         JSONObject songData = new JSONObject();
         JSONArray jsonArray = new JSONArray();
+        JSONArray jsonArrayTranslated = new JSONArray();
         List<Pair> lyrics = new ArrayList<>();
+        List<Pair> lyricsTranslated = new ArrayList<>();
         lyrics.add(new Pair("Verse 1", 10.5));
         lyrics.add(new Pair("Verse 2", 13.5));
+        lyricsTranslated.add(new Pair("Wers 1", 10.5));
+        lyricsTranslated.add(new Pair("Wers 2", 13.5));
 
         try {
-            for (Pair pair : lyrics) {
+            for (int i = 0; i<lyrics.size(); i++) {
+                Pair pair = lyrics.get(i);
+                Pair translatedPair = lyricsTranslated.get(i);
                 JSONObject pairObject = new JSONObject();
+                JSONObject translatedPairObject = new JSONObject();
                 pairObject.put("key", pair.getKey());
                 pairObject.put("value", pair.getValue());
+                translatedPairObject.put("key", translatedPair.getKey());
+                translatedPairObject.put("value", translatedPair.getValue());
                 jsonArray.put(pairObject);
-                songData.put("_id", 123L);
-                songData.put("title", "Example Song");
-                songData.put("timestamps", jsonArray);
+                jsonArrayTranslated.put(translatedPairObject);
             }
+            songData.put("_id", 123L);
+            songData.put("title", "Example Song");
+            songData.put("timestamps", jsonArray);
+            songData.put("timestampsTranslated", jsonArrayTranslated);
             }
             catch (JSONException e) {
                 e.printStackTrace();

@@ -42,10 +42,10 @@ def transcript(filepath, language):
 def generate_transcripts(song_name, language):
     separate_vocals(song_name)
     result = transcript(f"""src/main/resources/audio/htdemucs/{song_name}/vocals.mp3""", language)
-    try:
-        os.remove(f"""src/main/resources/audio/htdemucs/{song_name}""")
-    except OSError as e:
-        print(f"Error deleting audio file: {e}")
+    # try:
+    #     os.remove(f"""src/main/resources/audio/htdemucs/{song_name}""")
+    # except OSError as e:
+    #     print(f"Error deleting audio file: {e}")
     with open(f"""src/main/resources/lyrics/timestamps/{song_name}.json""", 'w', encoding='utf-8') as json_file:
         json.dump(result, json_file, ensure_ascii=False)
 

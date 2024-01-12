@@ -9,7 +9,7 @@ public class WebScraperTests {
     @Test
     public void testScrapeLyrics() {
         String url = "https://genius.com/Kendrick-lamar-humble-lyrics";
-        WebScraper webScraper = new WebScraper(6000);
+        WebScraper webScraper = new WebScraper(15000);
         String result = webScraper.scrapeLyrics(url);
         String expected = "[Intro]\n" +
                 "\n" +

@@ -100,7 +100,7 @@ function MainApp() {
 
     return (
         <div className={`MainApp`}>
-            <Logo/>
+            <Logo isPlaying={isPlaying}/>
             <div className={`content-wrapper ${appState === 0 ? '' : 'hidden'}`}>
                 {appState < 2 && (
                     <LanguagePicker

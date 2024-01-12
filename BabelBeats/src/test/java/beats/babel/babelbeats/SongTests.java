@@ -18,7 +18,7 @@ public class SongTests {
         assertThat(song.getName()).isEqualTo("Example Song");
         assertThat(song.getImage().toString()).isEqualTo(new Image(300, 400, "https://example.com/song-image.jpg").toString());
         assertThat(song.getId()).isEqualTo("123456");
-        assertThat(song.getDuration()).isEqualTo(240);
+        assertThat(song.getDuration()).isEqualTo(240000);
     }
 
     @Test

@@ -82,13 +82,17 @@ public class RestAPI {
         Timestamper ts = new Timestamper();
         List<String> blacklist = new ArrayList<>();
         String videoID = "";
-        int songIndex = 19;
+        int songIndex = 4;
         JSONObject songData;
         SongRecord newRecord;
         long size;
-        Song[] preShuffleSongs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(genre, targetLang, su), 20, su);
+        Song[] preShuffleSongs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(genre, targetLang, su), 30, su);
         List<Song> songs = Arrays.asList(preShuffleSongs);
-//        Collections.shuffle(songs);
+//        List<Song> temp = new ArrayList<>(songs);
+//        temp.removeIf(Objects::isNull);
+//        songs = temp;
+//        Collections.shuffle(temp);
+
         while(true) {
 //            for (int i = 0; i < songs.size(); i++) {
 //                Song song = songs.get(i);
@@ -106,7 +110,9 @@ public class RestAPI {
             String name = songs.get(songIndex).toString();
             if (isSongInDatabase(name.replace(" ", "_"))) {
                 newRecord = getRecordByTitle(name.replace(" ", "_"));
-            } else {
+            }
+            else
+            {
                 gh.getLyricsToFile(name, mapLanguages.get(targetLang), true);
                 MusicDownloader.download("https://www.youtube.com/watch?v=" + videoID, name);
                 size = getNumberOfRecords();

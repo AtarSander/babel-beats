@@ -90,7 +90,9 @@ public class Timestamper {
         List<Pair> finalLyrics = new ArrayList<>();
         double max_accuracy = 0.;
         for (int i = 0; i<versionsLyrics.size(); i++) {
-            plain_lyric_lines = versionsLyrics.get(i);
+            List<String> tempJavaIsShit = new ArrayList<>(versionsLyrics.get(i));
+            tempJavaIsShit.removeIf(String::isEmpty);
+            plain_lyric_lines = tempJavaIsShit;
             plain_lyric_words.clear();
             for (String line : plain_lyric_lines) {
                 plain_lyric_words.add(separateWords(line));
@@ -102,6 +104,7 @@ public class Timestamper {
                 chosenLyrics = versionsLyrics.get(i);
             }
         }
+        accuracy = max_accuracy;
         return correctTimestamps(finalLyrics);
     }
 
@@ -233,7 +236,7 @@ public class Timestamper {
 
     private List<Pair> timestamp() {
         int i = 0, j, k, l, count, max_count;
-        double saved = 0., max_saved = 0., previous = -1., temp_accuracy=0.;
+        double saved = 0., max_saved = 0., previous = -1., temp_accuracy=0., total_accuracy=0.;
         String[] line_plain;
         Map<String, Double> line_stamped;
         List<Pair> final_lyric = new ArrayList<>();
@@ -264,17 +267,17 @@ public class Timestamper {
                 if (count > max_count && saved > previous) {
                     max_count = count;
                     max_saved = saved;
+                    temp_accuracy = (double) count/line_plain.length;
                 }
                 k++;
             }
+            total_accuracy += temp_accuracy;
             final_lyric.add(new Pair(plain_lyric_lines.get(i), max_saved * 1000));
-            if (max_saved!=previous)
-                temp_accuracy++;
             previous = max_saved;
             i++;
 
         }
-        accuracy = temp_accuracy/timestamped_lines.size();
+        accuracy = total_accuracy/plain_lyric_words.size();
         return final_lyric;
     }
 

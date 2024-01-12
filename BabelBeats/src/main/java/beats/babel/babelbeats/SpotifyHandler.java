@@ -237,12 +237,12 @@ public class SpotifyHandler {
         int i = 0;
         int skipped = 0;
 
-        while (i < items.length()){
+        while (i < items.length() - skipped){
 //            get current song json
             JSONObject item = items.getJSONObject(i + skipped);
             JSONObject track = item.getJSONObject("track");
 //            extract songs name
-            String name = track.getString("name");
+            String name = track.getString("name").replace("\"", "");
 
 //            extract songId
             String songId = track.getString("id");

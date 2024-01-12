@@ -9,6 +9,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.deepl.api.*;
 
@@ -40,6 +41,9 @@ public class DeepLHandler {
 //        builder.header("Content-Type", "application/json");
 //        builder.POST(HttpRequest.BodyPublishers.ofString(parameters));
 //        HttpRequest request = builder.build();
+        targetLang = Objects.equals(targetLang, "en") ? "en-US" : targetLang;
+//        srcLang = Objects.equals(srcLang, "en") ? "en-US" : srcLang;
+
         TextTranslationOptions tto = new TextTranslationOptions();
         Translator translator = new Translator(authKey);
         tto.setContext("text of a song");

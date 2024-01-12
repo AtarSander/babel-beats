@@ -7,8 +7,15 @@
     /*pointer-events: none;*/
     cursor: grab !important;
     overflow: hidden;
-    transform: translatey(0px);
-    animation: rotate 8s linear infinite;
+    /*animation: rotate 8s linear infinite;*/
+}
+
+.notRotating {
+    animation:  rotation 8s linear infinite;
+}
+
+.rotating {
+    animation: vinylAnimation 2s linear infinite;
 }
 
 .logo-container{
@@ -30,7 +37,7 @@
 }
 
 
-@keyframes rotate{
+@keyframes rotation{
     0%{
         transform: rotate(0deg);
     }
@@ -47,4 +54,22 @@
         transform: rotate(0deg);
     }
 
+}
+
+@keyframes vinylAnimation {
+    0%{
+        transform: rotate(0deg);
+    }
+    25%{
+        transform: rotate(90deg);
+    }
+    50%{
+        transform: rotate(180deg);
+    }
+    75%{
+        transform: rotate(270deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
 }
