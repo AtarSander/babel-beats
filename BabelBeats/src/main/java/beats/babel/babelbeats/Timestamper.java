@@ -8,6 +8,8 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.Path;
+
 
 public class Timestamper {
     List<String[]> plain_lyric_words = new ArrayList<>();
@@ -20,27 +22,29 @@ public class Timestamper {
     private final static String plainPath = "src/main/resources/lyrics/plainLyrics/";
 
 
-    public String matchTranslated(String targetLang, String srcLang){
+    public List<String> matchTranslated(String targetLang, String srcLang){
         List<String> mutableList = new ArrayList<>(chosenLyrics);
-
 
         mutableList.removeIf(String::isEmpty);
 
-        String text = String.join(". ", mutableList);
+//        String text = String.join(". ", mutableList);
         DeepLHandler dl = new DeepLHandler();
-        return dl.translate(text, targetLang, srcLang);
+        return dl.translate(mutableList, targetLang, srcLang);
     }
 
     public JSONObject saveTimestamps(String name, long size, String targetLang, String srcLang) {
 //        JSONArray existingData = readJsonFromFile("src/main/resources/lyrics/processedLyrics/processedSong.json");
         List<Pair> lyrics = getTimestamps(name);
+        JSONObject record = new JSONObject();
+        if (accuracy < 0.1)
+                return record;
         JSONArray timestampsJsonArray = new JSONArray();
         JSONArray translatedJsonArray = new JSONArray();
-        JSONObject record = new JSONObject();
-        String test = matchTranslated(targetLang, srcLang);
-        List<String> translatedLines = Arrays.asList(test.split("\\. "));
+        
+        List<String> translatedLines = matchTranslated(targetLang, srcLang);
+//        List<String> translatedLines = Arrays.asList(test.split("\\. "));
         assert(translatedLines.size() == lyrics.size());
-        for (int i = 0; i < lyrics.size(); i++) {
+        for (int i = 0; i < Math.min(lyrics.size(), translatedLines.size()); i++) {
             Pair pair = lyrics.get(i);
             JSONObject pairObjectTimestamp = new JSONObject();
             JSONObject pairObjectTranslate = new JSONObject();
@@ -98,7 +102,6 @@ public class Timestamper {
                 chosenLyrics = versionsLyrics.get(i);
             }
         }
-
         return correctTimestamps(finalLyrics);
     }
 
@@ -123,31 +126,14 @@ public class Timestamper {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
 
-//    private Vector<List<String>> loadPlain(String name) {
-//        Vector<List<String>> plain_lines = new Vector<List<String>>();
-//        try {
-//            JSONTokener tokener = new JSONTokener(new FileReader(plainPath + name + ".json"));
-//            JSONArray jsonArray = new JSONArray(tokener);
-//            JSONObject obj = new JSONObject();
-//            for (int i = 0; i < jsonArray.length(); i++) {
-//                obj = jsonArray.getJSONObject(i);
-//                plain_lines.add(Arrays.asList(obj.getString("lyrics").split("\n")));
-//                language = obj.getString("language");
-//            }
-//        }
-//        catch(Exception e){
-//                e.printStackTrace();
-//        }
-//
-//        return plain_lines;
-//    }
+    }
 
     private Vector<List<String>> loadPlain(String name) {
         Vector<List<String>> plain_lines = new Vector<>();
-
-        try {
+        Path filePath = Paths.get(plainPath + name + ".json");
+        try
+        {
             String jsonString = new String(Files.readAllBytes(Paths.get(plainPath + name + ".json")));
             JSONArray jsonArray = new JSONArray(jsonString);
 
@@ -160,10 +146,21 @@ public class Timestamper {
             e.printStackTrace();
         }
 
+//        try
+//        {
+//            Files.delete(filePath);
+//            System.out.println("The file " + plainPath + name + ".json" + " has been successfully deleted.");
+//        }
+//        catch (IOException e) {
+//            System.err.println("Error: Unable to delete the file " + plainPath + name + ".json");
+//            e.printStackTrace();
+//        }
         return plain_lines;
     }
 
-    private void loadTimestamped(String path) {
+    private void loadTimestamped(String path)
+    {
+        Path filePath = Paths.get(path);
         try {
             BufferedReader reader = new BufferedReader(new FileReader(path));
             StringBuilder jsonString = new StringBuilder();
@@ -176,6 +173,16 @@ public class Timestamper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+//        try
+//        {
+//            Files.delete(filePath);
+//            System.out.println("The file " + path + " has been successfully deleted.");
+//        }
+//        catch (IOException e) {
+//            System.err.println("Error: Unable to delete the file " + path + ".json");
+//            e.printStackTrace();
+//        }
     }
 
     private Map<String, Double> mapTimestampsLine(String timestamped_line) {
@@ -314,5 +321,10 @@ public class Timestamper {
             finalLyrics.set(finalLyrics.size()-1, new Pair(finalLyrics.getLast().getKey(), result));
         }
         return finalLyrics;
+    }
+
+    public double getAccuracy()
+    {
+        return this.accuracy;
     }
 }

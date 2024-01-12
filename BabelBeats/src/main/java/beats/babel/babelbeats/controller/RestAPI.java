@@ -1,9 +1,11 @@
 package beats.babel.babelbeats.controller;
 import beats.babel.babelbeats.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -15,10 +17,17 @@ import java.util.*;
 public class RestAPI {
     private final SpotifyHandler sh;
     private final SongDBService songDBService;
-    private final Map<String, String> mapLanguages = Map.of("English", "en", "Japanese", "ja", "Spanish", "es", "Italian", "it", "Portuguese", "pt", "Chinese", "zh", "German", "de", "Korean", "ko");
+    private Map<String, String> mapLanguages;
     public RestAPI(SongDBService songDBService){
         this.sh = new SpotifyHandler();
         this.songDBService = songDBService;
+        try{
+            ObjectMapper om = new ObjectMapper();
+            this.mapLanguages = om.readValue(new File("src/main/resources/languageMap.json"), Map.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @GetMapping("/resume")
@@ -66,51 +75,61 @@ public class RestAPI {
     }
 
     @GetMapping("/loadRecommendedSong")
-    public SongRecord loadRecommendedSong(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken, @RequestParam(required = true)int genre, @RequestParam(required = true)String language){
+    public SongRecord loadRecommendedSong(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken, @RequestParam(required = true)int genre, @RequestParam(required = true)String targetLang, @RequestParam(required = true)String userLang){
         SpotifyUser su = new SpotifyUser(userToken, refreshToken);
         YoutubeSearcher ys = new YoutubeSearcher();
         GeniusHandler gh = new GeniusHandler();
         Timestamper ts = new Timestamper();
+        List<String> blacklist = new ArrayList<>();
         String videoID = "";
-        int songIndex = 0;
+        int songIndex = 19;
         JSONObject songData;
         SongRecord newRecord;
         long size;
-        Song[] preShuffleSongs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(genre, language, su), 15, su);
+        Song[] preShuffleSongs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(genre, targetLang, su), 20, su);
         List<Song> songs = Arrays.asList(preShuffleSongs);
-        Collections.shuffle(songs);
-
-        for (int i = 0; i < songs.size(); i++) {
-            videoID = ys.videoID(songs.get(i).toString());
-
-            if (songs.get(i).getDuration() < 5 * 60000 && ys.isLenCompatible(videoID, songs.get(i).getDuration(), 5000)) {
-                songIndex = i;
-                break;
-            }
-        }
+//        Collections.shuffle(songs);
+        while(true) {
+//            for (int i = 0; i < songs.size(); i++) {
+//                Song song = songs.get(i);
+//                if (song.getDuration() < 5 * 60000 && !blacklist.contains(song.toString())) {
+//                    videoID = ys.videoID(song.toString());
+//                    if(ys.isLenCompatible(videoID, song.getDuration(), 5000))
+//                        songIndex = i;
+//                    break;
+//                }
+//            }
 
 //        songIndex = 6;
-//        videoID = ys.videoID(songs.get(6).toString());
+        videoID = ys.videoID(songs.get(songIndex).toString());
 
-        String name = songs.get(songIndex).toString();
-        if (isSongInDatabase(name.replace(" ", "_")))
-        {
-            newRecord = getRecordByTitle(name.replace(" ", "_"));
-        }
-        else
-        {
-            gh.getLyricsToFile(name, mapLanguages.get(language), true);
-            MusicDownloader.download("https://www.youtube.com/watch?v=" + videoID, name);
-            size = getNumberOfRecords();
-            songData = ts.saveTimestamps(name.replace(" ", "_"), size, "pl", mapLanguages.get(language));
-            newRecord = new SongRecord();
-            newRecord.loadFromJSON(songData);
-            addRecord(newRecord);
-        }
-        sh.playSongByID(su, songs.get(songIndex).getId());
-        sh.pausePlayback(su);
+            String name = songs.get(songIndex).toString();
+            if (isSongInDatabase(name.replace(" ", "_"))) {
+                newRecord = getRecordByTitle(name.replace(" ", "_"));
+            } else {
+                gh.getLyricsToFile(name, mapLanguages.get(targetLang), true);
+                MusicDownloader.download("https://www.youtube.com/watch?v=" + videoID, name);
+                size = getNumberOfRecords();
+                try {
+                    songData = ts.saveTimestamps(name.replace(" ", "_"), size, mapLanguages.get(userLang), mapLanguages.get(targetLang));
+                }
+                catch(Exception e){
+                    blacklist.add(name);
+                    continue;
+                }
+                if (songData.isEmpty()) {
+                    blacklist.add(name);
+                    continue;
+                }
+                newRecord = new SongRecord();
+                newRecord.loadFromJSON(songData);
+                addRecord(newRecord);
+            }
+            sh.playSongByID(su, songs.get(songIndex).getId());
+            sh.pausePlayback(su);
 //        saveTitles(songs);
-        return newRecord;
+            return newRecord;
+        }
     }
 
     @GetMapping("/seekPosition")

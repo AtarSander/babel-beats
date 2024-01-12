@@ -234,9 +234,12 @@ public class SpotifyHandler {
 
 //        init sons table
         Song[] songs = new Song[items.length()];
-        for (int i = 0; i < items.length(); i++){
+        int i = 0;
+        int skipped = 0;
+
+        while (i < items.length()){
 //            get current song json
-            JSONObject item = items.getJSONObject(i);
+            JSONObject item = items.getJSONObject(i + skipped);
             JSONObject track = item.getJSONObject("track");
 //            extract songs name
             String name = track.getString("name");
@@ -253,13 +256,22 @@ public class SpotifyHandler {
 //            init Artist[]
             Artist[] artists = new Artist[artistIds.length()];
 
+            int popularity = 0;
+
             for (int j = 0; j < artistIds.length(); j++){
 //                get artistId
                 String artistId = artistIds.getJSONObject(j).getString("id");
                 JSONObject artistJson = new JSONObject(fetchArtistJSON(artistId, spotifyUser));
                 Artist tempArtist = createArtistFromJson(artistJson);
-                if (tempArtist != null)
+                if (tempArtist != null) {
                     artists[j] = tempArtist;
+                    popularity = Math.max(popularity, artistJson.getInt("popularity"));
+                }
+            }
+
+            if (popularity < 40) {
+                skipped++;
+                continue;
             }
 
 //            get song image
@@ -269,6 +281,7 @@ public class SpotifyHandler {
 
 //            add song to songs
             songs[i] = new Song(artists, name, image, songId, duration);
+            i++;
         }
         return songs;
     }

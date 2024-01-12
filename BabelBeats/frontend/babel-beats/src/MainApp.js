@@ -37,7 +37,7 @@ function MainApp() {
 
     useEffect(() => {
         if (selectedTargetLanguage != null)
-            console.log(`Selected language: ${selectedTargetLanguage}`);
+            console.log(`Selected target language: ${selectedTargetLanguage}`);
     }, [selectedTargetLanguage]);
 
     const [genreImagesJSON, setGenreImagesJSON] = useState(null);
@@ -49,21 +49,21 @@ function MainApp() {
     const [selectedGenre, setSelectedGenre] = useState(null);
     useEffect(() => {
         async function sendRequest() {
-            const response = await axios.get(`http://localhost:8080/api/loadRecommendedSong?userToken=${userToken}&refreshToken=${refreshToken}&genre=${selectedGenre}&language=${selectedTargetLanguage}`,);
-            appStateTransition(5);
+            const response = await axios.get(`http://localhost:8080/api/loadRecommendedSong?userToken=${userToken}&refreshToken=${refreshToken}&genre=${selectedGenre}&targetLang=${selectedTargetLanguage}&userLang=${selectedUserLanguage}`);
+            appStateTransition(7);
+
             console.log(`Recommended song json: `, response.data)
             setSongData(response.data);
         }
         if (selectedGenre != null) {
             sendRequest();
-            appStateTransition(3);
+            appStateTransition(5);
         }
     }, [selectedGenre]);
 
     const handleTargetLangSelection = (language) => {
         setSelectedTargetLanguage(language);
-        console.log('Target Language: ', selectedTargetLanguage)
-        appStateTransition(1);
+        appStateTransition(3);
     };
 
     useEffect(() => {
@@ -87,14 +87,16 @@ function MainApp() {
     }, [targetLangChosen]);
 
     useEffect(() => {
-
-    }, [userLangChosen])
+        if (selectedUserLanguage != null)
+            console.log(`Selected user language: ${selectedUserLanguage}`);
+    }, [selectedUserLanguage]);
 
     const handleUserLangSelection = (language) => {
         setSelectedUserLanguage(language);
-        console.log('User Language: ', selectedTargetLanguage);
-        // appStateTransition();
+        appStateTransition(1);
     }
+
+    console.log(appState);
 
     return (
         <div className={`MainApp`}>
@@ -103,41 +105,48 @@ function MainApp() {
                 {appState < 2 && (
                     <LanguagePicker
                         setSelectedLanguage={handleUserLangSelection}
-                        setFlag={setTargetLangChosen}
+                        setFlag={setUserLangChosen}
                         title={"What language do you speak?"}
-                        languages={languages}
+                        languages={userLanguages}
+                        langListElementCSS={"userLangListElement"}
+                        imageWidth={150}
+                        imageHeight={100}
                     />
                 )}
             </div>
 
-            {/*<div className={`content-wrapper ${appState === 0 ? 'before' : appState 'hidden'}`}>*/}
-            {/*    {appState < 2 && (*/}
-            {/*        <LanguagePicker*/}
-            {/*            setSelectedLanguage={handleTargetLangSelection}*/}
-            {/*            setFlag={setUserLangChosen}*/}
-            {/*            title={"What language do you want to learn?"}*/}
-            {/*        />*/}
-            {/*    )}*/}
-            {/*</div>*/}
+            <div className={`content-wrapper ${appState === 1 ? 'before' : appState >= 3 ? 'hidden' : ''}`}>
+                {appState >= 2 && appState <= 3 && (
+                    <LanguagePicker
+                        setSelectedLanguage={handleTargetLangSelection}
+                        setFlag={setTargetLangChosen}
+                        title={"What language do you want to learn?"}
+                        languages={languages}
+                        langListElementCSS={"targetLangListElement"}
+                        imageWidth={300}
+                        imageHeight={200}
+                    />
+                )}
+            </div>
 
-            <div className={`genre-wrapper ${appState === 1 ? 'before' : appState >= 3 ? 'hidden' : ''}`}>
-                {(appState === 2 || appState === 3) && (
+            <div className={`genre-wrapper ${appState === 3 ? 'before' : appState >= 5 ? 'hidden' : ''}`}>
+                {(appState === 4 || appState === 5) && (
                     <GenrePicker
                         genreImagesJSON={genreImagesJSON}
                         setSelectedGenre={setSelectedGenre}
                     />
                 )}
             </div>
-            <div className={`wait-wrapper ${appState === 3 ? 'before' : appState >= 7 ? 'hidden' : ''}`}>
-                {(appState >= 3 && appState <= 7) && (
+            <div className={`wait-wrapper ${appState === 5 ? 'before' : appState >= 9 ? 'hidden' : ''}`}>
+                {(appState >= 5 && appState <= 9) && (
                     <h1 className={"waitTitle"}>YOUR MUSIC IS BEING PREPARED!</h1>
                 )}
-                {appState >= 5 && appState <= 7 &&
-                    <button className={`musicReadyButton ${appState === 5 ? 'before' : ''}`}
-                            onClick={() => appStateTransition(7)}>Ready</button>}
+                {appState >= 7 && appState <= 9 &&
+                    <button className={`musicReadyButton ${appState === 7 ? 'before' : ''}`}
+                            onClick={() => appStateTransition(9)}>Ready</button>}
             </div>
-            <div className={`syncedText-wrapper ${appState === 7 ? 'before' : appState >= 9 ? 'hidden' : ''}`}>
-                {appState >= 7 && <SyncedText songData={songData} isPlaying={isPlaying} songPosition={songPosition}/>}
+            <div className={`syncedText-wrapper ${appState === 9 ? 'before' : appState >= 11 ? 'hidden' : ''}`}>
+                {appState >= 9 && <SyncedText songData={songData} isPlaying={isPlaying} songPosition={songPosition}/>}
             </div>
             <BottomBar userToken={userToken} refreshToken={refreshToken} isPlaying={isPlaying}
                        setIsPlaying={setIsPlaying} songPosition={songPosition} setSongPosition={setSongPosition}/>
