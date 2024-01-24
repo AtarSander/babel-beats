@@ -9,4 +9,21 @@ public class Image {
         this.height = height;
         this.imageURL = imageURL;
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    @Override
+    public String toString() {
+        return "Image{width="+width+", height="+height+", imageURL='"+imageURL+"'}";
+    }
 }

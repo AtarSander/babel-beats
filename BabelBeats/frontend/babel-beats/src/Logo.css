@@ -1,0 +1,75 @@
+.logo {
+    width: 5%;
+    height: auto;
+    margin-left: 1%;
+    margin-top: 1%;
+    position: absolute;
+    /*pointer-events: none;*/
+    cursor: grab !important;
+    overflow: hidden;
+    /*animation: rotate 8s linear infinite;*/
+}
+
+.notRotating {
+    animation:  rotation 8s linear infinite;
+}
+
+.rotating {
+    animation: vinylAnimation 2s linear infinite;
+}
+
+.logo-container{
+    animation: float 8s ease-in-out infinite;
+
+}
+
+@keyframes float {
+    0% {
+        /*box-shadow: 0 5px 15px 0 rgba(0,0,0,0.6);*/
+        transform: translatey(0px);
+    }
+    50% {
+        transform: translatey(-10px);
+    }
+    100% {
+        transform: translatey(0px);
+    }
+}
+
+
+@keyframes rotation{
+    0%{
+        transform: rotate(0deg);
+    }
+    25%{
+        transform: rotate(5deg);
+    }
+    50%{
+        transform: rotate(0deg);
+    }
+    75%{
+        transform: rotate(-5deg);
+    }
+    100%{
+        transform: rotate(0deg);
+    }
+
+}
+
+@keyframes vinylAnimation {
+    0%{
+        transform: rotate(0deg);
+    }
+    25%{
+        transform: rotate(90deg);
+    }
+    50%{
+        transform: rotate(180deg);
+    }
+    75%{
+        transform: rotate(270deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}

@@ -1,0 +1,13 @@
+.bottomBar {
+    display: inline-flex;
+    justify-content: center;
+    /*align-items: flex-end;*/
+    vertical-align: middle;
+    height: 10vh;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background-color: #2B2D30;
+    border: #565252;
+    border-radius: 2vh 2vh 0 0;
+}

@@ -1,36 +1,115 @@
 package beats.babel.babelbeats;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.*;
 import java.util.*;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.charset.StandardCharsets;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.Path;
+
 
 public class Timestamper {
     List<String[]> plain_lyric_words = new ArrayList<>();
     List<String> plain_lyric_lines = new ArrayList<>();
-    String timestamped_lyric;
+    private List<String> chosenLyrics = new ArrayList<>();
+    private String timestamped_lyric;
+    private String language;
     List<Map<String, Double>> timestamped_lines = new ArrayList<>();
-    private final static String plainPath = "src/main/resources/lyrics/songs_data.json";
+    double accuracy;
+    private final static String plainPath = "src/main/resources/lyrics/plainLyrics/";
 
-    public List<Pair> getTimestamps(String name) {
-        loadPlain(name);
+
+    public List<String> matchTranslated(String targetLang, String srcLang){
+        List<String> mutableList = new ArrayList<>(chosenLyrics);
+
+        mutableList.removeIf(String::isEmpty);
+
+//        String text = String.join(". ", mutableList);
+        DeepLHandler dl = new DeepLHandler();
+        return dl.translate(mutableList, targetLang, srcLang);
+    }
+
+    public JSONObject saveTimestamps(String name, long size, String targetLang, String srcLang) {
+//        JSONArray existingData = readJsonFromFile("src/main/resources/lyrics/processedLyrics/processedSong.json");
+        List<Pair> lyrics = getTimestamps(name);
+        JSONObject record = new JSONObject();
+        if (accuracy < 0.1)
+                return record;
+        JSONArray timestampsJsonArray = new JSONArray();
+        JSONArray translatedJsonArray = new JSONArray();
+        
+        List<String> translatedLines = matchTranslated(targetLang, srcLang);
+//        List<String> translatedLines = Arrays.asList(test.split("\\. "));
+        assert(translatedLines.size() == lyrics.size());
+        for (int i = 0; i < Math.min(lyrics.size(), translatedLines.size()); i++) {
+            Pair pair = lyrics.get(i);
+            JSONObject pairObjectTimestamp = new JSONObject();
+            JSONObject pairObjectTranslate = new JSONObject();
+            pairObjectTimestamp.put("key", pair.getKey());
+            pairObjectTimestamp.put("value", pair.getValue());
+
+            pairObjectTranslate.put("key", translatedLines.get(i));
+            pairObjectTranslate.put("value", pair.getValue());
+            timestampsJsonArray.put(pairObjectTimestamp);
+            translatedJsonArray.put(pairObjectTranslate);
+        }
+        record.put("_id", size+1);
+        record.put("title", name);
+        record.put("timestamps", timestampsJsonArray);
+        record.put("timestampsTranslated", translatedJsonArray);
+//        existingData.put(record);
+//        writeJsonToFile(existingData, "src/main/resources/lyrics/processedLyrics/processedSong.json");
+        return record;
+    }
+
+    private static JSONArray readJsonFromFile(String fileName) {
+        try (FileReader fileReader = new FileReader(fileName)) {
+            return new JSONArray(new JSONTokener(fileReader));
+        } catch (IOException e) {
+            return new JSONArray();
+        }
+    }
+
+    private static void writeJsonToFile(JSONArray data, String fileName) {
+        try (FileWriter fileWriter = new FileWriter(fileName)) {
+            fileWriter.write(data.toString(2));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected List<Pair> getTimestamps(String name) {
+        Vector<List<String>> versionsLyrics = loadPlain(name);
         callWhisper(name);
+        List<Pair> lyricsTemp = new ArrayList<>();
         loadTimestamped("src/main/resources/lyrics/timestamps/" + name + ".json");
         aggregateLines();
-        return timestamp();
+        List<Pair> finalLyrics = new ArrayList<>();
+        double max_accuracy = 0.;
+        for (int i = 0; i<versionsLyrics.size(); i++) {
+            List<String> tempJavaIsShit = new ArrayList<>(versionsLyrics.get(i));
+            tempJavaIsShit.removeIf(String::isEmpty);
+            plain_lyric_lines = tempJavaIsShit;
+            plain_lyric_words.clear();
+            for (String line : plain_lyric_lines) {
+                plain_lyric_words.add(separateWords(line));
+            }
+            lyricsTemp = timestamp();
+            if (accuracy > max_accuracy) {
+                max_accuracy = accuracy;
+                finalLyrics = lyricsTemp;
+                chosenLyrics = versionsLyrics.get(i);
+            }
+        }
+        accuracy = max_accuracy;
+        return correctTimestamps(finalLyrics);
     }
 
     private void callWhisper(String name) {
-        ProcessBuilder pb = new ProcessBuilder("python", "src/main/python/transcript.py", name);
+        ProcessBuilder pb = new ProcessBuilder("python", "src/main/python/transcript.py", name, language);
         pb.redirectErrorStream(true);
 
         try {
@@ -46,33 +125,45 @@ public class Timestamper {
 
             // Wait for the process to finish
             int exitCode = process.waitFor();
-            System.out.println("Exit Code: " + exitCode);
+            System.out.println("Whisper Exit Code: " + exitCode);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
-    private void loadPlain(String name) {
-        try {
-            JSONTokener tokener = new JSONTokener(new FileReader("src/main/resources/lyrics/songs_data.json"));
-            JSONArray jsonArray = new JSONArray(tokener);
-            JSONObject obj = new JSONObject();
+    private Vector<List<String>> loadPlain(String name) {
+        Vector<List<String>> plain_lines = new Vector<>();
+        Path filePath = Paths.get(plainPath + name + ".json");
+        try
+        {
+            String jsonString = new String(Files.readAllBytes(Paths.get(plainPath + name + ".json")));
+            JSONArray jsonArray = new JSONArray(jsonString);
+
             for (int i = 0; i < jsonArray.length(); i++) {
-                obj = jsonArray.getJSONObject(i);
-                if (obj.getString("title").equals(name))
-                    break;
+                JSONObject obj = jsonArray.getJSONObject(i);
+                plain_lines.add(Arrays.asList(obj.getString("lyrics").split("\n")));
+                language = obj.getString("language");
             }
-            plain_lyric_lines = Arrays.asList(obj.getString("lyrics").split("\n"));
-            for (String line : plain_lyric_lines) {
-                plain_lyric_words.add(separateWords(line));
-            }
-        }
-        catch(Exception e){
-                e.printStackTrace();
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-    private void loadTimestamped(String path) {
+//        try
+//        {
+//            Files.delete(filePath);
+//            System.out.println("The file " + plainPath + name + ".json" + " has been successfully deleted.");
+//        }
+//        catch (IOException e) {
+//            System.err.println("Error: Unable to delete the file " + plainPath + name + ".json");
+//            e.printStackTrace();
+//        }
+        return plain_lines;
+    }
+
+    private void loadTimestamped(String path)
+    {
+        Path filePath = Paths.get(path);
         try {
             BufferedReader reader = new BufferedReader(new FileReader(path));
             StringBuilder jsonString = new StringBuilder();
@@ -85,6 +176,16 @@ public class Timestamper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+//        try
+//        {
+//            Files.delete(filePath);
+//            System.out.println("The file " + path + " has been successfully deleted.");
+//        }
+//        catch (IOException e) {
+//            System.err.println("Error: Unable to delete the file " + path + ".json");
+//            e.printStackTrace();
+//        }
     }
 
     private Map<String, Double> mapTimestampsLine(String timestamped_line) {
@@ -134,8 +235,8 @@ public class Timestamper {
     }
 
     private List<Pair> timestamp() {
-        int i = 0, j, k = 0, l = 0, count, max_count;
-        Double saved = 0., max_saved = 0., previous = -1.;
+        int i = 0, j, k, l, count, max_count;
+        double saved = 0., max_saved = 0., previous = -1., temp_accuracy=0., total_accuracy=0.;
         String[] line_plain;
         Map<String, Double> line_stamped;
         List<Pair> final_lyric = new ArrayList<>();
@@ -166,37 +267,67 @@ public class Timestamper {
                 if (count > max_count && saved > previous) {
                     max_count = count;
                     max_saved = saved;
+                    temp_accuracy = (double) count/line_plain.length;
                 }
                 k++;
             }
-            final_lyric.add(new Pair(plain_lyric_lines.get(i), max_saved));
+            total_accuracy += temp_accuracy;
+            final_lyric.add(new Pair(plain_lyric_lines.get(i), max_saved * 1000));
             previous = max_saved;
             i++;
+
         }
+        accuracy = total_accuracy/plain_lyric_words.size();
         return final_lyric;
     }
+
+    private  List<Pair> correctTimestamps(List<Pair> finalLyrics) {
+        finalLyrics.removeIf(pair -> pair.getKey().isEmpty());
+        Pair prev = finalLyrics.get(0);
+        Pair next, current = finalLyrics.get(1);
+        double timeBetween=0., counter=0., result;
+        for (int i = 1; i < finalLyrics.size(); i++)
+        {
+            current = finalLyrics.get(i);
+            if (current.getValue() > prev.getValue() && current.getValue() - prev.getValue() < 5000)
+            {
+                timeBetween += current.getValue() - prev.getValue();
+                counter++;
+            }
+            prev = current;
+        }
+        timeBetween /= counter;
+        if (timeBetween == 0.)
+            timeBetween = 1000.;
+        prev = finalLyrics.get(0);
+        for (int i = 1; i < finalLyrics.size()-1; i++)
+        {
+            current = finalLyrics.get(i);
+            next = finalLyrics.get(i+1);
+            if (current.getValue() <= prev.getValue() && (prev.getValue()+timeBetween < next.getValue() || next.getValue() == current.getValue()))
+            {
+                result = Math.round((prev.getValue()+timeBetween) * 100)/100.0;
+                finalLyrics.set(i, new Pair(current.getKey(), result));
+                current = finalLyrics.get(i);
+            }
+            else if (current.getValue() <= prev.getValue() && prev.getValue()+timeBetween > next.getValue() && next.getValue() != current.getValue())
+            {
+                double timeBetween2 = Math.round((next.getValue() + prev.getValue()/2) * 100)/100.0;
+                finalLyrics.set(i, new Pair(current.getKey(), timeBetween2));
+                current = finalLyrics.get(i);
+            }
+            prev = current;
+        }
+        if (finalLyrics.getLast().getValue() <= current.getValue())
+        {
+            result = Math.round(((current.getValue()+timeBetween)*100)/100.0);
+            finalLyrics.set(finalLyrics.size()-1, new Pair(finalLyrics.getLast().getKey(), result));
+        }
+        return finalLyrics;
+    }
+
+    public double getAccuracy()
+    {
+        return this.accuracy;
+    }
 }
-
-class Pair {
-    private String key;
-    private double value;
-
-    public Pair(String key, double value) {
-        this.key = key;
-        this.value = value;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public double getValue() {
-        return value;
-    }
-
-    @Override
-    public String toString() {
-        return key + " " + value;
-    }
-}
-
