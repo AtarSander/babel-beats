@@ -7,6 +7,7 @@ import axios from "axios";
 import {useLocation} from "react-router-dom";
 import SyncedText from "./SyncedText";
 import Logo from "./Logo";
+import Flashcard from "./Flashcard";
 
 function MainApp() {
     let languages = ["Spanish", "Italian", "Korean", "English", "Portuguese", "German", "Chinese", "French"];
@@ -139,7 +140,10 @@ function MainApp() {
             </div>
             <div className={`wait-wrapper ${appState === 5 ? 'before' : appState >= 9 ? 'hidden' : ''}`}>
                 {(appState >= 5 && appState <= 9) && (
-                    <h1 className={"waitTitle"}>YOUR MUSIC IS BEING PREPARED!</h1>
+                    <>
+                        <h1 className={"waitTitle"}>Your music is being prepared</h1>
+                        <Flashcard srcLang={selectedUserLanguage} targetLang={selectedTargetLanguage} />
+                    </>
                 )}
                 {appState >= 7 && appState <= 9 &&
                     <button className={`musicReadyButton ${appState === 7 ? 'before' : ''}`}

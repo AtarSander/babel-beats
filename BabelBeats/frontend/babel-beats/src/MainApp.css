@@ -90,13 +90,16 @@
 }
 
 .wait-wrapper {
+    display: grid;
+    grid-template-rows: 1fr 3fr 1fr; /* 3 rows with equal height */
+    place-items: center; /* Center both horizontally and vertically */
     transition: opacity 1s ease-in-out, transform 1s ease-in-out;
     transform: translateX(0%);
     opacity: 1;
     pointer-events: auto;
     text-align: center;
     margin-top: 0;
-    padding-top: 4%;
+    /*padding-top: 4%;*/
     font-size: 100px;
     height: 100%;
 }
@@ -115,7 +118,7 @@
 }
 
 .waitTitle {
-
+    font-size: 80px;
 }
 
 .musicReadyButton {

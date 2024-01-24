@@ -1,0 +1,51 @@
+.FlashcardWrapper {
+    display: flex;
+}
+
+.Flashcard {
+    width: 600px;
+    height: 400px;
+    perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+.FlashcardInner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #565252;
+    border-radius: 5%;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.Flashcard:hover .FlashcardInner {
+    transform: rotateY(180deg);
+}
+
+.FlashcardFront, .FlashcardBack {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 40px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+}
+
+.FlashcardBack {
+    color: white;
+    transform: rotateY(180deg);
+}
+.lrButton {
+    margin: 0 3% 0 3%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
