@@ -224,7 +224,7 @@ public class SpotifyHandler {
         return rh.sendHTTPRequest(url, headerName, headerValues);
     }
 
-    public Song[] getPlaylistSongs(String playlistID, int songCount, SpotifyUser spotifyUser){
+    public List<Song> getPlaylistSongs(String playlistID, int songCount, SpotifyUser spotifyUser){
 //        fetch json
         String fetchedData = fetchSongsFromPlaylistJSON(playlistID, songCount, spotifyUser);
         JSONObject jo = new JSONObject(fetchedData);
@@ -232,8 +232,9 @@ public class SpotifyHandler {
 //        extract items
         JSONArray items = jo.getJSONArray("items");
 
-//        init sons table
-        Song[] songs = new Song[items.length()];
+//        init songs table
+//        Song[] songs = new Song[items.length()];
+        List<Song> songs = new ArrayList<>();
         int i = 0;
         int skipped = 0;
 
@@ -280,7 +281,7 @@ public class SpotifyHandler {
             Image image = createImageFromJson(imageJson);
 
 //            add song to songs
-            songs[i] = new Song(artists, name, image, songId, duration);
+            songs.add(new Song(artists, name, image, songId, duration));
             i++;
         }
         return songs;

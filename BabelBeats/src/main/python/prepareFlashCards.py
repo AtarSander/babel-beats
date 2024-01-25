@@ -39,4 +39,4 @@ if __name__ == "__main__":
     wordsList = readData("popularWords.csv")
     languageDict = readKeysJSON("languageMap.json")
     translatedJSON = translateWords(wordsList, languageDict)
-    saveToJson("flashCards.json", translatedJSON)
+    saveToJson("../resources/flashCards.json", translatedJSON)

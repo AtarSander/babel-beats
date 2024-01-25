@@ -99,6 +99,7 @@
     pointer-events: auto;
     text-align: center;
     margin-top: 0;
+    /*margin-bottom: 100%;*/
     /*padding-top: 4%;*/
     font-size: 100px;
     height: 100%;
@@ -133,7 +134,7 @@
     border: none;
     font-family: "Spotify", sans-serif;
     border-radius: 50px;
-
+    margin-bottom: 5%;
 }
 
 .musicReadyButton.before {

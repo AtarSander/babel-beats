@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import './SyncedText.css';
+import axios from "axios";
 
 
 function SyncedText({ songData, isPlaying, songPosition }) {
@@ -17,6 +18,19 @@ function SyncedText({ songData, isPlaying, songPosition }) {
     const [currTransLine, setCurrTransLine] = useState("");
     const [prevTransLine, setPrevTransLine] = useState("");
     const [prevPrevTransLine, setPrevPrevTransLine] = useState("");
+
+    async function blacklist() {
+        const sendRequest = async() => {
+            try {
+                let response = await axios.get(`http://localhost:8080/api/blacklist?title=${songTitle.replace(" ", "_")}`);
+                console.log("Blacklisted ", songTitle.replace(" ", "_"));
+            } catch (error) {
+                console.log('Error blacklisting');
+            }
+        }
+
+        sendRequest();
+    }
 
 
     function currentLyric() {
@@ -82,6 +96,8 @@ function SyncedText({ songData, isPlaying, songPosition }) {
                     <h1 className={"currLine"}>{currTransLine}</h1>
                 </div>
             </div>
+            <button className={"blackList"} onClick={blacklist}>Blacklist this song!</button>
+
         </>);
 }
 

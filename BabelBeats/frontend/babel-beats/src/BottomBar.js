@@ -3,6 +3,7 @@ import "./BottomBar.css"
 import SkipButton from "./SkipButton";
 
 function BottomBar({ userToken, refreshToken, isPlaying, setIsPlaying, songPosition, setSongPosition }) {
+
     return (
         <div className="bottomBar">
             <SkipButton direction="backward"  userToken={userToken} refreshToken={refreshToken}/>

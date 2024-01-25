@@ -27,20 +27,21 @@ public class Timestamper {
 
         mutableList.removeIf(String::isEmpty);
 
-//        String text = String.join(". ", mutableList);
         DeepLHandler dl = new DeepLHandler();
         return dl.translate(mutableList, targetLang, srcLang);
     }
 
-    public JSONObject saveTimestamps(String name, long size, String targetLang, String srcLang) {
-//        JSONArray existingData = readJsonFromFile("src/main/resources/lyrics/processedLyrics/processedSong.json");
+    public JSONObject saveTimestamps(String name, long size, String targetLang, String srcLang)  throws Exception {
         List<Pair> lyrics = getTimestamps(name);
+        if (chosenLyrics.size() > 200)
+            throw new Exception("Wrong plain text");
         JSONObject record = new JSONObject();
-        if (accuracy < 0.1)
-                return record;
+        System.out.println(accuracy);
+        if (accuracy < 0.3)
+            throw new Exception("Accuracy too low");
         JSONArray timestampsJsonArray = new JSONArray();
         JSONArray translatedJsonArray = new JSONArray();
-        
+
         List<String> translatedLines = matchTranslated(targetLang, srcLang);
 //        List<String> translatedLines = Arrays.asList(test.split("\\. "));
         assert(translatedLines.size() == lyrics.size());
@@ -62,6 +63,7 @@ public class Timestamper {
         record.put("timestampsTranslated", translatedJsonArray);
 //        existingData.put(record);
 //        writeJsonToFile(existingData, "src/main/resources/lyrics/processedLyrics/processedSong.json");
+
         return record;
     }
 

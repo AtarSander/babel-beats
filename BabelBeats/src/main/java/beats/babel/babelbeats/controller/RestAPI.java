@@ -75,37 +75,38 @@ public class RestAPI {
     }
 
     @GetMapping("/loadRecommendedSong")
-    public SongRecord loadRecommendedSong(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken, @RequestParam(required = true)int genre, @RequestParam(required = true)String targetLang, @RequestParam(required = true)String userLang){
+    public SongRecord loadRecommendedSong(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken, @RequestParam(required = true)int genre, @RequestParam(required = true)String targetLang, @RequestParam(required = true)String userLang) {
         SpotifyUser su = new SpotifyUser(userToken, refreshToken);
         YoutubeSearcher ys = new YoutubeSearcher();
         GeniusHandler gh = new GeniusHandler();
         Timestamper ts = new Timestamper();
-        List<String> blacklist = new ArrayList<>();
+//        List<String> blacklist = new ArrayList<>();
         String videoID = "";
-        int songIndex = 4;
+        int songIndex = 0;
         JSONObject songData;
         SongRecord newRecord;
         long size;
-        Song[] preShuffleSongs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(genre, targetLang, su), 30, su);
-        List<Song> songs = Arrays.asList(preShuffleSongs);
-//        List<Song> temp = new ArrayList<>(songs);
-//        temp.removeIf(Objects::isNull);
-//        songs = temp;
-//        Collections.shuffle(temp);
+        List<Song> songs = sh.getPlaylistSongs(sh.getRecommendedPlaylist(genre, targetLang, su), 10, su);
+//        List<Song> songs = Arrays.asList(preShuffleSongs);
+        List<Song> temp = new ArrayList<>(songs);
+        temp.removeIf(Objects::isNull);
+        songs = temp;
+        Collections.shuffle(temp);
 
         while(true) {
-//            for (int i = 0; i < songs.size(); i++) {
-//                Song song = songs.get(i);
-//                if (song.getDuration() < 5 * 60000 && !blacklist.contains(song.toString())) {
-//                    videoID = ys.videoID(song.toString());
-//                    if(ys.isLenCompatible(videoID, song.getDuration(), 5000))
-//                        songIndex = i;
-//                    break;
-//                }
-//            }
+            for (int i = 0; i < songs.size(); i++) {
+                Song song = songs.get(i);
+                if (song.getDuration() < 5 * 60000 && !isSongBlacklisted(song.toString().replace(" ", "_"))) {
+                    videoID = ys.videoID(song.toString());
+                    if(ys.isLenCompatible(videoID, song.getDuration(), 5000)) {
+                        songIndex = i;
+                        break;
+                    }
+                }
+            }
 
 //        songIndex = 6;
-        videoID = ys.videoID(songs.get(songIndex).toString());
+            videoID = ys.videoID(songs.get(songIndex).toString());
 
             String name = songs.get(songIndex).toString();
             if (isSongInDatabase(name.replace(" ", "_"))) {
@@ -113,18 +114,20 @@ public class RestAPI {
             }
             else
             {
-                gh.getLyricsToFile(name, mapLanguages.get(targetLang), true);
-                MusicDownloader.download("https://www.youtube.com/watch?v=" + videoID, name);
-                size = getNumberOfRecords();
                 try {
+                    gh.getLyricsToFile(name, mapLanguages.get(targetLang), true);
+                    MusicDownloader.download("https://www.youtube.com/watch?v=" + videoID, name);
+                    size = getNumberOfRecords();
                     songData = ts.saveTimestamps(name.replace(" ", "_"), size, mapLanguages.get(userLang), mapLanguages.get(targetLang));
                 }
                 catch(Exception e){
-                    blacklist.add(name);
+                    blacklist(name);
+//                    songIndex += 1;
                     continue;
                 }
                 if (songData.isEmpty()) {
-                    blacklist.add(name);
+                    blacklist(name);
+//                    songIndex += 1;
                     continue;
                 }
                 newRecord = new SongRecord();
@@ -138,14 +141,23 @@ public class RestAPI {
         }
     }
 
+    @GetMapping("/blacklist")
+    public void blacklist(@RequestParam(required = true)String title) {
+        System.out.println("Banned: " + title);
+        BlackRecord newBanned = new BlackRecord();
+        newBanned.set_id(getNumberOfBanned()+1);
+        newBanned.setTitle(title.replace(" ", "_"));
+        banRecord(newBanned);
+    }
+
     @GetMapping("/seekPosition")
-    public void seekPosition(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken, @RequestParam(required = true)int timeDiff){
+    public void seekPosition(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken, @RequestParam(required = true)int timeDiff) {
         SpotifyUser spotifyUser = new SpotifyUser(userToken, refreshToken);
         sh.seekPosition(spotifyUser, timeDiff);
     }
 
     @GetMapping("/getSongPosition")
-    public int getPosition(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken){
+    public int getPosition(@RequestParam(required = true)String userToken, @RequestParam(required = true)String refreshToken) {
         SpotifyUser spotifyUser = new SpotifyUser(userToken, refreshToken);
         return sh.getPosition(spotifyUser);
     }
@@ -153,6 +165,11 @@ public class RestAPI {
     @PostMapping("/add")
     public void addRecord(@RequestBody SongRecord newRecord) {
         songDBService.addRecord(newRecord);
+    }
+
+    @PostMapping("/ban")
+    public void banRecord(@RequestBody BlackRecord newRecord) {
+        songDBService.banRecord(newRecord);
     }
 
     @GetMapping("/checkSong/{title}")
@@ -165,8 +182,19 @@ public class RestAPI {
         return songDBService.getRecordByTitle(title);
     }
 
+    @GetMapping("/checkBlack/{title}")
+    public boolean isSongBlacklisted(@PathVariable String title) {
+        boolean retVal = songDBService.isSongBlacklisted(title);
+        return retVal;
+    }
+
     @GetMapping("/count")
     public long getNumberOfRecords() {
+        return songDBService.getNumberOfRecords();
+    }
+
+    @GetMapping("/countBan")
+    public long getNumberOfBanned() {
         return songDBService.getNumberOfRecords();
     }
 
