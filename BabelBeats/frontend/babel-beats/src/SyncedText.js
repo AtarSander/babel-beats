@@ -96,7 +96,7 @@ function SyncedText({ songData, isPlaying, songPosition }) {
                     <h1 className={"currLine"}>{currTransLine}</h1>
                 </div>
             </div>
-            <button className={"blackList"} onClick={blacklist}>Blacklist this song!</button>
+            {/*<button className={"blackList"} onClick={blacklist}>Blacklist this song!</button>*/}
 
         </>);
 }

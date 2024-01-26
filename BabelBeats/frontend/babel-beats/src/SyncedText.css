@@ -43,14 +43,14 @@
 .originalLyrics {
     text-align: right;
     display: grid;
-    grid-template-rows: repeat(3, 3fr);
+    grid-template-rows: repeat(3, 200px);
     align-items: center;
 }
 
 .translatedLyrics {
     text-align: left;
     display: grid;
-    grid-template-rows: repeat(3, 5fr);
+    grid-template-rows: repeat(3, 200px);
     align-items: center;
 }
 

@@ -32,7 +32,9 @@ public class SongDBService {
         BlackRecord record = blackListRepository.findByTitle(title);
         return record != null;
     }
-
+    public BlackRecord getDocumentWithHighestId() {
+        return blackListRepository.findDocumentWithHighestId();
+    }
     public SongRecord getRecordByTitle(String title) {
         return songRecordRepository.findByTitle(title);
     }
@@ -44,4 +46,5 @@ public class SongDBService {
     public long getNumberOfBanned() {
         return blackListRepository.count();
     }
+
 }

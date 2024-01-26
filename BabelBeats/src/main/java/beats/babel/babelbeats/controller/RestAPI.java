@@ -82,7 +82,7 @@ public class RestAPI {
         Timestamper ts = new Timestamper();
 //        List<String> blacklist = new ArrayList<>();
         String videoID = "";
-        int songIndex = 0;
+        int songIndex = -1;
         JSONObject songData;
         SongRecord newRecord;
         long size;
@@ -91,10 +91,10 @@ public class RestAPI {
         List<Song> temp = new ArrayList<>(songs);
         temp.removeIf(Objects::isNull);
         songs = temp;
-        Collections.shuffle(temp);
+//        Collections.shuffle(songs);
 
         while(true) {
-            for (int i = 0; i < songs.size(); i++) {
+            for (int i = songIndex + 1; i < songs.size(); i++) {
                 Song song = songs.get(i);
                 if (song.getDuration() < 5 * 60000 && !isSongBlacklisted(song.toString().replace(" ", "_"))) {
                     videoID = ys.videoID(song.toString());
@@ -134,6 +134,7 @@ public class RestAPI {
                 newRecord.loadFromJSON(songData);
                 addRecord(newRecord);
             }
+            System.out.println(name);
             sh.playSongByID(su, songs.get(songIndex).getId());
             sh.pausePlayback(su);
 //        saveTitles(songs);
@@ -145,9 +146,11 @@ public class RestAPI {
     public void blacklist(@RequestParam(required = true)String title) {
         System.out.println("Banned: " + title);
         BlackRecord newBanned = new BlackRecord();
-        newBanned.set_id(getNumberOfBanned()+1);
+        System.out.println("Before " + getNumberOfBanned());
+        newBanned.set_id(getDocumentWithHighestId()+1);
         newBanned.setTitle(title.replace(" ", "_"));
         banRecord(newBanned);
+        System.out.println("After " + getNumberOfBanned());
     }
 
     @GetMapping("/seekPosition")
@@ -192,6 +195,9 @@ public class RestAPI {
     public long getNumberOfRecords() {
         return songDBService.getNumberOfRecords();
     }
+
+    @GetMapping("/blacklistHighestID")
+    public long getDocumentWithHighestId(){return songDBService.getDocumentWithHighestId().get_id();}
 
     @GetMapping("/countBan")
     public long getNumberOfBanned() {
